@@ -1,46 +1,13 @@
 {
-  "hero-modern": {
-    "src": "assets/img/hero-modern.jpg",
-    "title": "Computer-Maus mit LED",
-    "creator": "ccnull.de Bilddatenbank",
-    "creator_url": "https://www.flickr.com/photos/115225894@N07",
+  "lab-tech-6": {
+    "src": "assets/img/lab-tech-6.jpg",
+    "title": "Ten days to go",
+    "creator": "the Comic Shop",
+    "creator_url": "https://www.flickr.com/photos/37682207@N00",
     "license": "by",
     "license_version": "2.0",
     "license_url": "https://creativecommons.org/licenses/by/2.0/",
-    "foreign_landing_url": "https://www.flickr.com/photos/115225894@N07/54357606285",
-    "source": "flickr"
-  },
-  "hero-remote": {
-    "src": "assets/img/hero-remote.jpg",
-    "title": "High tech deployment equipment 10-2010",
-    "creator": "US Army Africa",
-    "creator_url": "https://www.flickr.com/photos/36281822@N08",
-    "license": "by",
-    "license_version": "2.0",
-    "license_url": "https://creativecommons.org/licenses/by/2.0/",
-    "foreign_landing_url": "https://www.flickr.com/photos/36281822@N08/4944207741",
-    "source": "flickr"
-  },
-  "hero-tech": {
-    "src": "assets/img/hero-tech.jpg",
-    "title": "Workspace @ Nottingham Flat",
-    "creator": "David Wellbeloved",
-    "creator_url": "https://www.flickr.com/photos/35339157@N00",
-    "license": "by",
-    "license_version": "2.0",
-    "license_url": "https://creativecommons.org/licenses/by/2.0/",
-    "foreign_landing_url": "https://www.flickr.com/photos/35339157@N00/5378333486",
-    "source": "flickr"
-  },
-  "hero-neon": {
-    "src": "assets/img/hero-neon.jpg",
-    "title": "computer art",
-    "creator": "visual velocity pc",
-    "creator_url": "https://www.flickr.com/photos/44396549@N00",
-    "license": "by",
-    "license_version": "2.0",
-    "license_url": "https://creativecommons.org/licenses/by/2.0/",
-    "foreign_landing_url": "https://www.flickr.com/photos/44396549@N00/8972422",
+    "foreign_landing_url": "https://www.flickr.com/photos/37682207@N00/223589156",
     "source": "flickr"
   }
 }
