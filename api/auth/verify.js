@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-const SECRET = process.env.JWT_SECRET || 'soportemax-secret-key-change-in-production';
+const SECRET = process.env.JWT_SECRET || 'isinet-admin-secret-key-2026';
 
 function verifyToken(token) {
   try {
