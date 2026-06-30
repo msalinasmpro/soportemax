@@ -1,5 +1,5 @@
 /* ============================================
-   Admin Dashboard — SoporteMax
+   Admin Dashboard — Isinet
    ============================================ */
 :root {
   --bg: #050505;
@@ -444,4 +444,47 @@ body {
 @media (max-width: 540px) {
   .header-subtitle { display: none; }
   .gallery-grid-admin { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ============================================
+   Logo Section
+   ============================================ */
+.logo-upload-area {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.logo-current { margin-bottom: 16px; }
+
+.logo-preview-box {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100px;
+}
+
+.logo-preview-box img {
+  max-width: 200px;
+  max-height: 80px;
+  object-fit: contain;
+}
+
+/* ============================================
+   Map Section
+   ============================================ */
+.map-preview {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+
+.map-preview iframe {
+  display: block;
+  width: 100%;
+  min-height: 400px;
 }

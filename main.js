@@ -29,6 +29,44 @@
   }
 
   /* ============================================
+     Load Config from API & Update Logo
+     ============================================ */
+  function loadSiteConfig() {
+    fetch("/api/config")
+      .then(function (res) { return res.json(); })
+      .then(function (cfg) {
+        // Update logo
+        var logoEl = document.querySelector(".nav-logo-icon");
+        if (cfg.logo_url && logoEl) {
+          logoEl.innerHTML = '<img src="' + cfg.logo_url + '" alt="Logo" style="height:32px;width:auto;object-fit:contain;">';
+        }
+        // Update company name in footer
+        var footerBrand = document.querySelector(".footer-logo span:last-child");
+        if (cfg.company_name && footerBrand) footerBrand.textContent = cfg.company_name;
+        // Update phone/email in footer
+        var footerContact = document.querySelector(".footer-contact ul");
+        if (footerContact && cfg.phone) {
+          var items = footerContact.querySelectorAll("li");
+          if (items[0]) items[0].textContent = cfg.phone;
+          if (items[1]) items[1].textContent = cfg.email || "";
+          if (items[2]) items[2].textContent = cfg.address || "";
+          if (items[3]) items[3].textContent = cfg.hours || "";
+        }
+        // Update map
+        var mapFrame = document.querySelector(".contact-map iframe");
+        if (mapFrame && cfg.map_lat && cfg.map_lng) {
+          mapFrame.src = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3323.85!2d" + cfg.map_lng + "!3d" + cfg.map_lat + "!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z" + cfg.map_lat + "S%20" + cfg.map_lng + "W!5e0!3m2!1ses!2scl";
+        }
+        // Update social links
+        var socialLinks = document.querySelectorAll(".footer-social-link");
+        if (socialLinks[0] && cfg.social_facebook) socialLinks[0].href = cfg.social_facebook;
+        if (socialLinks[1] && cfg.social_instagram) socialLinks[1].href = cfg.social_instagram;
+        if (socialLinks[2] && cfg.social_linkedin) socialLinks[2].href = cfg.social_linkedin;
+      })
+      .catch(function () {});
+  }
+
+  /* ============================================
      Splash
      ============================================ */
   function initSplash() {
@@ -444,6 +482,7 @@
     safe(initMagnetic, "initMagnetic");
     safe(initGSAP, "initGSAP");
     safe(initGallery, "initGallery");
+    safe(loadSiteConfig, "loadSiteConfig");
   }
 
   if (document.readyState === "loading") {

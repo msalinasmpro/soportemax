@@ -6,7 +6,7 @@
   var submitBtn = document.getElementById("login-submit");
 
   // Check if already logged in
-  var session = localStorage.getItem("soportemax-admin-session");
+  var session = localStorage.getItem("isinet-admin-session");
   if (session) {
     try {
       var s = JSON.parse(session);
@@ -42,7 +42,7 @@
     .then(function (res) { return res.json(); })
     .then(function (data) {
       if (data.error) throw new Error(data.error);
-      localStorage.setItem("soportemax-admin-session", JSON.stringify({
+      localStorage.setItem("isinet-admin-session", JSON.stringify({
         token: data.token,
         user: data.user,
         expiresAt: Date.now() + (24 * 60 * 60 * 1000)

@@ -2,8 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 
-const DATA_DIR = path.join('/tmp', 'soportemax-data');
-const SECRET = process.env.JWT_SECRET || 'soportemax-secret-key-change-in-production';
+const DATA_DIR = path.join('/tmp', 'isinet-data');
+const SECRET = process.env.JWT_SECRET || 'isinet-admin-secret-key-2026';
 
 function ensureDataDir() {
   if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
@@ -13,7 +13,7 @@ function getUsers() {
   const file = path.join(DATA_DIR, 'users.json');
   if (!fs.existsSync(file)) {
     const defaults = [
-      { id: '1', email: 'admin@soportemax.cl', password: hashPassword('admin123'), name: 'Administrador', role: 'admin' }
+      { id: '1', email: 'admin@isinet.cl', password: hashPassword('Isinet2026!'), name: 'Administrador', role: 'admin' }
     ];
     fs.writeFileSync(file, JSON.stringify(defaults, null, 2));
     return defaults;

@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { authMiddleware } = require('./auth/verify');
 
-const DATA_DIR = path.join('/tmp', 'soportemax-data');
+const DATA_DIR = path.join('/tmp', 'isinet-data');
 const FILE = path.join(DATA_DIR, 'services.json');
 
 function ensureDataDir() { if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true }); }

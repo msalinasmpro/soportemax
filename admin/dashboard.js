@@ -4,12 +4,12 @@
   /* ============================================
      Auth Check
      ============================================ */
-  var session = localStorage.getItem("soportemax-admin-session");
+  var session = localStorage.getItem("isinet-admin-session");
   if (!session) { window.location.href = "index.html"; return; }
   try {
     var s = JSON.parse(session);
     if (!s.expiresAt || Date.now() > s.expiresAt) {
-      localStorage.removeItem("soportemax-admin-session");
+      localStorage.removeItem("isinet-admin-session");
       window.location.href = "index.html";
       return;
     }
@@ -41,8 +41,10 @@
     };
     if (body) opts.body = JSON.stringify(body);
     return fetch(API_BASE + path, opts).then(function (res) {
-      if (!res.ok) return res.json().then(function (d) { throw new Error(d.error || "API error"); });
-      return res.json();
+      return res.json().then(function (d) {
+        if (!res.ok) throw new Error(d.error || "API error");
+        return d;
+      });
     });
   }
 
@@ -62,13 +64,14 @@
   var sectionTitle = $("#section-title");
 
   var titles = {
-    "general": "Configuración General",
+    "general": "Datos de la Empresa",
+    "logo": "Logo de la Empresa",
     "services": "Servicios",
     "testimonials": "Testimonios",
     "faq": "Preguntas Frecuentes",
     "gallery": "Galería de Imágenes",
-    "contact-config": "Mensajes de Contacto",
-    "seo": "SEO & Meta Tags"
+    "messages": "Mensajes de Contacto",
+    "map": "Mapa de Ubicación"
   };
 
   if (menuToggle) menuToggle.addEventListener("click", function () { sidebar.classList.toggle("is-open"); });
@@ -94,7 +97,7 @@
   var logoutBtn = $("#btn-logout");
   if (logoutBtn) {
     logoutBtn.addEventListener("click", function () {
-      localStorage.removeItem("soportemax-admin-session");
+      localStorage.removeItem("isinet-admin-session");
       window.location.href = "index.html";
     });
   }
@@ -119,7 +122,7 @@
   function loadConfig() {
     fetch(API_BASE + "/api/config")
       .then(function (res) { return res.json(); })
-      .then(function (data) { config = data; fillForm(); })
+      .then(function (data) { config = data; fillForm(); updateMap(); updateLogo(); })
       .catch(function () { fillForm(); });
   }
 
@@ -134,16 +137,59 @@
     $$(".field-input[data-key]").forEach(function (input) {
       config[input.getAttribute("data-key")] = input.value;
     });
-
     api("PUT", "/api/config", config)
       .then(function () {
         showToast("Configuración guardada", "is-success");
         hasChanges = false;
         saveBtn.disabled = true;
+        updateMap();
+        updateLogo();
       })
-      .catch(function (err) {
-        showToast("Error: " + err.message, "is-error");
-      });
+      .catch(function (err) { showToast("Error: " + err.message, "is-error"); });
+  }
+
+  /* ============================================
+     Logo
+     ============================================ */
+  function updateLogo() {
+    var logoPreview = $("#logo-preview");
+    var currentLogo = $("#current-logo");
+    if (logoPreview && config.logo_url) {
+      logoPreview.src = config.logo_url;
+      logoPreview.style.display = "block";
+    }
+    if (currentLogo && config.logo_url) {
+      currentLogo.src = config.logo_url;
+    }
+  }
+
+  var logoUpload = $("#logo-upload");
+  if (logoUpload) {
+    logoUpload.addEventListener("change", function (e) {
+      var file = e.target.files[0];
+      if (!file) return;
+      if (file.size > 2 * 1024 * 1024) { showToast("Máximo 2MB para el logo", "is-error"); return; }
+      var reader = new FileReader();
+      reader.onload = function (ev) {
+        config.logo_url = ev.target.result;
+        updateLogo();
+        markDirty();
+        showToast("Logo cargado. Presiona Guardar para aplicar.", "is-success");
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  /* ============================================
+     Google Maps
+     ============================================ */
+  function updateMap() {
+    var mapFrame = $("#admin-map");
+    if (!mapFrame) return;
+    var lat = config.map_lat || "-33.4489";
+    var lng = config.map_lng || "-70.6693";
+    var zoom = config.map_zoom || "15";
+    mapFrame.src = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3323.85!2d" + lng + "!3d" + lat + "!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z" + lat + "S%20" + lng + "W!5e0!3m2!1ses!2scl";
   }
 
   /* ============================================
@@ -160,7 +206,7 @@
   function renderServices() {
     var list = $("#services-list");
     if (!list) return;
-    list.innerHTML = services.map(function (s, i) {
+    list.innerHTML = services.map(function (s) {
       return '<div class="panel-list-item">' +
         '<div class="panel-list-item-header">' +
           '<span class="panel-list-item-title">' + sanitize(s.title) + '</span>' +
@@ -170,6 +216,7 @@
           '<div class="panel-field"><label class="field-label">Título</label><input class="field-input" value="' + sanitize(s.title) + '" onchange="updateItem(\'services\',\'' + s.id + '\',\'title\',this.value)"></div>' +
           '<div class="panel-field"><label class="field-label">Icono</label><input class="field-input" value="' + sanitize(s.icon || "") + '" onchange="updateItem(\'services\',\'' + s.id + '\',\'icon\',this.value)"></div>' +
           '<div class="panel-field panel-field-full"><label class="field-label">Descripción</label><textarea class="field-input field-textarea" rows="2" onchange="updateItem(\'services\',\'' + s.id + '\',\'description\',this.value)">' + sanitize(s.description) + '</textarea></div>' +
+          '<div class="panel-field panel-field-full"><label class="field-label">Imagen URL o subir</label><input class="field-input" value="' + sanitize(s.image_url || "") + '" onchange="updateItem(\'services\',\'' + s.id + '\',\'image_url\',this.value)"></div>' +
         '</div>' +
       '</div>';
     }).join("");
@@ -191,8 +238,7 @@
   var addServiceBtn = $("#btn-add-service");
   if (addServiceBtn) {
     addServiceBtn.addEventListener("click", function () {
-      var newService = { title: "Nuevo Servicio", description: "Descripción", icon: "settings" };
-      api("POST", "/api/services", newService)
+      api("POST", "/api/services", { title: "Nuevo Servicio", description: "Descripción", icon: "settings" })
         .then(function (created) { services.push(created); renderServices(); showToast("Servicio agregado", "is-success"); })
         .catch(function (e) { showToast("Error: " + e.message, "is-error"); });
     });
@@ -287,7 +333,7 @@
   }
 
   /* ============================================
-     Gallery
+     Gallery — Upload Images
      ============================================ */
   function initGallery() {
     var uploadInput = $("#gallery-upload");
@@ -295,17 +341,19 @@
     if (!uploadInput || !grid) return;
 
     var galleryImages = [];
-    var saved = localStorage.getItem("soportemax-gallery");
+    var saved = localStorage.getItem("isinet-gallery");
     if (saved) { try { galleryImages = JSON.parse(saved); } catch (e) {} }
     renderGallery();
 
     uploadInput.addEventListener("change", function (e) {
       Array.from(e.target.files).forEach(function (file) {
+        if (file.size > 5 * 1024 * 1024) { showToast(file.name + " excede 5MB", "is-error"); return; }
         var reader = new FileReader();
         reader.onload = function (ev) {
-          galleryImages.push({ id: Date.now() + Math.random(), src: ev.target.result, name: file.name });
-          localStorage.setItem("soportemax-gallery", JSON.stringify(galleryImages));
+          galleryImages.push({ id: Date.now() + Math.random(), src: ev.target.result, name: file.name, date: new Date().toISOString() });
+          localStorage.setItem("isinet-gallery", JSON.stringify(galleryImages));
           renderGallery();
+          showToast("Imagen cargada: " + file.name, "is-success");
         };
         reader.readAsDataURL(file);
       });
@@ -313,15 +361,19 @@
 
     function renderGallery() {
       grid.innerHTML = galleryImages.map(function (img) {
-        return '<div class="gallery-item-admin"><img src="' + img.src + '" alt="' + sanitize(img.name) + '" loading="lazy"><button class="gallery-item-admin-delete" onclick="deleteGalleryItem(' + img.id + ')">✕</button></div>';
+        return '<div class="gallery-item-admin"><img src="' + img.src + '" alt="' + sanitize(img.name) + '" loading="lazy"><div class="gallery-item-admin-info"><span>' + sanitize(img.name) + '</span></div><button class="gallery-item-admin-delete" onclick="deleteGalleryItem(' + img.id + ')">✕</button></div>';
       }).join("");
+      if (galleryImages.length === 0) {
+        grid.innerHTML = '<p style="color:var(--text-4);text-align:center;padding:40px;grid-column:1/-1;">No hay imágenes. Sube una desde el botón de arriba.</p>';
+      }
     }
 
     window.deleteGalleryItem = function (id) {
-      if (!confirm("¿Eliminar?")) return;
+      if (!confirm("¿Eliminar esta imagen?")) return;
       galleryImages = galleryImages.filter(function (i) { return i.id !== id; });
-      localStorage.setItem("soportemax-gallery", JSON.stringify(galleryImages));
+      localStorage.setItem("isinet-gallery", JSON.stringify(galleryImages));
       renderGallery();
+      showToast("Imagen eliminada", "is-success");
     };
   }
 
@@ -333,7 +385,7 @@
     if (!list) return;
     api("GET", "/api/contact")
       .then(function (data) {
-        if (!data.length) { list.innerHTML = '<p style="color:var(--text-4);text-align:center;padding:40px;">No hay mensajes aún.</p>'; return; }
+        if (!data.length) { list.innerHTML = '<p style="color:var(--text-4);text-align:center;padding:40px;">No hay mensajes de contacto aún.</p>'; return; }
         list.innerHTML = data.map(function (m) {
           var date = m.created_at ? new Date(m.created_at).toLocaleDateString("es-CL") : "";
           return '<div class="message-item">' +

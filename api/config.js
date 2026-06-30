@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const DATA_DIR = path.join('/tmp', 'soportemax-data');
+const DATA_DIR = path.join('/tmp', 'isinet-data');
 const { authMiddleware } = require('./auth/verify');
 
 function ensureDataDir() {
