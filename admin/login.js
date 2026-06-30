@@ -1,29 +1,23 @@
 (function () {
   "use strict";
 
+  // Clear any stale sessions on login page
+  localStorage.removeItem("isinet-admin-session");
+
   var form = document.getElementById("login-form");
   var errorEl = document.getElementById("login-error");
   var submitBtn = document.getElementById("login-submit");
-
-  // Check if already logged in — redirect silently
-  var session = localStorage.getItem("isinet-admin-session");
-  if (session) {
-    try {
-      var s = JSON.parse(session);
-      if (s.expiresAt && Date.now() < s.expiresAt && s.token) {
-        window.location.replace("dashboard.html");
-        return;
-      }
-    } catch (e) { localStorage.removeItem("isinet-admin-session"); }
-  }
 
   if (!form) return;
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
+    e.stopPropagation();
 
-    var email = document.getElementById("login-email").value.trim();
-    var password = document.getElementById("login-password").value;
+    var emailInput = document.getElementById("login-email");
+    var passwordInput = document.getElementById("login-password");
+    var email = emailInput ? emailInput.value.trim() : "";
+    var password = passwordInput ? passwordInput.value : "";
 
     if (!email) { showError("Ingresa tu correo electrónico"); return; }
     if (!password) { showError("Ingresa tu contraseña"); return; }
@@ -57,24 +51,30 @@
       localStorage.setItem("isinet-admin-session", JSON.stringify(sessionObj));
 
       // Success animation
-      submitBtn.innerHTML = '<span class="btn-check-icon">✓</span> Acceso concedido';
+      submitBtn.innerHTML = '<span class="btn-check-icon">&#10003;</span> Acceso concedido';
       submitBtn.style.background = "#22c55e";
 
       setTimeout(function () {
         window.location.href = "dashboard.html";
-      }, 800);
+      }, 600);
     })
     .catch(function (err) {
       submitBtn.disabled = false;
       submitBtn.innerHTML = '<span class="btn-text">Iniciar Sesión</span>';
       showError(err.message || "Error al conectar con el servidor");
     });
+
+    return false;
   });
 
   function showError(msg) {
     if (errorEl) {
       errorEl.textContent = msg;
       errorEl.style.display = "block";
+    }
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = '<span class="btn-text">Iniciar Sesión</span>';
     }
   }
 })();
