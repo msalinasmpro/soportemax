@@ -1,0 +1,46 @@
+{
+  "hero-lab": {
+    "src": "assets/img/hero-lab.jpg",
+    "title": "Laboratory: computers",
+    "creator": "towo™",
+    "creator_url": "https://www.flickr.com/photos/24567257@N05",
+    "license": "by-sa",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+    "foreign_landing_url": "https://www.flickr.com/photos/24567257@N05/3232054252",
+    "source": "flickr"
+  },
+  "laptop-repair": {
+    "src": "assets/img/laptop-repair.jpg",
+    "title": "The New Switch",
+    "creator": "shalf",
+    "creator_url": "https://www.flickr.com/photos/99525316@N00",
+    "license": "by-sa",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+    "foreign_landing_url": "https://www.flickr.com/photos/99525316@N00/2501298652",
+    "source": "flickr"
+  },
+  "services-2": {
+    "src": "assets/img/services-2.jpg",
+    "title": "Concept computer sketch and actual installation",
+    "creator": "bat_ART",
+    "creator_url": "https://www.flickr.com/photos/25862401@N02",
+    "license": "by",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0/",
+    "foreign_landing_url": "https://www.flickr.com/photos/25862401@N02/10249483965",
+    "source": "flickr"
+  },
+  "hero-glow": {
+    "src": "assets/img/hero-glow.jpg",
+    "title": "Server grill with blue light",
+    "creator": "bigpresh",
+    "creator_url": "https://www.flickr.com/photos/62806367@N00",
+    "license": "by",
+    "license_version": "2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0/",
+    "foreign_landing_url": "https://www.flickr.com/photos/62806367@N00/7389234452",
+    "source": "flickr"
+  }
+}

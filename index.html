@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SoporteMax — Soporte Técnico Profesional</title>
+  <meta name="description" content="Soluciones de soporte técnico informático para empresas y hogares. Reparación, mantención, redes, servidores y más.">
+  <meta name="keywords" content="soporte técnico, reparación computadores, mantenimiento informático, redes, servidores">
+  <meta name="author" content="SoporteMax">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="SoporteMax — Soporte Técnico Profesional">
+  <meta property="og:description" content="Soluciones de soporte técnico informático para empresas y hogares.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://soportemax.cl">
+  <meta property="og:image" content="assets/img/hero-lab.jpg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SoporteMax — Soporte Técnico Profesional">
+  <meta name="twitter:description" content="Soluciones de soporte técnico informático para empresas y hogares.">
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "SoporteMax",
+    "description": "Soporte técnico informático profesional",
+    "telephone": "+56912345678",
+    "email": "contacto@soportemax.cl",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Av. Tecnología 1234",
+      "addressLocality": "Santiago",
+      "addressCountry": "CL"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": -33.4489,
+      "longitude": -70.6693
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+        "opens": "09:00",
+        "closes": "18:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": "Saturday",
+        "opens": "09:00",
+        "closes": "14:00"
+      }
+    ]
+  }
+  </script>
+
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css?v=20260630">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+
+  <!-- Skip Link -->
+  <a href="#main" class="skip-link">Saltar al contenido principal</a>
+
+  <!-- Splash Loader -->
+  <div class="splash" data-splash aria-hidden="true">
+    <div class="splash-inner">
+      <div class="splash-logo">SoporteMax</div>
+      <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+    </div>
+  </div>
+
+  <!-- Cursor -->
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+
+  <!-- Navigation -->
+  <nav class="nav" id="nav" role="navigation" aria-label="Navegación principal">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <span class="nav-logo-icon">⚡</span>
+        <span class="nav-logo-text">SoporteMax</span>
+      </a>
+      <div class="nav-links" id="nav-links">
+        <a href="#inicio" class="nav-link active">Inicio</a>
+        <a href="#servicios" class="nav-link">Servicios</a>
+        <a href="#proceso" class="nav-link">Proceso</a>
+        <a href="#galeria" class="nav-link">Galería</a>
+        <a href="#testimonios" class="nav-link">Testimonios</a>
+        <a href="#faq" class="nav-link">FAQ</a>
+        <a href="#contacto" class="nav-link">Contacto</a>
+      </div>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Cambiar tema" title="Cambiar tema">
+          <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <a href="#contacto" class="btn btn-primary btn-nav">Solicitar Soporte</a>
+        <button class="nav-hamburger" id="nav-hamburger" aria-label="Menú" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <div class="mobile-menu-inner">
+      <a href="#inicio" class="mobile-link">Inicio</a>
+      <a href="#servicios" class="mobile-link">Servicios</a>
+      <a href="#proceso" class="mobile-link">Proceso</a>
+      <a href="#galeria" class="mobile-link">Galería</a>
+      <a href="#testimonios" class="mobile-link">Testimonios</a>
+      <a href="#faq" class="mobile-link">FAQ</a>
+      <a href="#contacto" class="mobile-link">Contacto</a>
+      <a href="#contacto" class="btn btn-primary btn-full">Solicitar Soporte</a>
+    </div>
+  </div>
+
+  <main id="main">
+
+    <!-- ========== HERO ========== -->
+    <section class="hero" id="inicio">
+      <div class="hero-bg">
+        <img src="assets/img/hero-lab.jpg" alt="Laboratorio de soporte técnico" fetchpriority="high">
+        <div class="hero-overlay"></div>
+      </div>
+      <div class="hero-mesh" data-mouse-gradient></div>
+      <div class="hero-content">
+        <div class="hero-badge reveal">
+          <span class="hero-badge-dot"></span>
+          Soporte Técnico Profesional
+        </div>
+        <h1 class="hero-title reveal">
+          Soluciones IT<br>
+          <em>que funcionan.</em>
+        </h1>
+        <p class="hero-sub reveal">
+          Reparación · Mantención · Redes · Servidores · Respaldo
+        </p>
+        <div class="hero-actions reveal">
+          <a href="#contacto" class="btn btn-primary btn-glow">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            Solicitar Soporte
+          </a>
+          <a href="#servicios" class="btn btn-ghost">
+            Ver Servicios
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+        <div class="hero-stats reveal">
+          <div class="hero-stat">
+            <span class="hero-stat-number" data-count-to="500">500+</span>
+            <span class="hero-stat-label">Reparaciones</span>
+          </div>
+          <div class="hero-stat">
+            <span class="hero-stat-number" data-count-to="98">98%</span>
+            <span class="hero-stat-label">Satisfacción</span>
+          </div>
+          <div class="hero-stat">
+            <span class="hero-stat-number" data-count-to="10">10+</span>
+            <span class="hero-stat-label">Años</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-scroll">
+        <span>Scroll</span>
+        <div class="hero-scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- ========== ABOUT ========== -->
+    <section class="section section-about" id="quienes-somos">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-content">
+            <span class="section-tag reveal">Quiénes Somos</span>
+            <h2 class="section-title reveal">
+              Expertos en tecnología,<br><em>comprometidos contigo.</em>
+            </h2>
+            <p class="about-text reveal">
+              Con más de 10 años de experiencia, SoporteMax se ha consolidado como líder en soporte técnico informático. Nuestro equipo de técnicos certificados ofrece soluciones integrales para empresas y particulares.
+            </p>
+            <p class="about-text reveal">
+              Creemos que la tecnología debe ser una herramienta que facilite tu vida, no un obstáculo. Por eso, nos dedicamos a resolver cualquier problema técnico con rapidez, profesionalismo y precios transparentes.
+            </p>
+            <div class="about-features reveal">
+              <div class="about-feature">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <span>Certificaciones Microsoft, Apple, CompTIA</span>
+              </div>
+              <div class="about-feature">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <span>Servicio on-site y remoto 24/7</span>
+              </div>
+              <div class="about-feature">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <span>Garantía de 3 meses en reparaciones</span>
+              </div>
+            </div>
+          </div>
+          <div class="about-visual reveal">
+            <div class="about-image-wrapper">
+              <img src="assets/img/about-team.jpg" alt="Equipo de SoporteMax trabajando" loading="lazy">
+              <div class="about-image-glow"></div>
+            </div>
+            <div class="about-floating-card">
+              <span class="about-floating-number">10+</span>
+              <span class="about-floating-text">Años de<br>experiencia</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SERVICES ========== -->
+    <section class="section section-services" id="servicios">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag reveal">Nuestros Servicios</span>
+          <h2 class="section-title reveal">
+            Soluciones completas<br><em>para cada necesidad.</em>
+          </h2>
+          <p class="section-subtitle reveal">
+            Desde reparaciones simples hasta infraestructura empresarial compleja.
+          </p>
+        </div>
+        <div class="services-grid" data-reveal-cards>
+          <article class="service-card reveal" data-service>
+            <div class="service-card-image">
+              <img src="assets/img/repair-workspace.jpg" alt="Reparación de computadores" loading="lazy">
+              <div class="service-card-overlay"></div>
+            </div>
+            <div class="service-card-content">
+              <div class="service-card-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              </div>
+              <h3 class="service-card-title">Reparación de Computadores</h3>
+              <p class="service-card-desc">Diagnóstico y reparación experta de desktops, laptops y workstations.</p>
+            </div>
+          </article>
+          <article class="service-card reveal" data-service>
+            <div class="service-card-image">
+              <img src="assets/img/laptop-repair.jpg" alt="Servicio de notebook" loading="lazy">
+              <div class="service-card-overlay"></div>
+            </div>
+            <div class="service-card-content">
+              <div class="service-card-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16"/></svg>
+              </div>
+              <h3 class="service-card-title">Notebook</h3>
+              <p class="service-card-desc">Reparación especializada: pantallas, teclados, baterías y más.</p>
+            </div>
+          </article>
+          <article class="service-card reveal" data-service>
+            <div class="service-card-image">
+              <img src="assets/img/gaming-pc.jpg" alt="PC Gamer" loading="lazy">
+              <div class="service-card-overlay"></div>
+            </div>
+            <div class="service-card-content">
+              <div class="service-card-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><line x1="15" y1="13" x2="15.01" y2="13"/><line x1="18" y1="11" x2="18.01" y2="11"/><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"/></svg>
+              </div>
+              <h3 class="service-card-title">PC Gamer</h3>
+              <p class="service-card-desc">Optimización y reparación para máximo rendimiento gaming.</p>
+            </div>
+          </article>
+          <article class="service-card reveal" data-service>
+            <div class="service-card-image">
+              <img src="assets/img/office-tech.jpg" alt="Soporte empresas" loading="lazy">
+              <div class="service-card-overlay"></div>
+            </div>
+            <div class="service-card-content">
+              <div class="service-card-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg>
+              </div>
+              <h3 class="service-card-title">Soporte Empresas</h3>
+              <p class="service-card-desc">Soporte integral con contratos de mantención y SLA garantizado.</p>
+            </div>
+          </article>
+          <article class="service-card reveal" data-service>
+            <div class="service-card-image">
+              <img src="assets/img/hero-glow.jpg" alt="Soporte remoto" loading="lazy">
+              <div class="service-card-overlay"></div>
+            </div>
+            <div class="service-card-content">
+              <div class="service-card-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+              </div>
+              <h3 class="service-card-title">Soporte Remoto</h3>
+              <p class="service-card-desc">Resolvemos problemas de forma remota, rápida y segura.</p>
+            </div>
+          </article>
+          <article class="service-card reveal" data-service>
+            <div class="service-card-image">
+              <img src="assets/img/data-backup.jpg" alt="Respaldo de información" loading="lazy">
+              <div class="service-card-overlay"></div>
+            </div>
+            <div class="service-card-content">
+              <div class="service-card-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="22" y1="12" x2="2" y2="12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/><line x1="6" y1="16" x2="6.01" y2="16"/><line x1="10" y1="16" x2="10.01" y2="16"/></svg>
+              </div>
+              <h3 class="service-card-title">Respaldo de Información</h3>
+              <p class="service-card-desc">Copias de seguridad automáticas y recuperación de datos.</p>
+            </div>
+          </article>
+          <article class="service-card reveal" data-service>
+            <div class="service-card-image">
+              <img src="assets/img/services-2.jpg" alt="Eliminación de virus" loading="lazy">
+              <div class="service-card-overlay"></div>
+            </div>
+            <div class="service-card-content">
+              <div class="service-card-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+              </div>
+              <h3 class="service-card-title">Eliminación de Virus</h3>
+              <p class="service-card-desc">Eliminación completa de malware, ransomware y spyware.</p>
+            </div>
+          </article>
+          <article class="service-card reveal" data-service>
+            <div class="service-card-image">
+              <img src="assets/img/technician.jpg" alt="Optimización" loading="lazy">
+              <div class="service-card-overlay"></div>
+            </div>
+            <div class="service-card-content">
+              <div class="service-card-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              </div>
+              <h3 class="service-card-title">Optimización</h3>
+              <p class="service-card-desc">Rendimiento máximo: limpieza, updates y configuración.</p>
+            </div>
+          </article>
+          <article class="service-card reveal" data-service>
+            <div class="service-card-image">
+              <img src="assets/img/hero-lab.jpg" alt="Instalación Windows" loading="lazy">
+              <div class="service-card-overlay"></div>
+            </div>
+            <div class="service-card-content">
+              <div class="service-card-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              </div>
+              <h3 class="service-card-title">Instalación Windows</h3>
+              <p class="service-card-desc">Instalación, drivers, actualizaciones y configuración.</p>
+            </div>
+          </article>
+          <article class="service-card reveal" data-service>
+            <div class="service-card-image">
+              <img src="assets/img/network-cables.jpg" alt="Redes" loading="lazy">
+              <div class="service-card-overlay"></div>
+            </div>
+            <div class="service-card-content">
+              <div class="service-card-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 6v12"/><path d="M19 6v12"/><path d="M13 6v12"/></svg>
+              </div>
+              <h3 class="service-card-title">Redes</h3>
+              <p class="service-card-desc">Diseño, cableado estructurado, switches y WiFi.</p>
+            </div>
+          </article>
+          <article class="service-card reveal" data-service>
+            <div class="service-card-image">
+              <img src="assets/img/server-room.jpg" alt="Servidores" loading="lazy">
+              <div class="service-card-overlay"></div>
+            </div>
+            <div class="service-card-content">
+              <div class="service-card-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+              </div>
+              <h3 class="service-card-title">Servidores</h3>
+              <p class="service-card-desc">Virtualización, RAID, backups y monitoreo 24/7.</p>
+            </div>
+          </article>
+          <article class="service-card reveal" data-service>
+            <div class="service-card-image">
+              <img src="assets/img/about-team.jpg" alt="Mantención preventiva" loading="lazy">
+              <div class="service-card-overlay"></div>
+            </div>
+            <div class="service-card-content">
+              <div class="service-card-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+              </div>
+              <h3 class="service-card-title">Mantención Preventiva</h3>
+              <p class="service-card-desc">Programas de mantención para evitar fallos futuros.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== WHY US ========== -->
+    <section class="section section-features" id="por-que">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag reveal">Por Qué Elegirnos</span>
+          <h2 class="section-title reveal">
+            La diferencia está<br><em>en los detalles.</em>
+          </h2>
+        </div>
+        <div class="features-grid">
+          <div class="feature-card reveal">
+            <div class="feature-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <h3 class="feature-title">Respuesta Rápida</h3>
+            <p class="feature-desc">Tiempo de respuesta garantizado. Cada minuto sin equipo es productividad perdida.</p>
+          </div>
+          <div class="feature-card reveal">
+            <div class="feature-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+            </div>
+            <h3 class="feature-title">Técnicos Certificados</h3>
+            <p class="feature-desc">Equipo con certificaciones oficiales de Microsoft, Apple, CompTIA y más.</p>
+          </div>
+          <div class="feature-card reveal">
+            <div class="feature-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h3 class="feature-title">Garantía Total</h3>
+            <p class="feature-desc">3 meses de garantía en todas las reparaciones. Tu satisfacción es nuestra prioridad.</p>
+          </div>
+          <div class="feature-card reveal">
+            <div class="feature-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <h3 class="feature-title">Precios Transparentes</h3>
+            <p class="feature-desc">Sin costos ocultos. Presupuesto aprobado antes de cualquier trabajo.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== PROCESS ========== -->
+    <section class="section section-process" id="proceso">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag reveal">Proceso de Trabajo</span>
+          <h2 class="section-title reveal">
+            Así es como<br><em>resolvemos tu problema.</em>
+          </h2>
+        </div>
+        <div class="process-grid">
+          <div class="process-step reveal">
+            <div class="process-number">01</div>
+            <div class="process-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <h3 class="process-title">Contacto</h3>
+            <p class="process-desc">Cuéntanos tu problema por teléfono, email o formulario. Te respondemos en menos de 2 horas.</p>
+          </div>
+          <div class="process-step reveal">
+            <div class="process-number">02</div>
+            <div class="process-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <h3 class="process-title">Diagnóstico</h3>
+            <p class="process-desc">Nuestros técnicos analizan tu equipo y te entregan un diagnóstico detallado con presupuesto.</p>
+          </div>
+          <div class="process-step reveal">
+            <div class="process-number">03</div>
+            <div class="process-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </div>
+            <h3 class="process-title">Reparación</h3>
+            <p class="process-desc">Procedemos con la reparación una vez aprobado el presupuesto. Te mantenemos informado.</p>
+          </div>
+          <div class="process-step reveal">
+            <div class="process-number">04</div>
+            <div class="process-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <h3 class="process-title">Entrega</h3>
+            <p class="process-desc">Tu equipo listo y funcionando. Incluimos garantía y soporte post-reparación.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== STATS ========== -->
+    <section class="section section-stats">
+      <div class="stats-bg">
+        <img src="assets/img/server-room.jpg" alt="" loading="lazy" aria-hidden="true">
+        <div class="stats-overlay"></div>
+      </div>
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-item reveal">
+            <span class="stat-number" data-count-to="500">0</span>
+            <span class="stat-suffix">+</span>
+            <span class="stat-label">Reparaciones Realizadas</span>
+          </div>
+          <div class="stat-item reveal">
+            <span class="stat-number" data-count-to="200">0</span>
+            <span class="stat-suffix">+</span>
+            <span class="stat-label">Clientes Satisfechos</span>
+          </div>
+          <div class="stat-item reveal">
+            <span class="stat-number" data-count-to="10">0</span>
+            <span class="stat-suffix">+</span>
+            <span class="stat-label">Años de Experiencia</span>
+          </div>
+          <div class="stat-item reveal">
+            <span class="stat-number" data-count-to="98">0</span>
+            <span class="stat-suffix">%</span>
+            <span class="stat-label">Tasa de Satisfacción</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== GALLERY ========== -->
+    <section class="section section-gallery" id="galeria">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag reveal">Galería</span>
+          <h2 class="section-title reveal">
+            Nuestro espacio<br><em>de trabajo.</em>
+          </h2>
+        </div>
+        <div class="gallery-grid">
+          <div class="gallery-item gallery-item-wide reveal">
+            <img src="assets/img/hero-lab.jpg" alt="Laboratorio de soporte técnico" loading="lazy">
+            <div class="gallery-overlay">
+              <span>Laboratorio</span>
+            </div>
+          </div>
+          <div class="gallery-item reveal">
+            <img src="assets/img/technician.jpg" alt="Técnico trabajando" loading="lazy">
+            <div class="gallery-overlay">
+              <span>Técnicos</span>
+            </div>
+          </div>
+          <div class="gallery-item reveal">
+            <img src="assets/img/server-room.jpg" alt="Sala de servidores" loading="lazy">
+            <div class="gallery-overlay">
+              <span>Servidores</span>
+            </div>
+          </div>
+          <div class="gallery-item reveal">
+            <img src="assets/img/repair-workspace.jpg" alt="Estación de reparación" loading="lazy">
+            <div class="gallery-overlay">
+              <span>Reparaciones</span>
+            </div>
+          </div>
+          <div class="gallery-item gallery-item-wide reveal">
+            <img src="assets/img/network-cables.jpg" alt="Rack de redes" loading="lazy">
+            <div class="gallery-overlay">
+              <span>Redes</span>
+            </div>
+          </div>
+          <div class="gallery-item reveal">
+            <img src="assets/img/gaming-pc.jpg" alt="Computador gamer" loading="lazy">
+            <div class="gallery-overlay">
+              <span>PC Gaming</span>
+            </div>
+          </div>
+          <div class="gallery-item reveal">
+            <img src="assets/img/office-tech.jpg" alt="Oficinas" loading="lazy">
+            <div class="gallery-overlay">
+              <span>Oficinas</span>
+            </div>
+          </div>
+          <div class="gallery-item reveal">
+            <img src="assets/img/about-team.jpg" alt="Equipo de trabajo" loading="lazy">
+            <div class="gallery-overlay">
+              <span>Equipo</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== TESTIMONIALS ========== -->
+    <section class="section section-testimonials" id="testimonios">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag reveal">Testimonios</span>
+          <h2 class="section-title reveal">
+            Lo que dicen<br><em>nuestros clientes.</em>
+          </h2>
+        </div>
+        <div class="testimonials-grid">
+          <div class="testimonial-card reveal">
+            <div class="testimonial-rating">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <p class="testimonial-text">"SoporteMax transformó nuestra infraestructura de TI. El tiempo de respuesta es increíble y la calidad del servicio excepcional."</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">CM</div>
+              <div>
+                <span class="testimonial-name">Carlos Mendoza</span>
+                <span class="testimonial-role">Gerente, TechCorp</span>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card reveal">
+            <div class="testimonial-rating">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <p class="testimonial-text">"Llevan 3 años gestionando nuestro soporte técnico. Profesionales, confiables y siempre disponibles cuando los necesitamos."</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">MF</div>
+              <div>
+                <span class="testimonial-name">María Fernández</span>
+                <span class="testimonial-role">Directora, InnovaLab</span>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card reveal">
+            <div class="testimonial-rating">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <p class="testimonial-text">"Recuperaron datos críticos que pensábamos perdidos. Su equipo es altamente capacitado y el servicio es premium."</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">RS</div>
+              <div>
+                <span class="testimonial-name">Roberto Silva</span>
+                <span class="testimonial-role">CEO, DataFlow</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== FAQ ========== -->
+    <section class="section section-faq" id="faq">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag reveal">Preguntas Frecuentes</span>
+          <h2 class="section-title reveal">
+            Resolvemos tus<br><em>dudas.</em>
+          </h2>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item reveal">
+            <button class="faq-question" aria-expanded="false">
+              <span>¿Cuánto tiempo tarda una reparación?</span>
+              <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+            <div class="faq-answer">
+              <p>La mayoría de las reparaciones se completan en 24-48 horas. Problemas más complejos pueden tomar hasta 3-5 días hábiles. Siempre ofrecemos un diagnóstico previo con tiempo estimado.</p>
+            </div>
+          </div>
+          <div class="faq-item reveal">
+            <button class="faq-question" aria-expanded="false">
+              <span>¿Ofrecen servicio a domicilio?</span>
+              <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+            <div class="faq-answer">
+              <p>Sí, contamos con servicio on-site para empresas y clientes premium. También ofrecemos soporte remoto para resolver problemas sin traslado.</p>
+            </div>
+          </div>
+          <div class="faq-item reveal">
+            <button class="faq-question" aria-expanded="false">
+              <span>¿Cuánto cuesta un diagnóstico?</span>
+              <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+            <div class="faq-answer">
+              <p>El diagnóstico es gratuito para reparaciones que se aprueben. Para diagnósticos sin reparación, el costo es de $15.000 CLP.</p>
+            </div>
+          </div>
+          <div class="faq-item reveal">
+            <button class="faq-question" aria-expanded="false">
+              <span>¿Trabajan con empresas de todos los tamaños?</span>
+              <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+            <div class="faq-answer">
+              <p>Absolutamente. Atendemos desde emprendedores y pymes hasta empresas grandes con infraestructura compleja. Adaptamos nuestros servicios a cada necesidad.</p>
+            </div>
+          </div>
+          <div class="faq-item reveal">
+            <button class="faq-question" aria-expanded="false">
+              <span>¿Qué garantía ofrecen en las reparaciones?</span>
+              <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+            <div class="faq-answer">
+              <p>Todas nuestras reparaciones incluyen 3 meses de garantía. Para repuestos, la garantía del fabricante se mantiene intacta.</p>
+            </div>
+          </div>
+          <div class="faq-item reveal">
+            <button class="faq-question" aria-expanded="false">
+              <span>¿Pueden recuperar datos de discos dañados?</span>
+              <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+            <div class="faq-answer">
+              <p>Sí, contamos con herramientas especializadas de recuperación de datos. Tenemos un 95% de éxito en recuperación de discos duros y SSD.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== CONTACT ========== -->
+    <section class="section section-contact" id="contacto">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag reveal">Contacto</span>
+          <h2 class="section-title reveal">
+            ¿Necesitas<br><em>ayuda?</em>
+          </h2>
+          <p class="section-subtitle reveal">
+            Escríbenos y te responderemos en menos de 2 horas.
+          </p>
+        </div>
+        <div class="contact-grid">
+          <div class="contact-form-wrapper reveal">
+            <form class="contact-form" id="contact-form" novalidate>
+              <div class="form-group">
+                <label for="contact-name" class="form-label">Nombre completo</label>
+                <input type="text" id="contact-name" name="name" class="form-input" placeholder="Tu nombre" required autocomplete="name">
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="contact-email" class="form-label">Correo electrónico</label>
+                  <input type="email" id="contact-email" name="email" class="form-input" placeholder="tu@email.com" required autocomplete="email">
+                </div>
+                <div class="form-group">
+                  <label for="contact-phone" class="form-label">Teléfono</label>
+                  <input type="tel" id="contact-phone" name="phone" class="form-input" placeholder="+56 9 1234 5678" autocomplete="tel">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="contact-message" class="form-label">Mensaje</label>
+                <textarea id="contact-message" name="message" class="form-input form-textarea" placeholder="Cuéntanos tu problema..." rows="5" required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary btn-full btn-glow" id="contact-submit">
+                <span class="btn-text">Enviar Mensaje</span>
+                <span class="btn-loading" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-dasharray="31.4" stroke-dashoffset="10"/></svg>
+                </span>
+              </button>
+            </form>
+            <div class="form-success" id="form-success" aria-hidden="true">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="16 8 10.5 13.5 8 11"/></svg>
+              <h3>Mensaje enviado</h3>
+              <p>Te responderemos en menos de 2 horas.</p>
+            </div>
+          </div>
+          <div class="contact-info reveal">
+            <div class="contact-info-card">
+              <div class="contact-info-item">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                <div>
+                  <span class="contact-info-label">Teléfono</span>
+                  <span class="contact-info-value">+56 9 1234 5678</span>
+                </div>
+              </div>
+              <div class="contact-info-item">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                <div>
+                  <span class="contact-info-label">Email</span>
+                  <span class="contact-info-value">contacto@soportemax.cl</span>
+                </div>
+              </div>
+              <div class="contact-info-item">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <div>
+                  <span class="contact-info-label">Dirección</span>
+                  <span class="contact-info-value">Av. Tecnología 1234, Santiago, Chile</span>
+                </div>
+              </div>
+              <div class="contact-info-item">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <div>
+                  <span class="contact-info-label">Horario</span>
+                  <span class="contact-info-value">Lun-Vie: 9:00-18:00 | Sáb: 9:00-14:00</span>
+                </div>
+              </div>
+            </div>
+            <div class="contact-map">
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3323.8519999999997!2d-70.6693!3d-33.4489!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzPCsDI2JzU2LjAiUyA3MMKwNDAnMDkuNSJX!5e0!3m2!1ses!2scl!4v1234567890" width="100%" height="250" style="border:0; border-radius: 16px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Ubicación de SoporteMax"></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="footer-logo">
+            <span class="nav-logo-icon">⚡</span>
+            <span>SoporteMax</span>
+          </a>
+          <p class="footer-desc">Soluciones de soporte técnico informático para empresas y hogares. Reparación, mantención, redes, servidores y más.</p>
+          <div class="footer-social">
+            <a href="https://facebook.com/soportemax" class="footer-social-link" aria-label="Facebook" target="_blank" rel="noopener">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="https://instagram.com/soportemax" class="footer-social-link" aria-label="Instagram" target="_blank" rel="noopener">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="https://linkedin.com/company/soportemax" class="footer-social-link" aria-label="LinkedIn" target="_blank" rel="noopener">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-links">
+          <h4 class="footer-heading">Servicios</h4>
+          <ul>
+            <li><a href="#servicios">Reparación</a></li>
+            <li><a href="#servicios">Soporte Empresas</a></li>
+            <li><a href="#servicios">Soporte Remoto</a></li>
+            <li><a href="#servicios">Redes</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4 class="footer-heading">Empresa</h4>
+          <ul>
+            <li><a href="#quienes-somos">Quiénes Somos</a></li>
+            <li><a href="#proceso">Proceso</a></li>
+            <li><a href="#testimonios">Testimonios</a></li>
+            <li><a href="#faq">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="footer-contact">
+          <h4 class="footer-heading">Contacto</h4>
+          <ul>
+            <li>+56 9 1234 5678</li>
+            <li>contacto@soportemax.cl</li>
+            <li>Av. Tecnología 1234, Santiago</li>
+            <li>Lun-Vie: 9:00-18:00</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 SoporteMax. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast notification -->
+  <div class="toast" id="toast" role="alert" aria-live="polite"></div>
+
+  <!-- Scripts -->
+  <script defer src="lib/gsap.min.js"></script>
+  <script defer src="lib/ScrollTrigger.min.js"></script>
+  <script defer src="lib/manifest.js"></script>
+  <script defer src="main.js?v=20260630"></script>
+
+</body>
+</html>
