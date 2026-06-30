@@ -269,6 +269,51 @@
     </div>
   </div>
 
-  <script defer src="login.js?v=20260630"></script>
+  <script>
+  (function () {
+    "use strict";
+    localStorage.removeItem("isinet-admin-session");
+    var form = document.getElementById("login-form");
+    var errorEl = document.getElementById("login-error");
+    var submitBtn = document.getElementById("login-submit");
+    if (!form) return;
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var email = document.getElementById("login-email").value.trim();
+      var password = document.getElementById("login-password").value;
+      if (!email) { showError("Ingresa tu correo electrónico"); return; }
+      if (!password) { showError("Ingresa tu contraseña"); return; }
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Conectando...";
+      errorEl.style.display = "none";
+      fetch(window.location.origin + "/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email, password: password })
+      })
+      .then(function (r) { return r.json().then(function (d) { if (!r.ok) throw new Error(d.error); return d; }); })
+      .then(function (data) {
+        localStorage.setItem("isinet-admin-session", JSON.stringify({ token: data.token, user: data.user, expiresAt: Date.now() + 86400000 }));
+        submitBtn.textContent = "Acceso concedido";
+        submitBtn.style.background = "#22c55e";
+        setTimeout(function () { window.location.href = "dashboard.html"; }, 500);
+      })
+      .catch(function (err) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Iniciar Sesión";
+        errorEl.textContent = err.message || "Error";
+        errorEl.style.display = "block";
+      });
+      return false;
+    });
+    function showError(msg) {
+      errorEl.textContent = msg;
+      errorEl.style.display = "block";
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Iniciar Sesión";
+    }
+  })();
+  </script>
 </body>
 </html>
