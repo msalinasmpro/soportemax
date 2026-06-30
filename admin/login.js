@@ -32,38 +32,28 @@
     submitBtn.disabled = true;
     errorEl.textContent = "";
 
-    // Try Supabase auth
-    if (window.__supabaseClient) {
-      window.__supabaseClient.auth.signInWithPassword({ email: email, password: password })
-        .then(function (res) {
-          if (res.error) throw res.error;
-          localStorage.setItem("soportemax-admin-session", JSON.stringify({
-            user: res.data.user,
-            expiresAt: Date.now() + (res.data.session.expires_in * 1000)
-          }));
-          window.location.href = "dashboard.html";
-        })
-        .catch(function (err) {
-          form.classList.remove("is-sending");
-          submitBtn.disabled = false;
-          showError(err.message || "Credenciales incorrectas");
-        });
-    } else {
-      // Demo mode — accept admin@example.com / admin123
-      setTimeout(function () {
-        if (email === "admin@example.com" && password === "admin123") {
-          localStorage.setItem("soportemax-admin-session", JSON.stringify({
-            user: { email: email },
-            expiresAt: Date.now() + (24 * 60 * 60 * 1000)
-          }));
-          window.location.href = "dashboard.html";
-        } else {
-          form.classList.remove("is-sending");
-          submitBtn.disabled = false;
-          showError("Credenciales incorrectas. Usa admin@example.com / admin123");
-        }
-      }, 800);
-    }
+    // Login via API
+    var apiBase = window.location.origin;
+    fetch(apiBase + "/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: email, password: password })
+    })
+    .then(function (res) { return res.json(); })
+    .then(function (data) {
+      if (data.error) throw new Error(data.error);
+      localStorage.setItem("soportemax-admin-session", JSON.stringify({
+        token: data.token,
+        user: data.user,
+        expiresAt: Date.now() + (24 * 60 * 60 * 1000)
+      }));
+      window.location.href = "dashboard.html";
+    })
+    .catch(function (err) {
+      form.classList.remove("is-sending");
+      submitBtn.disabled = false;
+      showError(err.message || "Error al conectar con el servidor");
+    });
   });
 
   function showError(msg) {

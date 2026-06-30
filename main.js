@@ -264,27 +264,24 @@
       form.classList.add("is-sending");
       submitBtn.disabled = true;
 
-      // Try Supabase if available
-      if (window.__supabase && window.__supabase.insert) {
-        window.__supabase.insert("contact_messages", data)
-          .then(function () {
-            form.style.display = "none";
-            if (success) { success.classList.add("is-visible"); success.setAttribute("aria-hidden", "false"); }
-            showToast("Mensaje enviado correctamente", "is-success");
-          })
-          .catch(function () {
-            form.classList.remove("is-sending");
-            submitBtn.disabled = false;
-            showToast("Error al enviar. Intenta de nuevo.", "is-error");
-          });
-      } else {
-        // Fallback: simulate success
-        setTimeout(function () {
-          form.style.display = "none";
-          if (success) { success.classList.add("is-visible"); success.setAttribute("aria-hidden", "false"); }
-          showToast("Mensaje enviado correctamente", "is-success");
-        }, 1000);
-      }
+      // Send via API
+      fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      })
+      .then(function (res) { return res.json(); })
+      .then(function (result) {
+        if (result.error) throw new Error(result.error);
+        form.style.display = "none";
+        if (success) { success.classList.add("is-visible"); success.setAttribute("aria-hidden", "false"); }
+        showToast("Mensaje enviado correctamente", "is-success");
+      })
+      .catch(function () {
+        form.classList.remove("is-sending");
+        submitBtn.disabled = false;
+        showToast("Error al enviar. Intenta de nuevo.", "is-error");
+      });
     });
   }
 
