@@ -1,123 +1,46 @@
 {
-  "hero-lab": {
-    "src": "assets/img/hero-lab.jpg",
-    "title": "Computer Repair",
-    "creator": "Sean MacEntee",
-    "creator_url": "https://www.flickr.com/photos/18090920@N07",
+  "hero-modern": {
+    "src": "assets/img/hero-modern.jpg",
+    "title": "Computer-Maus mit LED",
+    "creator": "ccnull.de Bilddatenbank",
+    "creator_url": "https://www.flickr.com/photos/115225894@N07",
     "license": "by",
     "license_version": "2.0",
     "license_url": "https://creativecommons.org/licenses/by/2.0/",
-    "foreign_landing_url": "https://www.flickr.com/photos/18090920@N07/6500625219",
+    "foreign_landing_url": "https://www.flickr.com/photos/115225894@N07/54357606285",
     "source": "flickr"
   },
-  "repair-workspace": {
-    "src": "assets/img/repair-workspace.jpg",
-    "title": "Laptop Repair",
-    "creator": "Sean MacEntee",
-    "creator_url": "https://www.flickr.com/photos/18090920@N07",
+  "hero-remote": {
+    "src": "assets/img/hero-remote.jpg",
+    "title": "High tech deployment equipment 10-2010",
+    "creator": "US Army Africa",
+    "creator_url": "https://www.flickr.com/photos/36281822@N08",
     "license": "by",
     "license_version": "2.0",
     "license_url": "https://creativecommons.org/licenses/by/2.0/",
-    "foreign_landing_url": "https://www.flickr.com/photos/18090920@N07/5918067297",
+    "foreign_landing_url": "https://www.flickr.com/photos/36281822@N08/4944207741",
     "source": "flickr"
   },
-  "server-room": {
-    "src": "assets/img/server-room.jpg",
-    "title": "Cyberdyne Systems",
-    "creator": "jurvetson",
-    "creator_url": "https://www.flickr.com/photos/44124348109@N01",
+  "hero-tech": {
+    "src": "assets/img/hero-tech.jpg",
+    "title": "Workspace @ Nottingham Flat",
+    "creator": "David Wellbeloved",
+    "creator_url": "https://www.flickr.com/photos/35339157@N00",
     "license": "by",
     "license_version": "2.0",
     "license_url": "https://creativecommons.org/licenses/by/2.0/",
-    "foreign_landing_url": "https://www.flickr.com/photos/44124348109@N01/9848225175",
+    "foreign_landing_url": "https://www.flickr.com/photos/35339157@N00/5378333486",
     "source": "flickr"
   },
-  "technician": {
-    "src": "assets/img/technician.jpg",
-    "title": "2015-3549",
-    "creator": "NASAKennedy",
-    "creator_url": "https://www.flickr.com/photos/108488366@N07",
-    "license": "by-sa",
-    "license_version": "2.0",
-    "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
-    "foreign_landing_url": "https://www.flickr.com/photos/108488366@N07/23689006101",
-    "source": "nasa"
-  },
-  "laptop-repair": {
-    "src": "assets/img/laptop-repair.jpg",
-    "title": "Vicki is Alive!",
-    "creator": "Capitan Giona",
-    "creator_url": "https://www.flickr.com/photos/32452814@N00",
-    "license": "by-sa",
-    "license_version": "2.0",
-    "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
-    "foreign_landing_url": "https://www.flickr.com/photos/32452814@N00/219027074",
-    "source": "flickr"
-  },
-  "network-cables": {
-    "src": "assets/img/network-cables.jpg",
-    "title": "Data storm",
-    "creator": "Herkie",
-    "creator_url": "https://www.flickr.com/photos/44038067@N00",
-    "license": "by-sa",
-    "license_version": "2.0",
-    "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
-    "foreign_landing_url": "https://www.flickr.com/photos/44038067@N00/450303689",
-    "source": "flickr"
-  },
-  "gaming-pc": {
-    "src": "assets/img/gaming-pc.jpeg",
-    "title": "Dream Computer Setup",
-    "creator": "Daniel Cardona",
-    "creator_url": "https://sketchfab.com/DanielCardonaArt",
-    "license": "by",
-    "license_version": "4.0",
-    "license_url": "https://creativecommons.org/licenses/by/4.0/",
-    "foreign_landing_url": "https://sketchfab.com/3d-models/82f78bbaf2d34f01af854a52151dbf49",
-    "source": "sketchfab"
-  },
-  "office-tech": {
-    "src": "assets/img/office-tech.jpg",
-    "title": "Computer corner update",
-    "creator": "Stefan Ledwina",
-    "creator_url": "https://www.flickr.com/photos/95529805@N00",
-    "license": "by-sa",
-    "license_version": "2.0",
-    "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
-    "foreign_landing_url": "https://www.flickr.com/photos/95529805@N00/2465450062",
-    "source": "flickr"
-  },
-  "services-2": {
-    "src": "assets/img/services-2.jpg",
-    "title": "Obsoletos",
-    "creator": "kyezitri",
-    "creator_url": "https://www.flickr.com/photos/80943959@N00",
+  "hero-neon": {
+    "src": "assets/img/hero-neon.jpg",
+    "title": "computer art",
+    "creator": "visual velocity pc",
+    "creator_url": "https://www.flickr.com/photos/44396549@N00",
     "license": "by",
     "license_version": "2.0",
     "license_url": "https://creativecommons.org/licenses/by/2.0/",
-    "foreign_landing_url": "https://www.flickr.com/photos/80943959@N00/5551551668",
-    "source": "flickr"
-  },
-  "hero-glow2": {
-    "src": "assets/img/hero-glow2.jpg",
-    "title": "Server grill with blue light",
-    "creator": "bigpresh",
-    "creator_url": "https://www.flickr.com/photos/62806367@N00",
-    "license": "by",
-    "license_version": "2.0",
-    "license_url": "https://creativecommons.org/licenses/by/2.0/",
-    "foreign_landing_url": "https://www.flickr.com/photos/62806367@N00/7389234452",
-    "source": "flickr"
-  },
-  "workspace-modern": {
-    "src": "assets/img/workspace-modern.jpg",
-    "title": "Arial",
-    "creator": "Mr. Riegel",
-    "creator_url": "https://www.flickr.com/photos/129042679@N05",
-    "license": "by",
-    "license_version": "2.0",
-    "license_url": "https://creativecommons.org/licenses/by/2.0/",
-    "foreign_landing_url": "https://www.flickr.com/photos/129042679@N05/15762590590",
+    "foreign_landing_url": "https://www.flickr.com/photos/44396549@N00/8972422",
     "source": "flickr"
   }
 }
