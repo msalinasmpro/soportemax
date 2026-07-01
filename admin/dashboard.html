@@ -388,6 +388,39 @@
     }
   }
 
+  // IndexedDB for large data (replaces localStorage quota limit)
+  var db;
+  function openDB() {
+    return new Promise(function(resolve) {
+      var req = indexedDB.open("IsinetDB", 1);
+      req.onupgradeneeded = function(e) { e.target.result.createObjectStore("data"); };
+      req.onsuccess = function(e) { db = e.target.result; resolve(db); };
+      req.onerror = function() { resolve(null); };
+    });
+  }
+  function idbSet(key, val) {
+    return openDB().then(function(d) {
+      return new Promise(function(resolve) {
+        if (!d) { try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) {} resolve(); return; }
+        var tx = d.transaction("data", "readwrite");
+        tx.objectStore("data").put(JSON.stringify(val), key);
+        tx.oncomplete = function() { resolve(); };
+        tx.onerror = function() { try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) {} resolve(); };
+      });
+    });
+  }
+  function idbGet(key) {
+    return openDB().then(function(d) {
+      return new Promise(function(resolve) {
+        if (!d) { try { resolve(JSON.parse(localStorage.getItem(key))); } catch(e) { resolve(null); } return; }
+        var tx = d.transaction("data", "readonly");
+        var req = tx.objectStore("data").get(key);
+        req.onsuccess = function() { try { resolve(JSON.parse(req.result)); } catch(e) { resolve(null); } };
+        req.onerror = function() { try { resolve(JSON.parse(localStorage.getItem(key))); } catch(e) { resolve(null); } };
+      });
+    });
+  }
+
   var TOKEN = "", API = window.location.origin, LK = "isinet-config", RK = "isinet-replaces", IK = "isinet-images";
   try { TOKEN = JSON.parse(localStorage.getItem("isinet-admin-session")).token; } catch(e) {}
 
@@ -503,8 +536,9 @@
   var imgIdx = 0;
 
   function loadImgs() {
-    var s = localStorage.getItem(IK);
-    if (s) try { allImgs = JSON.parse(s); } catch(e) {}
+    idbGet(IK).then(function(s) {
+      if (s) allImgs = s;
+    });
   }
 
   function renderAll() {
@@ -568,15 +602,18 @@
       if (file.size > 5e6) { show("Max 5MB", "is-error"); return; }
       var reader = new FileReader();
       reader.onload = function(ev) {
-        var r = {};
-        try { r = JSON.parse(localStorage.getItem(RK) || "{}"); } catch(ex) {}
-        r["replace_" + fname.replace(/\.\w+$/, "")] = ev.target.result;
-        localStorage.setItem(RK, JSON.stringify(r));
-        document.querySelectorAll('img[src="/assets/img/' + fname + '"]').forEach(function(img) {
-          img.src = ev.target.result;
+        var key = "replace_" + fname.replace(/\.\w+$/, "");
+        idbGet(RK).then(function(r) {
+          if (!r) r = {};
+          r[key] = ev.target.result;
+          return idbSet(RK, r);
+        }).then(function() {
+          document.querySelectorAll('img[src="/assets/img/' + fname + '"]').forEach(function(img) {
+            img.src = ev.target.result;
+          });
+          markDirty();
+          show("Reemplazada: " + fname, "is-success");
         });
-        markDirty();
-        show("Reemplazada: " + fname, "is-success");
       };
       reader.readAsDataURL(file);
     }
@@ -590,9 +627,10 @@
           var reader = new FileReader();
           reader.onload = function(ev) {
             allImgs.push({ id: Date.now() + Math.random(), src: ev.target.result, name: file.name });
-            localStorage.setItem(IK, JSON.stringify(allImgs));
-            fillUploaded();
-            show("Subida: " + file.name, "is-success");
+            idbSet(IK, allImgs).then(function() {
+              fillUploaded();
+              show("Subida: " + file.name, "is-success");
+            });
           };
           reader.readAsDataURL(file);
         })(self.files[i]);
@@ -617,9 +655,10 @@
       var id = parseFloat(delUp.getAttribute("data-delup"));
       if (!confirm("Eliminar?")) return;
       allImgs = allImgs.filter(function(i) { return i.id !== id; });
-      localStorage.setItem(IK, JSON.stringify(allImgs));
-      fillUploaded();
-      show("Eliminada", "is-success");
+      idbSet(IK, allImgs).then(function() {
+        fillUploaded();
+        show("Eliminada", "is-success");
+      });
       return;
     }
   }, true);
