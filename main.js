@@ -57,12 +57,13 @@
     var replaceStore = {};
     try { replaceStore = JSON.parse(localStorage.getItem("isinet-replaces") || "{}"); } catch (e) {}
 
-    // Apply image replacements
-    var allImgs = document.querySelectorAll("img[src]");
-    allImgs.forEach(function (img) {
-      var src = img.getAttribute("src");
-      if (src && src.indexOf("assets/img/") !== -1) {
-        var filename = src.split("/").pop().replace(/\.[^.]+$/, "");
+    // Apply ALL image replacements on the page
+    document.querySelectorAll("img").forEach(function (img) {
+      var src = img.getAttribute("src") || "";
+      // Match any image path ending with a filename
+      var match = src.match(/\/([^\/]+\.\w+)$/);
+      if (match) {
+        var filename = match[1].replace(/\.\w+$/, "");
         var replaceKey = "replace_" + filename;
         var replacement = replaceStore[replaceKey] || cfg[replaceKey];
         if (replacement) img.src = replacement;
