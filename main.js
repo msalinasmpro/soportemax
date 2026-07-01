@@ -86,6 +86,8 @@
   }
 
   function applyConfig(cfg) {
+    console.log("[Isinet] applyConfig called, keys:", Object.keys(cfg).length);
+    console.log("[Isinet] image_replaces:", cfg.image_replaces);
     // Apply image replacements from config
     if (cfg.image_replaces) {
       var replaces = (typeof cfg.image_replaces === 'string') ? JSON.parse(cfg.image_replaces) : cfg.image_replaces;
@@ -608,6 +610,7 @@
      Boot
      ============================================ */
   function boot() {
+    console.log("[Isinet] boot called, DOM ready:", document.readyState);
     safe(initSplash, "initSplash");
     safe(initNav, "initNav");
     safe(initThemeToggle, "initThemeToggle");
