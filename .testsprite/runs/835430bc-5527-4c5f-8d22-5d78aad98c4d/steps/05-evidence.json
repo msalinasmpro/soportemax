@@ -1,0 +1,8 @@
+[
+  {
+    "kind": "snapshot",
+    "stepIndex": 5,
+    "summary": "Step 5 'The admin login header 'Isinet — Acceso Administración' should be visible on the login page' failed. Error: Stopped as requested. Summary of what was observed in this session:\n\n- The admin login page (Isinet — Acceso Administración) was reached and the login form fields were filled with example@gmail.com and password123.\n- After clicking 'Iniciar Sesión', the page displayed a red error message: 'Invalid login credentials'. This indicates the sign-in attempt failed with those credentials.\n- No credentials were provided by the user in their request (they were empty), so the default test credentials were used for the attempt.\n\nBecause the user asked to stop, no further actions will be taken. If the user wants a next step, possible options are: provide valid credentials, try password recovery, or investigate the authentication backend. Current success: false (login not successful).",
+    "path": "steps/05-snapshot.html"
+  }
+]

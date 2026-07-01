@@ -1,0 +1,18 @@
+{
+  "testId": "8b9144ee-0b04-4871-a22d-c37d49f5294c",
+  "status": "blocked",
+  "startedAt": "2026-07-01T16:01:17.617Z",
+  "finishedAt": "2026-07-01T16:03:34.038Z",
+  "videoUrl": "https://testsprite-videos.s3.us-east-1.amazonaws.com/d458c4b8-c031-7097-ad3c-428cc4a22c94/1782921810502392//tmp/fe95c45a-6731-4896-a31e-d4433403760d/result.webm",
+  "failureAnalysisUrl": null,
+  "snapshotId": "snap_05a8de2700514424",
+  "runIdIfAvailable": "835430bc-5527-4c5f-8d22-5d78aad98c4d",
+  "codeVersion": "v1",
+  "targetUrl": "https://soportemax.vercel.app/admin/",
+  "targetUrlSource": "run",
+  "failedStepIndex": 5,
+  "failureKind": null,
+  "verdict": "blocked",
+  "executionStatus": "completed",
+  "summary": "Blocked before a verdict could be produced: Stopped as requested. Summary of what was observed in this session:\n\n- The admin login page (Isinet — Acceso Administración) was reached and the login form fields were filled with example@gmail.com and password123.\n- After clicking 'Iniciar Sesión', the page displayed a red error message: 'Invalid login credentials'. This indicates the sign-in attempt failed with those credentials.\n- No credentials were provided by the user in their request (they were…"
+}

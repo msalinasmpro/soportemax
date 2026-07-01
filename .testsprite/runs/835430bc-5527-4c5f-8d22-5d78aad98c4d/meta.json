@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "cli-v1",
+  "snapshotId": "snap_05a8de2700514424",
+  "testId": "8b9144ee-0b04-4871-a22d-c37d49f5294c",
+  "projectId": "9e5e148f-13aa-44da-9210-3c7c41b59909",
+  "codeVersion": "v1",
+  "runIdIfAvailable": "835430bc-5527-4c5f-8d22-5d78aad98c4d",
+  "targetUrl": "https://soportemax.vercel.app/admin/",
+  "failedStepIndex": 5,
+  "failureKind": null,
+  "capturedAt": "2026-07-01T16:03:34.038Z",
+  "fetchedAt": "2026-07-01T16:03:57.710Z"
+}
