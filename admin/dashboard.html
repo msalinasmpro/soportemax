@@ -32,9 +32,9 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
         Logo
       </a>
-      <a href="#" class="sidebar-link" data-section="hero-image">
+      <a href="#" class="sidebar-link" data-section="images">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-        Imagen Hero
+        Imágenes
       </a>
       <a href="#" class="sidebar-link" data-section="texts">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
@@ -52,9 +52,9 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
         FAQ
       </a>
-      <a href="#" class="sidebar-link" data-section="gallery">
+      <a href="#" class="sidebar-link" data-section="images">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-        Galería
+        Imágenes
       </a>
       <a href="#" class="sidebar-link" data-section="map">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -173,27 +173,72 @@
       </div>
 
       <!-- ===== HERO IMAGE ===== -->
-      <div class="panel-section" id="section-hero-image">
-        <div class="panel-section-header"><h2>Imagen del Hero</h2></div>
-        <p style="color:var(--text-3);margin-bottom:20px;font-size:0.9rem;">La imagen grande que se muestra en la página principal. Sube una imagen horizontal (mínimo 1200x600px) para mejor resultado.</p>
-        <div class="logo-upload-area">
-          <div class="logo-current">
-            <p class="field-label" style="margin-bottom:8px;">Imagen actual:</p>
-            <div class="logo-preview-box" style="min-height:160px;">
-              <img id="hero-preview" src="" alt="Hero image" style="max-width:100%;max-height:200px;display:none;border-radius:8px;">
-              <span id="hero-placeholder" style="color:var(--text-4);font-size:0.85rem;">Usando imagen por defecto (assets/img/hero-main.jpg)</span>
-            </div>
+      <!-- ===== IMAGES MANAGER ===== -->
+      <div class="panel-section" id="section-images">
+        <div class="panel-section-header">
+          <h2>Gestor de Imágenes</h2>
+          <label class="btn btn-small" style="cursor:pointer;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            Subir nuevas
+            <input type="file" id="images-upload" accept="image/*" multiple hidden>
+          </label>
+        </div>
+        <p style="color:var(--text-3);margin-bottom:24px;font-size:0.9rem;">Gestiona todas las imágenes del sitio organizadas por sección.</p>
+
+        <!-- HERO -->
+        <div class="images-section-block">
+          <div class="images-section-header">
+            <h3>Hero</h3>
+            <span class="images-section-count">1 imagen</span>
           </div>
-          <div style="display:flex;gap:12px;flex-wrap:wrap;">
-            <label class="btn btn-small" style="cursor:pointer;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-              Subir imagen nueva
-              <input type="file" id="hero-upload" accept="image/*" hidden>
-            </label>
-            <button class="btn btn-danger" id="btn-delete-hero" type="button">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-              Restablecer imagen por defecto
-            </button>
+          <div class="images-row" id="images-hero"></div>
+        </div>
+
+        <!-- ABOUT -->
+        <div class="images-section-block">
+          <div class="images-section-header">
+            <h3>Quiénes Somos</h3>
+            <span class="images-section-count">1 imagen</span>
+          </div>
+          <div class="images-row" id="images-about"></div>
+        </div>
+
+        <!-- SERVICES -->
+        <div class="images-section-block">
+          <div class="images-section-header">
+            <h3>Servicios</h3>
+            <span class="images-section-count" id="count-services">12 imágenes</span>
+          </div>
+          <div class="images-row" id="images-services"></div>
+        </div>
+
+        <!-- STATS -->
+        <div class="images-section-block">
+          <div class="images-section-header">
+            <h3>Estadísticas (fondo)</h3>
+            <span class="images-section-count">1 imagen</span>
+          </div>
+          <div class="images-row" id="images-stats"></div>
+        </div>
+
+        <!-- GALLERY -->
+        <div class="images-section-block">
+          <div class="images-section-header">
+            <h3>Galería</h3>
+            <span class="images-section-count" id="count-gallery">8 imágenes</span>
+          </div>
+          <div class="images-row" id="images-gallery"></div>
+        </div>
+
+        <!-- ALL UPLOADED -->
+        <div class="images-section-block">
+          <div class="images-section-header">
+            <h3>Todas las imágenes subidas</h3>
+            <span class="images-section-count" id="count-all">—</span>
+          </div>
+          <div class="images-row" id="images-all"></div>
+          <div id="all-images-empty" style="display:none;text-align:center;padding:40px;color:var(--text-4);font-size:0.85rem;">
+            No hay imágenes subidas aún.
           </div>
         </div>
       </div>
@@ -289,19 +334,6 @@
       </div>
 
       <!-- ===== GALLERY ===== -->
-      <div class="panel-section" id="section-gallery">
-        <div class="panel-section-header"><h2>Galería de Imágenes</h2></div>
-        <p style="color:var(--text-3);margin-bottom:16px;font-size:0.9rem;">Sube imágenes para la galería del sitio. Máximo 5MB por imagen.</p>
-        <div class="gallery-upload">
-          <label class="upload-area" id="upload-area">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-            <span>Arrastra imágenes aquí o haz clic para subir</span>
-            <input type="file" id="gallery-upload" accept="image/*" multiple hidden>
-          </label>
-        </div>
-        <div class="gallery-grid-admin" id="gallery-grid"></div>
-      </div>
-
       <!-- ===== MAP ===== -->
       <div class="panel-section" id="section-map">
         <div class="panel-section-header"><h2>Mapa de Ubicación</h2></div>

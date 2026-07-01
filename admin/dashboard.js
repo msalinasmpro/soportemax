@@ -68,10 +68,10 @@
     "logo": "Logo de la Empresa",
     "hero-image": "Imagen Hero",
     "texts": "Textos de la Página",
+    "images": "Gestor de Imágenes",
     "services": "Servicios",
     "testimonials": "Testimonios",
     "faq": "Preguntas Frecuentes",
-    "gallery": "Galería de Imágenes",
     "messages": "Mensajes de Contacto",
     "map": "Mapa de Ubicación"
   };
@@ -502,49 +502,116 @@
   }
 
   /* ============================================
-     Gallery — Upload Images
+     Images Manager — Organized by section
      ============================================ */
-  function initGallery() {
-    var uploadInput = $("#gallery-upload");
-    var grid = $("#gallery-grid");
-    if (!uploadInput || !grid) return;
+  var allImages = [];
+  var IMAGES_KEY = "isinet-all-images";
 
-    var galleryImages = [];
-    var saved = localStorage.getItem("isinet-gallery");
-    if (saved) { try { galleryImages = JSON.parse(saved); } catch (e) {} }
-    renderGallery();
+  // Image sections mapping: which images belong to which section
+  var imageSections = {
+    hero: { label: "Hero", container: "images-hero", files: ["hero-main.jpg"] },
+    about: { label: "Quiénes Somos", container: "images-about", files: ["about-team.jpg"] },
+    services: { label: "Servicios", container: "images-services", files: ["repair-workspace.jpg","laptop-repair.jpg","workspace-modern.jpg","office-tech.jpg","hero-glow2.jpg","technician.jpg","hero-main.jpg","network-cables.jpg","server-room.jpg","about-team.jpg"] },
+    stats: { label: "Estadísticas", container: "images-stats", files: ["server-room.jpg"] },
+    gallery: { label: "Galería", container: "images-gallery", files: ["hero-main.jpg","technician.jpg","server-room.jpg","repair-workspace.jpg","network-cables.jpg","workspace-modern.jpg","office-tech.jpg","about-team.jpg"] }
+  };
 
+  function initImagesManager() {
+    var uploadInput = $("#images-upload");
+    if (!uploadInput) return;
+
+    // Load uploaded images
+    var saved = localStorage.getItem(IMAGES_KEY);
+    if (saved) { try { allImages = JSON.parse(saved); } catch (e) {} }
+
+    // Upload handler
     uploadInput.addEventListener("change", function (e) {
       Array.from(e.target.files).forEach(function (file) {
         if (file.size > 5 * 1024 * 1024) { showToast(file.name + " excede 5MB", "is-error"); return; }
         var reader = new FileReader();
         reader.onload = function (ev) {
-          galleryImages.push({ id: Date.now() + Math.random(), src: ev.target.result, name: file.name, date: new Date().toISOString() });
-          localStorage.setItem("isinet-gallery", JSON.stringify(galleryImages));
-          renderGallery();
-          showToast("Imagen cargada: " + file.name, "is-success");
+          allImages.push({ id: Date.now() + Math.random(), src: ev.target.result, name: file.name, date: new Date().toISOString() });
+          localStorage.setItem(IMAGES_KEY, JSON.stringify(allImages));
+          renderAllSections();
+          showToast("Subida: " + file.name, "is-success");
         };
         reader.readAsDataURL(file);
       });
     });
 
-    function renderGallery() {
-      grid.innerHTML = galleryImages.map(function (img) {
-        return '<div class="gallery-item-admin"><img src="' + img.src + '" alt="' + sanitize(img.name) + '" loading="lazy"><div class="gallery-item-admin-info"><span>' + sanitize(img.name) + '</span></div><button class="gallery-item-admin-delete" onclick="deleteGalleryItem(' + img.id + ')">✕</button></div>';
-      }).join("");
-      if (galleryImages.length === 0) {
-        grid.innerHTML = '<p style="color:var(--text-4);text-align:center;padding:40px;grid-column:1/-1;">No hay imágenes. Sube una desde el botón de arriba.</p>';
-      }
+    renderAllSections();
+  }
+
+  function renderImageCard(img, showDelete) {
+    var deleteBtn = showDelete !== false ? '<button class="image-item-delete" onclick="deleteImage(' + img.id + ')" title="Eliminar">✕</button>' : '';
+    return '<div class="image-item">' +
+      '<img src="' + img.src + '" alt="' + sanitize(img.name) + '" loading="lazy">' +
+      '<div class="image-item-label">' + sanitize(img.name) + '</div>' +
+      deleteBtn +
+    '</div>';
+}
+
+function renderImageCardFile(filename) {
+    return '<div class="image-item">' +
+      '<img src="assets/img/' + filename + '" alt="' + filename + '" loading="lazy">' +
+      '<div class="image-item-label">' + filename.replace('.jpg','').replace('.png','').replace(/-/g,' ') + '</div>' +
+    '</div>';
+  }
+
+  function renderAllSections() {
+    // Hero
+    var heroEl = $("#images-hero");
+    if (heroEl) heroEl.innerHTML = renderImageCardFile("hero-main.jpg");
+
+    // About
+    var aboutEl = $("#images-about");
+    if (aboutEl) aboutEl.innerHTML = renderImageCardFile("about-team.jpg");
+
+    // Services
+    var servicesEl = $("#images-services");
+    if (servicesEl) {
+      var svcFiles = ["repair-workspace.jpg","laptop-repair.jpg","workspace-modern.jpg","office-tech.jpg","hero-glow2.jpg","technician.jpg","hero-main.jpg","network-cables.jpg","server-room.jpg","about-team.jpg"];
+      servicesEl.innerHTML = svcFiles.map(renderImageCardFile).join("");
+      var svcCount = $("#count-services");
+      if (svcCount) svcCount.textContent = svcFiles.length + " imágenes";
     }
 
-    window.deleteGalleryItem = function (id) {
-      if (!confirm("¿Eliminar esta imagen?")) return;
-      galleryImages = galleryImages.filter(function (i) { return i.id !== id; });
-      localStorage.setItem("isinet-gallery", JSON.stringify(galleryImages));
-      renderGallery();
-      showToast("Imagen eliminada", "is-success");
-    };
+    // Stats
+    var statsEl = $("#images-stats");
+    if (statsEl) statsEl.innerHTML = renderImageCardFile("server-room.jpg");
+
+    // Gallery
+    var galleryEl = $("#images-gallery");
+    if (galleryEl) {
+      var galFiles = ["hero-main.jpg","technician.jpg","server-room.jpg","repair-workspace.jpg","network-cables.jpg","workspace-modern.jpg","office-tech.jpg","about-team.jpg"];
+      galleryEl.innerHTML = galFiles.map(renderImageCardFile).join("");
+      var galCount = $("#count-gallery");
+      if (galCount) galCount.textContent = galFiles.length + " imágenes";
+    }
+
+    // All uploaded images
+    var allEl = $("#images-all");
+    var emptyEl = $("#all-images-empty");
+    var countEl = $("#count-all");
+    if (allEl) {
+      if (allImages.length === 0) {
+        allEl.innerHTML = "";
+        if (emptyEl) emptyEl.style.display = "block";
+      } else {
+        if (emptyEl) emptyEl.style.display = "none";
+        allEl.innerHTML = allImages.map(function (img) { return renderImageCard(img, true); }).join("");
+      }
+      if (countEl) countEl.textContent = allImages.length + " imágenes";
+    }
   }
+
+  window.deleteImage = function (id) {
+    if (!confirm("¿Eliminar esta imagen?")) return;
+    allImages = allImages.filter(function (i) { return i.id !== id; });
+    localStorage.setItem(IMAGES_KEY, JSON.stringify(allImages));
+    renderAllSections();
+    showToast("Imagen eliminada", "is-success");
+  };
 
   /* ============================================
      Messages
@@ -574,6 +641,6 @@
   loadServices();
   loadTestimonials();
   loadFAQs();
-  initGallery();
+  initImagesManager();
   loadMessages();
 })();
