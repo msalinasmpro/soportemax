@@ -46,9 +46,11 @@
   }
 
   function loadReplacements() {
+    console.log("[Isinet] loadReplacements called");
     fetch("/api/images?" + Date.now())
       .then(function (r) { return r.json(); })
       .then(function (data) {
+        console.log("[Isinet] API response:", JSON.stringify(data).substring(0, 200));
         if (!data) return;
         var count = 0;
         // Apply replacements
@@ -58,9 +60,9 @@
             if (url) {
               document.querySelectorAll('img').forEach(function (img) {
                 var src = img.getAttribute("src") || "";
-                // Match filename without extension and without path prefix
                 var filename = src.split('/').pop().replace(/\.\w+$/, '');
                 if (filename === key && !img.dataset.replaced) {
+                  console.log("[Isinet] Replacing:", key, "→", url.substring(0, 60));
                   img.src = url + "?t=" + Date.now();
                   img.dataset.replaced = "1";
                   count++;
@@ -82,9 +84,9 @@
             });
           });
         }
-        if (count > 0) console.log("[Isinet] Applied " + count + " image changes");
+        console.log("[Isinet] Applied " + count + " image changes");
       })
-      .catch(function () {});
+      .catch(function (e) { console.log("[Isinet] loadReplacements error:", e); });
   }
 
   function applyConfig(cfg) {
