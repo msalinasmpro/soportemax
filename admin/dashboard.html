@@ -754,24 +754,31 @@
   loadTests();
   loadFaqs();
   loadImgs();
+  renderAll(); // ALWAYS render images first
+  // Then try to load server state and apply it
   loadImageState().then(function() {
-    renderAll();
     // Apply hidden images from server
-    imageState.hidden.forEach(function(fname) {
-      document.querySelectorAll('.image-item img[src*="' + fname + '"]').forEach(function(img) {
-        var card = img.closest(".image-item");
-        if (card) card.style.display = "none";
-      });
-    });
-    // Apply replacements from server
-    Object.keys(imageState.replaces).forEach(function(key) {
-      var url = imageState.replaces[key];
-      if (url) {
-        document.querySelectorAll('.image-item img[src*="' + key + '"]').forEach(function(img) {
-          img.src = url;
+    if (imageState.hidden) {
+      imageState.hidden.forEach(function(fname) {
+        document.querySelectorAll('.image-item img[src*="' + fname + '"]').forEach(function(img) {
+          var card = img.closest(".image-item");
+          if (card) card.style.display = "none";
         });
-      }
-    });
+      });
+    }
+    // Apply replacements from server
+    if (imageState.replaces) {
+      Object.keys(imageState.replaces).forEach(function(key) {
+        var url = imageState.replaces[key];
+        if (url) {
+          document.querySelectorAll('.image-item img[src*="' + key + '"]').forEach(function(img) {
+            img.src = url;
+          });
+        }
+      });
+    }
+  }).catch(function() {
+    console.log("Could not load image state from server");
   });
   loadMsgs();
   console.log("ADMIN PANEL LOADED SUCCESSFULLY");
