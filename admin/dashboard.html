@@ -172,66 +172,42 @@
       <div class="panel-section" id="section-images">
         <div class="panel-section-header">
           <h2>Gestor de Imágenes</h2>
-          <label for="images-upload" class="btn btn-small" style="cursor:pointer;">Subir nuevas</label>
-          <input type="file" id="images-upload" accept="image/*" multiple style="position:fixed;top:-9999px;left:-9999px;">
         </div>
-        <p style="color:var(--text-3);margin-bottom:24px;font-size:0.9rem;">Gestiona todas las imágenes del sitio organizadas por sección.</p>
+        <p style="color:var(--text-3);margin-bottom:16px;font-size:0.9rem;">Selecciona la imagen que quieres cambiar directamente desde el cuadro.</p>
 
         <!-- HERO -->
         <div class="images-section-block">
-          <div class="images-section-header">
-            <h3>Hero</h3>
-            <span class="images-section-count">1 imagen</span>
-          </div>
+          <div class="images-section-header"><h3>Hero</h3></div>
           <div class="images-row" id="images-hero"></div>
         </div>
-
         <!-- ABOUT -->
         <div class="images-section-block">
-          <div class="images-section-header">
-            <h3>Quiénes Somos</h3>
-            <span class="images-section-count">1 imagen</span>
-          </div>
+          <div class="images-section-header"><h3>Quiénes Somos</h3></div>
           <div class="images-row" id="images-about"></div>
         </div>
-
         <!-- SERVICES -->
         <div class="images-section-block">
-          <div class="images-section-header">
-            <h3>Servicios</h3>
-            <span class="images-section-count" id="count-services">12 imágenes</span>
-          </div>
+          <div class="images-section-header"><h3>Servicios</h3><span class="images-section-count">10 imágenes</span></div>
           <div class="images-row" id="images-services"></div>
         </div>
-
         <!-- STATS -->
         <div class="images-section-block">
-          <div class="images-section-header">
-            <h3>Estadísticas (fondo)</h3>
-            <span class="images-section-count">1 imagen</span>
-          </div>
+          <div class="images-section-header"><h3>Estadísticas</h3></div>
           <div class="images-row" id="images-stats"></div>
         </div>
-
         <!-- GALLERY -->
         <div class="images-section-block">
-          <div class="images-section-header">
-            <h3>Galería</h3>
-            <span class="images-section-count" id="count-gallery">8 imágenes</span>
-          </div>
+          <div class="images-section-header"><h3>Galería</h3></div>
           <div class="images-row" id="images-gallery"></div>
         </div>
-
-        <!-- ALL UPLOADED -->
+        <!-- UPLOAD NEW -->
         <div class="images-section-block">
-          <div class="images-section-header">
-            <h3>Todas las imágenes subidas</h3>
-            <span class="images-section-count" id="count-all">—</span>
+          <div class="images-section-header"><h3>Imágenes subidas</h3><span class="images-section-count" id="count-all">0</span></div>
+          <div style="margin-bottom:16px;">
+            <input type="file" id="images-upload" accept="image/*" multiple style="padding:12px;border:2px dashed var(--line-2);border-radius:12px;width:100%;cursor:pointer;background:var(--surface-2);color:var(--text-3);font-size:0.9rem;">
           </div>
-          <div class="images-row" id="images-all"></div>
-          <div id="all-images-empty" style="display:none;text-align:center;padding:40px;color:var(--text-4);font-size:0.85rem;">
-            No hay imágenes subidas aún.
-          </div>
+          <div id="images-all"></div>
+          <div id="all-images-empty" style="text-align:center;padding:30px;color:var(--text-4);">No hay imágenes subidas.</div>
         </div>
       </div>
 
@@ -474,9 +450,9 @@
       html+='<img src="/assets/img/'+f+'" alt="'+f+'">';
       html+='<div class="image-item-label">'+f.replace(/\.\w+$/,"").replace(/-/g," ")+'</div>';
       html+='<div class="image-item-actions">';
-      html+='<label class="image-item-btn image-item-replace" for="'+uid+'">🔄 Reemplazar</label>';
-      html+='<input type="file" accept="image/*" id="'+uid+'" data-file="'+f+'" class="rif" style="position:fixed;top:-9999px;left:-9999px;">';
-      html+='<button class="image-item-btn image-item-delete" data-del="'+f+'">✕</button>';
+      html+='<span class="image-item-btn image-item-replace" style="cursor:pointer;padding:6px 12px;background:rgba(59,130,246,0.9);color:#fff;border-radius:8px;font-size:0.8rem;font-weight:600;display:inline-block;" onclick="document.getElementById(\''+uid+'\').click()">🔄 Cambiar</span>';
+      html+='<input type="file" accept="image/*" id="'+uid+'" data-file="'+f+'" class="rif" style="margin-top:8px;width:100%;padding:8px;border:1px solid var(--line-2);border-radius:8px;background:var(--surface-2);color:var(--text-3);font-size:0.8rem;cursor:pointer;">';
+      html+='<button class="image-item-btn image-item-delete" data-del="'+f+'" style="margin-top:4px;width:100%;padding:6px;background:rgba(239,68,68,0.1);color:var(--error);border:1px solid rgba(239,68,68,0.2);border-radius:8px;font-size:0.8rem;font-weight:600;cursor:pointer;">✕ Ocultar</button>';
       html+='</div></div>';
     }
     el.innerHTML=html;
