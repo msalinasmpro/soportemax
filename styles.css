@@ -64,9 +64,9 @@
   --radius-xl: 24px;
   --radius-full: 9999px;
 
-  /* Typography */
+  /* Typography — Satoshi (premium geometric sans) + Space Grotesk */
   --font-display: 'Space Grotesk', system-ui, sans-serif;
-  --font-body: 'Inter', system-ui, sans-serif;
+  --font-body: 'Satoshi', 'Inter', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
   /* Easing */
@@ -224,7 +224,7 @@ em {
 }
 
 .section {
-  padding: var(--space-24) 0;
+  padding: var(--space-24) 0 var(--space-20);
   position: relative;
 }
 
@@ -260,21 +260,26 @@ em {
    5. COMPONENTS
    ============================================ */
 
-/* Buttons */
+/* Buttons — Premium pill architecture */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
-  padding: var(--space-3) var(--space-6);
+  padding: 14px 32px;
   font-family: var(--font-display);
   font-size: 0.9rem;
   font-weight: 600;
   border-radius: var(--radius-full);
-  transition: all 0.3s var(--ease-out);
+  transition: all 0.4s cubic-bezier(0.32, 0.72, 0, 1);
   white-space: nowrap;
   position: relative;
   overflow: hidden;
+  letter-spacing: 0.01em;
+}
+
+.btn:active {
+  transform: scale(0.97);
 }
 
 .btn-primary {
@@ -857,12 +862,12 @@ em {
   border: 1px solid var(--line);
   border-radius: var(--radius-xl);
   overflow: hidden;
-  transition: transform 0.4s var(--ease-out), box-shadow 0.4s, border-color 0.4s;
+  transition: all 0.5s cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 .service-card:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-lg), 0 0 60px var(--accent-glow);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(59,130,246,0.15);
   border-color: rgba(59, 130, 246, 0.2);
 }
 
@@ -1020,12 +1025,12 @@ em {
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius-xl);
-  transition: transform 0.4s var(--ease-out), box-shadow 0.4s, border-color 0.4s;
+  transition: all 0.5s cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 .feature-card:hover {
   transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.3);
   border-color: rgba(59, 130, 246, 0.15);
 }
 
@@ -1653,13 +1658,15 @@ em {
    ============================================ */
 .reveal {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+  transform: translateY(24px);
+  filter: blur(4px);
+  transition: opacity 0.9s cubic-bezier(0.32, 0.72, 0, 1), transform 0.9s cubic-bezier(0.32, 0.72, 0, 1), filter 0.9s cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 .reveal.is-visible {
   opacity: 1;
   transform: translateY(0);
+  filter: blur(0);
 }
 
 /* Safety: split text always visible */

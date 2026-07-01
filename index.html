@@ -62,7 +62,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Fonts: Satoshi (premium geometric sans) + Space Grotesk (display) -->
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=space-grotesk@400,500,600,700&display=swap" rel="stylesheet">
 
   <!-- Leaflet Map (free, no API key) -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
@@ -153,7 +155,7 @@
           <em>que funcionan.</em>
         </h1>
         <p class="hero-sub reveal">
-          Reparación · Mantención · Redes · Servidores · Respaldo
+          Reparación, mantención, redes y servidores para empresas y hogares.
         </p>
         <div class="hero-actions reveal">
           <a href="#contacto" class="btn btn-primary btn-glow">
@@ -165,24 +167,38 @@
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </a>
         </div>
-        <div class="hero-stats reveal">
-          <div class="hero-stat">
-            <span class="hero-stat-number" data-count-to="500">500+</span>
-            <span class="hero-stat-label">Reparaciones</span>
-          </div>
-          <div class="hero-stat">
-            <span class="hero-stat-number" data-count-to="98">98%</span>
-            <span class="hero-stat-label">Satisfacción</span>
-          </div>
-          <div class="hero-stat">
-            <span class="hero-stat-number" data-count-to="10">10+</span>
-            <span class="hero-stat-label">Años</span>
-          </div>
-        </div>
       </div>
       <div class="hero-scroll">
         <span>Scroll</span>
         <div class="hero-scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- ========== STATS (separate from hero) ========== -->
+    <section class="section section-stats" style="padding-top:0;padding-bottom:var(--space-16);">
+      <div class="container">
+        <div class="stats-grid" style="margin-top:0;">
+          <div class="stat-item reveal">
+            <span class="stat-number" data-count-to="500">0</span>
+            <span class="stat-suffix">+</span>
+            <span class="stat-label">Reparaciones</span>
+          </div>
+          <div class="stat-item reveal">
+            <span class="stat-number" data-count-to="200">0</span>
+            <span class="stat-suffix">+</span>
+            <span class="stat-label">Clientes</span>
+          </div>
+          <div class="stat-item reveal">
+            <span class="stat-number" data-count-to="10">0</span>
+            <span class="stat-suffix">+</span>
+            <span class="stat-label">Años</span>
+          </div>
+          <div class="stat-item reveal">
+            <span class="stat-number" data-count-to="98">0</span>
+            <span class="stat-suffix">%</span>
+            <span class="stat-label">Satisfacción</span>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -191,7 +207,6 @@
       <div class="container">
         <div class="about-grid">
           <div class="about-content">
-            <span class="section-tag reveal">Quiénes Somos</span>
             <h2 class="section-title reveal">
               Expertos en tecnología,<br><em>comprometidos contigo.</em>
             </h2>
@@ -407,7 +422,6 @@
     <section class="section section-features" id="por-que">
       <div class="container">
         <div class="section-header">
-          <span class="section-tag reveal">Por Qué Elegirnos</span>
           <h2 class="section-title reveal">
             La diferencia está<br><em>en los detalles.</em>
           </h2>
@@ -449,7 +463,6 @@
     <section class="section section-process" id="proceso">
       <div class="container">
         <div class="section-header">
-          <span class="section-tag reveal">Proceso de Trabajo</span>
           <h2 class="section-title reveal">
             Así es como<br><em>resolvemos tu problema.</em>
           </h2>
@@ -527,7 +540,6 @@
     <section class="section section-gallery" id="galeria">
       <div class="container">
         <div class="section-header">
-          <span class="section-tag reveal">Galería</span>
           <h2 class="section-title reveal">
             Nuestro espacio<br><em>de trabajo.</em>
           </h2>
@@ -590,7 +602,6 @@
     <section class="section section-testimonials" id="testimonios">
       <div class="container">
         <div class="section-header">
-          <span class="section-tag reveal">Testimonios</span>
           <h2 class="section-title reveal">
             Lo que dicen<br><em>nuestros clientes.</em>
           </h2>
@@ -655,7 +666,6 @@
     <section class="section section-faq" id="faq">
       <div class="container">
         <div class="section-header">
-          <span class="section-tag reveal">Preguntas Frecuentes</span>
           <h2 class="section-title reveal">
             Resolvemos tus<br><em>dudas.</em>
           </h2>
