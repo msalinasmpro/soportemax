@@ -163,45 +163,6 @@
     renderAllSections();
   }
 
-  function renderAllSections() {
-    renderSection("images-hero", ["hero-main.jpg"]);
-    renderSection("images-about", ["about-team.jpg"]);
-    renderSection("images-services", ["repair-workspace.jpg","laptop-repair.jpg","workspace-modern.jpg","office-tech.jpg","hero-glow2.jpg","technician.jpg","hero-main.jpg","network-cables.jpg","server-room.jpg","about-team.jpg"]);
-    renderSection("images-stats", ["server-room.jpg"]);
-    renderSection("images-gallery", ["hero-main.jpg","technician.jpg","server-room.jpg","repair-workspace.jpg","network-cables.jpg","workspace-modern.jpg","office-tech.jpg","about-team.jpg"]);
-    renderUploaded();
-    // Create hidden file input for replace if not exists
-    if (!document.getElementById("shared-replace-input")) {
-      var inp = document.createElement("input");
-      inp.type = "file";
-      inp.accept = "image/*";
-      inp.id = "shared-replace-input";
-      inp.style.cssText = "position:fixed;top:-9999px;left:-9999px;opacity:0;width:0;height:0;";
-      document.body.appendChild(inp);
-      inp.addEventListener("change", function () {
-        var targetFile = this.getAttribute("data-target");
-        var file = this.files[0];
-        if (!file || !targetFile) return;
-        if (file.size > 5*1024*1024) { showToast("Máx 5MB", "is-error"); return; }
-        var reader = new FileReader();
-        var self = this;
-        reader.onload = function (ev) {
-          var replaces = {};
-          try { replaces = JSON.parse(localStorage.getItem(REPLACES_KEY) || "{}"); } catch (e) {}
-          var key = "replace_" + targetFile.replace(/\.\w+$/, "");
-          replaces[key] = ev.target.result;
-          localStorage.setItem(REPLACES_KEY, JSON.stringify(replaces));
-          document.querySelectorAll('img[src="/assets/img/' + targetFile + '"]').forEach(function (img) { img.src = ev.target.result; });
-          self.value = "";
-          self.removeAttribute("data-target");
-          markDirty();
-          showToast("Reemplazada: " + targetFile, "is-success");
-        };
-        reader.readAsDataURL(file);
-      });
-    }
-  }
-
   function renderSection(containerId, files) {
     var el = document.getElementById(containerId);
     if (!el) return;
