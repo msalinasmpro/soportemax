@@ -6,15 +6,15 @@ module.exports = async function handler(req, res) {
   const filename = req.query.f;
   if (!filename) return res.status(400).json({ error: 'filename required' });
 
-  try {
-    // Look up replacement in site_config
-    const key = filename.replace(/\.\w+$/, '');
-    const { data } = await supabase.from('site_config')
-      .select('value').eq('key', 'image_replaces').single();
+  const key = filename.replace(/\.\w+$/, '');
 
-    if (data && data.value && data.value[key]) {
-      // Redirect to the replacement URL
-      res.writeHead(302, { 'Location': data.value[key] });
+  try {
+    // Look up replacement by key (replace_hero-main)
+    const { data, error } = await supabase.from('site_config')
+      .select('value').eq('key', 'replace_' + key).single();
+
+    if (!error && data && data.value) {
+      res.writeHead(302, { 'Location': data.value });
       return res.end();
     }
   } catch (e) {}
