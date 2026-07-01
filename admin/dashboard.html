@@ -529,9 +529,10 @@
   var imgIdx = 0;
 
   function loadImgs() {
-    idbGet(IK).then(function(s) {
-      if (s) allImgs = s;
-    });
+    try {
+      var s = localStorage.getItem(IK);
+      if (s) allImgs = JSON.parse(s);
+    } catch(e) {}
   }
 
   function renderAll() {
@@ -666,10 +667,9 @@
       var id = parseFloat(delUp.getAttribute("data-delup"));
       if (!confirm("Eliminar?")) return;
       allImgs = allImgs.filter(function(i) { return i.id !== id; });
-      idbSet(IK, allImgs).then(function() {
-        fillUploaded();
-        show("Eliminada", "is-success");
-      });
+      try { localStorage.setItem(IK, JSON.stringify(allImgs)); } catch(e) {}
+      fillUploaded();
+      show("Eliminada", "is-success");
       return;
     }
   }, true);
