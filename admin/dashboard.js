@@ -205,17 +205,97 @@
   function renderSection(containerId, files) {
     var el = document.getElementById(containerId);
     if (!el) return;
-    el.innerHTML = files.map(function (f) { return makeImageCard(f); }).join("");
+    el.innerHTML = files.map(function (f, i) { return makeImageCard(f, containerId + "-" + i); }).join("");
   }
 
-  function makeImageCard(filename) {
-    var safeId = filename.replace(/[^a-z0-9]/gi, "_");
-    return '<div class="image-item" id="card-' + safeId + '">' +
-      '<img src="/assets/img/' + filename + '" alt="' + filename + '" loading="lazy">' +
+  function renderUploaded() {
+    var el = document.getElementById("images-all");
+    var empty = document.getElementById("all-images-empty");
+    var count = document.getElementById("count-all");
+    if (!el) return;
+    if (allImages.length === 0) {
+      el.innerHTML = "";
+      if (empty) empty.style.display = "block";
+    } else {
+      if (empty) empty.style.display = "none";
+      el.innerHTML = allImages.map(function (img, i) {
+        return '<div class="image-item">' +
+          '<img src="' + img.src + '" alt="' + sanitize(img.name) + '">' +
+          '<div class="image-item-label">' + sanitize(img.name) + '</div>' +
+          '<div class="image-item-actions">' +
+            '<button class="image-item-btn image-item-delete" data-del-upload="' + img.id + '">✕ Eliminar</button>' +
+          '</div>' +
+        '</div>';
+      }).join("");
+    }
+    if (count) count.textContent = allImages.length + " imágenes";
+  }
+
+  function renderAllSections() {
+    renderSection("images-hero", ["hero-main.jpg"]);
+    renderSection("images-about", ["about-team.jpg"]);
+    renderSection("images-services", ["repair-workspace.jpg","laptop-repair.jpg","workspace-modern.jpg","office-tech.jpg","hero-glow2.jpg","technician.jpg","hero-main.jpg","network-cables.jpg","server-room.jpg","about-team.jpg"]);
+    renderSection("images-stats", ["server-room.jpg"]);
+    renderSection("images-gallery", ["hero-main.jpg","technician.jpg","server-room.jpg","repair-workspace.jpg","network-cables.jpg","workspace-modern.jpg","office-tech.jpg","about-team.jpg"]);
+    renderUploaded();
+    attachImageHandlers();
+  }
+
+  function attachImageHandlers() {
+    // Attach change listener to every file input with class hidden-file-input
+    $$(".hidden-file-input").forEach(function (inp) {
+      inp.addEventListener("change", function () {
+        var filename = this.getAttribute("data-file");
+        var file = this.files[0];
+        if (!file || !filename) return;
+        if (file.size > 5 * 1024 * 1024) { showToast("Máx 5MB", "is-error"); return; }
+        var self = this;
+        var reader = new FileReader();
+        reader.onload = function (ev) {
+          var replaces = {};
+          try { replaces = JSON.parse(localStorage.getItem(REPLACES_KEY) || "{}"); } catch (e) {}
+          replaces["replace_" + filename.replace(/\.\w+$/, "")] = ev.target.result;
+          localStorage.setItem(REPLACES_KEY, JSON.stringify(replaces));
+          document.querySelectorAll('img[src="/assets/img/' + filename + '"]').forEach(function (img) { img.src = ev.target.result; });
+          self.value = "";
+          markDirty();
+          showToast("Reemplazada: " + filename, "is-success");
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+    // Delete buttons
+    $$("[data-del]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var filename = this.getAttribute("data-del");
+        if (!confirm("¿Ocultar " + filename + "?")) return;
+        var card = this.closest(".image-item");
+        if (card) card.style.display = "none";
+        showToast("Ocultada", "is-success");
+      });
+    });
+    $$("[data-del-upload]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var id = parseFloat(this.getAttribute("data-del-upload"));
+        if (!confirm("¿Eliminar?")) return;
+        allImages = allImages.filter(function (i) { return i.id !== id; });
+        localStorage.setItem(IMAGES_KEY, JSON.stringify(allImages));
+        renderUploaded();
+        attachImageHandlers();
+        showToast("Eliminada", "is-success");
+      });
+    });
+  }
+
+  function makeImageCard(filename, index) {
+    var safeId = "img-" + index;
+    return '<div class="image-item">' +
+      '<img src="/assets/img/' + filename + '" alt="' + filename + '">' +
       '<div class="image-item-label">' + filename.replace(/\.\w+$/, "").replace(/-/g, " ") + '</div>' +
       '<div class="image-item-actions">' +
-        '<button class="image-item-btn image-item-replace" data-replace-target="' + filename + '" type="button">🔄 Reemplazar</button>' +
-        '<button class="image-item-btn image-item-delete" data-delete-target="' + filename + '" type="button">✕ Ocultar</button>' +
+        '<label class="image-item-btn image-item-replace" for="' + safeId + '">🔄 Reemplazar</label>' +
+        '<input type="file" accept="image/*" id="' + safeId + '" data-file="' + filename + '" class="hidden-file-input">' +
+        '<button class="image-item-btn image-item-delete" data-del="' + filename + '">✕ Ocultar</button>' +
       '</div>' +
     '</div>';
   }
@@ -243,45 +323,19 @@
     if (count) count.textContent = allImages.length + " imágenes";
   }
 
-  // Global handlers for inline onclick
-  window._replaceImage = function (input) {
-    var filename = input.getAttribute("data-file");
-    var file = input.files[0];
-    if (!file) return;
-    if (file.size > 5*1024*1024) { showToast("Máx 5MB", "is-error"); return; }
-    var reader = new FileReader();
-    reader.onload = function (ev) {
-      // Save replacement
-      var replaces = {};
-      try { replaces = JSON.parse(localStorage.getItem(REPLACES_KEY) || "{}"); } catch (e) {}
-      var key = "replace_" + filename.replace(/\.\w+$/, "");
-      replaces[key] = ev.target.result;
-      localStorage.setItem(REPLACES_KEY, JSON.stringify(replaces));
-      // Update ALL matching images on the page
-      document.querySelectorAll('img[src="/assets/img/' + filename + '"]').forEach(function (img) {
-        img.src = ev.target.result;
-      });
-      input.value = "";
-      markDirty();
-      showToast("Reemplazada: " + filename, "is-success");
-    };
-    reader.readAsDataURL(file);
-  };
-
-  window._deleteFileImage = function (filename) {
-    if (!confirm("¿Ocultar esta imagen?")) return;
-    var card = document.getElementById("card-" + filename.replace(/[^a-z0-9]/gi, "_"));
-    if (card) card.style.display = "none";
-    showToast("Ocultada: " + filename, "is-success");
-  };
-
-  window._deleteUploadedImage = function (id) {
-    if (!confirm("¿Eliminar imagen subida?")) return;
-    allImages = allImages.filter(function (i) { return i.id !== id; });
-    localStorage.setItem(IMAGES_KEY, JSON.stringify(allImages));
-    renderUploaded();
-    showToast("Eliminada", "is-success");
-  };
+  // Event delegation for replace/delete buttons
+  document.addEventListener("click", function (e) {
+    var delBtn = e.target.closest("[data-del]");
+    if (delBtn) {
+      e.preventDefault();
+      var filename = delBtn.getAttribute("data-del");
+      if (confirm("¿Ocultar " + filename + "?")) {
+        var card = delBtn.closest(".image-item");
+        if (card) card.style.display = "none";
+        showToast("Ocultada", "is-success");
+      }
+    }
+  });
 
   /* ===== SERVICES ===== */
   var services = [];

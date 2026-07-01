@@ -502,6 +502,15 @@ body {
 }
 .image-item-delete:hover { background: rgba(239,68,68,1); transform: scale(1.05); }
 
+.hidden-file-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
 .gallery-grid-admin {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
