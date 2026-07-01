@@ -600,7 +600,7 @@
       var file = e.target.files[0];
       if (!file || !fname) return;
       if (file.size > 5e6) { show("Max 5MB", "is-error"); return; }
-      show("Subiendo...", "is-success");
+      show("Guardando...", "is-success");
       var card = e.target.closest(".image-item");
       var imgEl = card ? card.querySelector("img") : null;
       var reader = new FileReader();
@@ -609,28 +609,17 @@
         var key = fname.replace(/\.\w+$/, "");
         // Update image visually IMMEDIATELY
         if (imgEl) imgEl.src = dataUrl;
-        // Upload to Supabase Storage (no auth needed)
+        // Save data URL to config via simple endpoint
         fetch(API + "/api/upload", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ filename: fname, dataurl: dataUrl })
+          body: JSON.stringify({ key: key, dataurl: dataUrl })
         }).then(function(r) { return r.json(); }).then(function(result) {
-          var imgUrl = result.url || dataUrl;
-          // Save replacement URL to config (no auth needed)
-          fetch(API + "/api/update-config", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ key: "replace_" + key, value: imgUrl })
-          }).then(function() {
-            markDirty();
-            show("Reemplazada y guardada: " + fname, "is-success");
-          }).catch(function() {
-            markDirty();
-            show("Reemplazada (guarda pendiente): " + fname, "is-success");
-          });
+          markDirty();
+          show("Reemplazada y guardada: " + fname, "is-success");
         }).catch(function() {
           markDirty();
-          show("Reemplazada local: " + fname, "is-success");
+          show("Reemplazada (pendiente guardar): " + fname, "is-success");
         });
       };
       reader.readAsDataURL(file);
