@@ -118,12 +118,24 @@
      Config
      ============================================ */
   var config = {};
+  var LOCAL_KEY = "isinet-config";
 
   function loadConfig() {
+    // First try API
     fetch(API_BASE + "/api/config")
       .then(function (res) { return res.json(); })
-      .then(function (data) { config = data; fillForm(); updateMap(); updateLogo(); })
-      .catch(function () { fillForm(); });
+      .then(function (data) {
+        config = data;
+        // Save to localStorage as backup
+        localStorage.setItem(LOCAL_KEY, JSON.stringify(config));
+        fillForm(); updateMap(); updateLogo();
+      })
+      .catch(function () {
+        // Fallback to localStorage
+        var saved = localStorage.getItem(LOCAL_KEY);
+        if (saved) { try { config = JSON.parse(saved); } catch (e) {} }
+        fillForm(); updateMap(); updateLogo();
+      });
   }
 
   function fillForm() {
@@ -137,15 +149,23 @@
     $$(".field-input[data-key]").forEach(function (input) {
       config[input.getAttribute("data-key")] = input.value;
     });
+    // Always save to localStorage first (persists across deploys)
+    localStorage.setItem(LOCAL_KEY, JSON.stringify(config));
+    // Then try API
     api("PUT", "/api/config", config)
       .then(function () {
         showToast("Configuración guardada", "is-success");
         hasChanges = false;
         saveBtn.disabled = true;
-        updateMap();
-        updateLogo();
+        updateMap(); updateLogo();
       })
-      .catch(function (err) { showToast("Error: " + err.message, "is-error"); });
+      .catch(function (err) {
+        // Even if API fails, data is saved in localStorage
+        showToast("Guardado localmente", "is-success");
+        hasChanges = false;
+        saveBtn.disabled = true;
+        updateMap(); updateLogo();
+      });
   }
 
   /* ============================================

@@ -32,56 +32,72 @@
      Load Config from API & Update Logo
      ============================================ */
   function loadSiteConfig() {
+    // Try API first, then localStorage
+    var localConfig = null;
+    try {
+      var saved = localStorage.getItem("isinet-config");
+      if (saved) localConfig = JSON.parse(saved);
+    } catch (e) {}
+
     fetch("/api/config")
       .then(function (res) { return res.json(); })
       .then(function (cfg) {
-        // Update logo
-        var logoEl = document.querySelector(".nav-logo-icon");
-        if (cfg.logo_url && logoEl) {
-          logoEl.innerHTML = '<img src="' + cfg.logo_url + '" alt="Logo" style="height:32px;width:auto;object-fit:contain;">';
-        }
-        // Update contact info block
-        var contactPhone = document.getElementById("contact-phone");
-        var contactEmail = document.getElementById("contact-email");
-        var contactAddress = document.getElementById("contact-address");
-        var contactHours = document.getElementById("contact-hours");
-        if (contactPhone && cfg.phone) contactPhone.textContent = cfg.phone;
-        if (contactEmail && cfg.email) contactEmail.textContent = cfg.email;
-        if (contactAddress && cfg.address) contactAddress.textContent = cfg.address;
-        if (contactHours && cfg.hours) contactHours.textContent = cfg.hours;
-        // Update footer
-        var footerBrand = document.querySelector(".footer-logo span:last-child");
-        if (cfg.company_name && footerBrand) footerBrand.textContent = cfg.company_name;
-        var footerContact = document.querySelector(".footer-contact ul");
-        if (footerContact && cfg.phone) {
-          var items = footerContact.querySelectorAll("li");
-          if (items[0]) items[0].textContent = cfg.phone;
-          if (items[1]) items[1].textContent = cfg.email || "";
-          if (items[2]) items[2].textContent = cfg.address || "";
-          if (items[3]) items[3].textContent = cfg.hours || "";
-        }
-        // Init Leaflet map
-        if (typeof L !== "undefined") {
-          var mapContainer = document.getElementById("site-map");
-          if (mapContainer && !mapContainer._leaflet_id) {
-            var lat = parseFloat(cfg.map_lat) || -33.4489;
-            var lng = parseFloat(cfg.map_lng) || -70.6693;
-            var siteMap = L.map("site-map").setView([lat, lng], 15);
-            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-              attribution: "&copy; OpenStreetMap",
-              maxZoom: 19
-            }).addTo(siteMap);
-            L.marker([lat, lng]).addTo(siteMap);
-            setTimeout(function () { siteMap.invalidateSize(); }, 300);
-          }
-        }
-        // Update social links
-        var socialLinks = document.querySelectorAll(".footer-social-link");
-        if (socialLinks[0] && cfg.social_facebook) socialLinks[0].href = cfg.social_facebook;
-        if (socialLinks[1] && cfg.social_instagram) socialLinks[1].href = cfg.social_instagram;
-        if (socialLinks[2] && cfg.social_linkedin) socialLinks[2].href = cfg.social_linkedin;
+        // Merge: API defaults + localStorage overrides (localStorage wins)
+        var merged = localConfig ? Object.assign({}, cfg, localConfig) : cfg;
+        applyConfig(merged);
       })
-      .catch(function () {});
+      .catch(function () {
+        // API failed, use localStorage only
+        if (localConfig) applyConfig(localConfig);
+      });
+  }
+
+  function applyConfig(cfg) {
+    // Update logo
+    var logoEl = document.querySelector(".nav-logo-icon");
+    if (cfg.logo_url && logoEl) {
+      logoEl.innerHTML = '<img src="' + cfg.logo_url + '" alt="Logo" style="height:32px;width:auto;object-fit:contain;">';
+    }
+    // Update contact info block
+    var contactPhone = document.getElementById("contact-phone");
+    var contactEmail = document.getElementById("contact-email");
+    var contactAddress = document.getElementById("contact-address");
+    var contactHours = document.getElementById("contact-hours");
+    if (contactPhone && cfg.phone) contactPhone.textContent = cfg.phone;
+    if (contactEmail && cfg.email) contactEmail.textContent = cfg.email;
+    if (contactAddress && cfg.address) contactAddress.textContent = cfg.address;
+    if (contactHours && cfg.hours) contactHours.textContent = cfg.hours;
+    // Update footer
+    var footerBrand = document.querySelector(".footer-logo span:last-child");
+    if (cfg.company_name && footerBrand) footerBrand.textContent = cfg.company_name;
+    var footerContact = document.querySelector(".footer-contact ul");
+    if (footerContact && cfg.phone) {
+      var items = footerContact.querySelectorAll("li");
+      if (items[0]) items[0].textContent = cfg.phone;
+      if (items[1]) items[1].textContent = cfg.email || "";
+      if (items[2]) items[2].textContent = cfg.address || "";
+      if (items[3]) items[3].textContent = cfg.hours || "";
+    }
+    // Init Leaflet map
+    if (typeof L !== "undefined") {
+      var mapContainer = document.getElementById("site-map");
+      if (mapContainer && !mapContainer._leaflet_id) {
+        var lat = parseFloat(cfg.map_lat) || -33.4489;
+        var lng = parseFloat(cfg.map_lng) || -70.6693;
+        var siteMap = L.map("site-map").setView([lat, lng], 15);
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          attribution: "&copy; OpenStreetMap",
+          maxZoom: 19
+        }).addTo(siteMap);
+        L.marker([lat, lng]).addTo(siteMap);
+        setTimeout(function () { siteMap.invalidateSize(); }, 300);
+      }
+    }
+    // Update social links
+    var socialLinks = document.querySelectorAll(".footer-social-link");
+    if (socialLinks[0] && cfg.social_facebook) socialLinks[0].href = cfg.social_facebook;
+    if (socialLinks[1] && cfg.social_instagram) socialLinks[1].href = cfg.social_instagram;
+    if (socialLinks[2] && cfg.social_linkedin) socialLinks[2].href = cfg.social_linkedin;
   }
 
   /* ============================================
