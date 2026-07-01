@@ -549,12 +549,13 @@
       '<div class="image-item-label">' + sanitize(img.name) + '</div>' +
       deleteBtn +
     '</div>';
-}
+  }
 
-function renderImageCardFile(filename) {
+  function renderImageCardFile(filename) {
     return '<div class="image-item">' +
-      '<img src="assets/img/' + filename + '" alt="' + filename + '" loading="lazy">' +
+      '<img src="/assets/img/' + filename + '" alt="' + filename + '" loading="lazy">' +
       '<div class="image-item-label">' + filename.replace('.jpg','').replace('.png','').replace(/-/g,' ') + '</div>' +
+      '<button class="image-item-delete" onclick="deleteFileImage(\'' + filename + '\')" title="Eliminar">✕</button>' +
     '</div>';
   }
 
@@ -606,11 +607,22 @@ function renderImageCardFile(filename) {
   }
 
   window.deleteImage = function (id) {
-    if (!confirm("¿Eliminar esta imagen?")) return;
+    if (!confirm("¿Eliminar esta imagen subida?")) return;
     allImages = allImages.filter(function (i) { return i.id !== id; });
     localStorage.setItem(IMAGES_KEY, JSON.stringify(allImages));
     renderAllSections();
     showToast("Imagen eliminada", "is-success");
+  };
+
+  window.deleteFileImage = function (filename) {
+    if (!confirm("¿Ocultar esta imagen de la sección?")) return;
+    // Remove from the visible section by hiding the parent element
+    var imgs = document.querySelectorAll('.image-item img[src*="' + filename + '"]');
+    imgs.forEach(function (img) {
+      var card = img.closest('.image-item');
+      if (card) { card.style.display = 'none'; }
+    });
+    showToast("Imagen ocultada", "is-success");
   };
 
   /* ============================================
