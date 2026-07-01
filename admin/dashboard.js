@@ -66,6 +66,8 @@
   var titles = {
     "general": "Datos de la Empresa",
     "logo": "Logo de la Empresa",
+    "hero-image": "Imagen Hero",
+    "texts": "Textos de la Página",
     "services": "Servicios",
     "testimonials": "Testimonios",
     "faq": "Preguntas Frecuentes",

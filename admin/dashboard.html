@@ -36,6 +36,10 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
         Imagen Hero
       </a>
+      <a href="#" class="sidebar-link" data-section="texts">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        Textos
+      </a>
       <a href="#" class="sidebar-link" data-section="services">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
         Servicios
@@ -191,6 +195,69 @@
               Restablecer imagen por defecto
             </button>
           </div>
+        </div>
+      </div>
+
+      <!-- ===== TEXTS / CONTENT ===== -->
+      <div class="panel-section" id="section-texts">
+        <div class="panel-section-header"><h2>Textos de la Página</h2></div>
+        <p style="color:var(--text-3);margin-bottom:20px;font-size:0.9rem;">Edita todos los textos que se muestran en la página principal. Los cambios se aplican al presionar Guardar.</p>
+
+        <div class="panel-section-title">Hero</div>
+        <div class="panel-grid">
+          <div class="panel-field panel-field-full"><label class="field-label">Badge (etiqueta pequeña)</label><input type="text" class="field-input" data-key="text_hero_badge" placeholder="Soporte Técnico Profesional"></div>
+          <div class="panel-field panel-field-full"><label class="field-label">Título principal</label><input type="text" class="field-input" data-key="text_hero_title" placeholder="Soluciones IT que funcionan."></div>
+          <div class="panel-field panel-field-full"><label class="field-label">Subtítulo</label><input type="text" class="field-input" data-key="text_hero_sub" placeholder="Reparación, mantención, redes y servidores."></div>
+        </div>
+
+        <div class="panel-section-title">Quiénes Somos</div>
+        <div class="panel-grid">
+          <div class="panel-field panel-field-full"><label class="field-label">Título</label><input type="text" class="field-input" data-key="text_about_title" placeholder="Expertos en tecnología, comprometidos contigo."></div>
+          <div class="panel-field panel-field-full"><label class="field-label">Párrafo 1</label><textarea class="field-input field-textarea" data-key="text_about_p1" rows="3" placeholder="Con más de 10 años de experiencia..."></textarea></div>
+          <div class="panel-field panel-field-full"><label class="field-label">Párrafo 2</label><textarea class="field-input field-textarea" data-key="text_about_p2" rows="3" placeholder="Creemos que la tecnología debe ser una herramienta..."></textarea></div>
+        </div>
+
+        <div class="panel-section-title">Servicios</div>
+        <div class="panel-grid">
+          <div class="panel-field panel-field-full"><label class="field-label">Título</label><input type="text" class="field-input" data-key="text_services_title" placeholder="Soluciones completas para cada necesidad."></div>
+          <div class="panel-field panel-field-full"><label class="field-label">Subtítulo</label><input type="text" class="field-input" data-key="text_services_sub" placeholder="Desde reparaciones simples hasta infraestructura empresarial."></div>
+        </div>
+
+        <div class="panel-section-title">Por Qué Elegirnos</div>
+        <div class="panel-grid">
+          <div class="panel-field panel-field-full"><label class="field-label">Título</label><input type="text" class="field-input" data-key="text_features_title" placeholder="La diferencia está en los detalles."></div>
+        </div>
+
+        <div class="panel-section-title">Proceso</div>
+        <div class="panel-grid">
+          <div class="panel-field panel-field-full"><label class="field-label">Título</label><input type="text" class="field-input" data-key="text_process_title" placeholder="Así es como resolvemos tu problema."></div>
+        </div>
+
+        <div class="panel-section-title">Galería</div>
+        <div class="panel-grid">
+          <div class="panel-field panel-field-full"><label class="field-label">Título</label><input type="text" class="field-input" data-key="text_gallery_title" placeholder="Nuestro espacio de trabajo."></div>
+        </div>
+
+        <div class="panel-section-title">Testimonios</div>
+        <div class="panel-grid">
+          <div class="panel-field panel-field-full"><label class="field-label">Título</label><input type="text" class="field-input" data-key="text_testimonials_title" placeholder="Lo que dicen nuestros clientes."></div>
+        </div>
+
+        <div class="panel-section-title">FAQ</div>
+        <div class="panel-grid">
+          <div class="panel-field panel-field-full"><label class="field-label">Título</label><input type="text" class="field-input" data-key="text_faq_title" placeholder="Resolvemos tus dudas."></div>
+        </div>
+
+        <div class="panel-section-title">Contacto</div>
+        <div class="panel-grid">
+          <div class="panel-field panel-field-full"><label class="field-label">Título</label><input type="text" class="field-input" data-key="text_contact_title" placeholder="¿Necesitas ayuda?"></div>
+          <div class="panel-field panel-field-full"><label class="field-label">Subtítulo</label><input type="text" class="field-input" data-key="text_contact_sub" placeholder="Escríbenos y te responderemos en menos de 2 horas."></div>
+        </div>
+
+        <div class="panel-section-title">Footer</div>
+        <div class="panel-grid">
+          <div class="panel-field panel-field-full"><label class="field-label">Descripción</label><textarea class="field-input field-textarea" data-key="text_footer_desc" rows="2" placeholder="Soluciones de soporte técnico..."></textarea></div>
+          <div class="panel-field panel-field-full"><label class="field-label">Copyright</label><input type="text" class="field-input" data-key="text_footer_copy" placeholder="© 2026 Isinet. Todos los derechos reservados."></div>
         </div>
       </div>
 

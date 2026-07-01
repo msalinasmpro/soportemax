@@ -58,6 +58,39 @@
       var heroImg = document.querySelector(".hero-bg img");
       if (heroImg) heroImg.src = cfg.hero_image_url;
     }
+    // Update texts
+    var textMap = {
+      "text_hero_badge": ".hero-badge",
+      "text_hero_title": ".hero-title",
+      "text_hero_sub": ".hero-sub",
+      "text_about_title": "#quienes-somos .section-title",
+      "text_about_p1": "#quienes-somos .about-text:first-of-type",
+      "text_about_p2": "#quienes-somos .about-text:last-of-type",
+      "text_services_title": "#servicios .section-title",
+      "text_services_sub": "#servicios .section-subtitle",
+      "text_features_title": "#por-que .section-title",
+      "text_process_title": "#proceso .section-title",
+      "text_gallery_title": "#galeria .section-title",
+      "text_testimonials_title": "#testimonios .section-title",
+      "text_faq_title": "#faq .section-title",
+      "text_contact_title": "#contacto .section-title",
+      "text_contact_sub": "#contacto .section-subtitle",
+      "text_footer_desc": ".footer-desc",
+      "text_footer_copy": ".footer-bottom p"
+    };
+    Object.keys(textMap).forEach(function (key) {
+      if (cfg[key]) {
+        var el = document.querySelector(textMap[key]);
+        if (el) {
+          if (key === "text_hero_title" || key === "text_about_title" || key === "text_services_title" || key === "text_features_title" || key === "text_process_title" || key === "text_gallery_title" || key === "text_testimonials_title" || key === "text_faq_title" || key === "text_contact_title") {
+            // Headlines with <em> — preserve the gradient emphasis
+            el.innerHTML = cfg[key];
+          } else {
+            el.textContent = cfg[key];
+          }
+        }
+      }
+    });
     // Update logo
     var logoEl = document.querySelector(".nav-logo-icon");
     if (cfg.logo_url && logoEl) {
