@@ -551,9 +551,12 @@
     var html = "";
     for (var i = 0; i < files.length; i++) {
       var f = files[i];
+      var key = f.replace(/\.\w+$/, "");
+      // Use replacement URL if it exists, otherwise use original
+      var imgUrl = (imageState.replaces && imageState.replaces[key]) ? imageState.replaces[key] : "/assets/img/" + f;
       var uid = "rif" + (imgIdx++);
       html += '<div class="image-item">';
-      html += '<img src="/assets/img/' + f + '" alt="' + f + '">';
+      html += '<img src="' + imgUrl + '" alt="' + f + '">';
       html += '<div class="image-item-label">' + f.replace(/\.\w+$/, "").replace(/-/g, " ") + '</div>';
       html += '<div class="image-item-actions">';
       html += '<input type="file" accept="image/*" id="' + uid + '" data-file="' + f + '" class="rif" style="width:100%;padding:8px;border:1px solid var(--line-2);border-radius:8px;background:var(--surface-2);color:var(--text-3);font-size:0.8rem;cursor:pointer;margin-bottom:4px;">';
@@ -754,34 +757,29 @@
   loadTests();
   loadFaqs();
   loadImgs();
-  renderAll(); // ALWAYS render images first
-  // Then try to load server state and apply it
+  // Load saved image state FIRST, then render with replacements
   loadImageState().then(function() {
+    renderAll();
     // Apply hidden images from server
     if (imageState.hidden) {
       imageState.hidden.forEach(function(fname) {
-        document.querySelectorAll('.image-item img[src*="' + fname + '"]').forEach(function(img) {
-          var card = img.closest(".image-item");
-          if (card) card.style.display = "none";
+        document.querySelectorAll('.image-item img').forEach(function(img) {
+          var src = img.getAttribute("src") || "";
+          var filename = src.split('/').pop().replace(/\.\w+$/, '');
+          if (filename === fname) {
+            var card = img.closest(".image-item");
+            if (card) card.style.display = "none";
+          }
         });
       });
     }
-    // Apply replacements from server
-    if (imageState.replaces) {
-      Object.keys(imageState.replaces).forEach(function(key) {
-        var url = imageState.replaces[key];
-        if (url) {
-          document.querySelectorAll('.image-item img[src*="' + key + '"]').forEach(function(img) {
-            img.src = url;
-          });
-        }
-      });
-    }
+    loadMsgs();
+    console.log("ADMIN PANEL LOADED - images:", Object.keys(imageState.replaces || {}).length, "replaced,", (imageState.hidden || []).length, "hidden");
   }).catch(function() {
-    console.log("Could not load image state from server");
+    renderAll();
+    loadMsgs();
+    console.log("ADMIN PANEL LOADED - no server state");
   });
-  loadMsgs();
-  console.log("ADMIN PANEL LOADED SUCCESSFULLY");
   </script>
 
 </body>
