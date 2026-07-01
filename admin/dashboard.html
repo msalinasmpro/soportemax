@@ -388,37 +388,30 @@
     }
   }
 
-  // IndexedDB for large data (replaces localStorage quota limit)
-  var db;
-  function openDB() {
-    return new Promise(function(resolve) {
-      var req = indexedDB.open("IsinetDB", 1);
-      req.onupgradeneeded = function(e) { e.target.result.createObjectStore("data"); };
-      req.onsuccess = function(e) { db = e.target.result; resolve(db); };
-      req.onerror = function() { resolve(null); };
-    });
+  // Server-side image storage via /api/images
+  var imageState = { replaces: {}, hidden: [] };
+
+  function loadImageState() {
+    return fetch(API + "/api/images", { headers: { "Authorization": "Bearer " + TOKEN } })
+      .then(function(r) { return r.json(); })
+      .then(function(d) { imageState = d || { replaces: {}, hidden: [] }; })
+      .catch(function() { imageState = { replaces: {}, hidden: [] }; });
   }
-  function idbSet(key, val) {
-    return openDB().then(function(d) {
-      return new Promise(function(resolve) {
-        if (!d) { try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) {} resolve(); return; }
-        var tx = d.transaction("data", "readwrite");
-        tx.objectStore("data").put(JSON.stringify(val), key);
-        tx.oncomplete = function() { resolve(); };
-        tx.onerror = function() { try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) {} resolve(); };
-      });
-    });
+
+  function saveImageState() {
+    return fetch(API + "/api/images", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + TOKEN },
+      body: JSON.stringify(imageState)
+    }).then(function(r) { return r.json(); });
   }
-  function idbGet(key) {
-    return openDB().then(function(d) {
-      return new Promise(function(resolve) {
-        if (!d) { try { resolve(JSON.parse(localStorage.getItem(key))); } catch(e) { resolve(null); } return; }
-        var tx = d.transaction("data", "readonly");
-        var req = tx.objectStore("data").get(key);
-        req.onsuccess = function() { try { resolve(JSON.parse(req.result)); } catch(e) { resolve(null); } };
-        req.onerror = function() { try { resolve(JSON.parse(localStorage.getItem(key))); } catch(e) { resolve(null); } };
-      });
-    });
+
+  function uploadImageToServer(filename, dataurl) {
+    return fetch(API + "/api/images", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + TOKEN },
+      body: JSON.stringify({ filename: filename, dataurl: dataurl })
+    }).then(function(r) { return r.json(); });
   }
 
   var TOKEN = "", API = window.location.origin, LK = "isinet-config", RK = "isinet-replaces", IK = "isinet-images";
@@ -600,19 +593,33 @@
       var file = e.target.files[0];
       if (!file || !fname) return;
       if (file.size > 5e6) { show("Max 5MB", "is-error"); return; }
+      show("Subiendo " + fname + "...", "is-success");
       var reader = new FileReader();
       reader.onload = function(ev) {
-        var key = "replace_" + fname.replace(/\.\w+$/, "");
-        idbGet(RK).then(function(r) {
-          if (!r) r = {};
-          r[key] = ev.target.result;
-          return idbSet(RK, r);
-        }).then(function() {
-          document.querySelectorAll('img[src="/assets/img/' + fname + '"]').forEach(function(img) {
-            img.src = ev.target.result;
+        var key = fname.replace(/\.\w+$/, "");
+        uploadImageToServer(key, ev.target.result).then(function(result) {
+          if (result.url) {
+            imageState.replaces[key] = result.url;
+          } else {
+            // Fallback: store data URL directly
+            imageState.replaces[key] = ev.target.result;
+          }
+          saveImageState().then(function() {
+            document.querySelectorAll('img[src*="' + fname + '"]').forEach(function(img) {
+              img.src = imageState.replaces[key];
+            });
+            markDirty();
+            show("Reemplazada: " + fname, "is-success");
+          });
+        }).catch(function() {
+          // Even if server upload fails, show the change visually
+          imageState.replaces[key] = ev.target.result;
+          saveImageState();
+          document.querySelectorAll('img[src*="' + fname + '"]').forEach(function(img) {
+            img.src = imageState.replaces[key];
           });
           markDirty();
-          show("Reemplazada: " + fname, "is-success");
+          show("Reemplazada (local): " + fname, "is-success");
         });
       };
       reader.readAsDataURL(file);
@@ -627,10 +634,12 @@
           var reader = new FileReader();
           reader.onload = function(ev) {
             allImgs.push({ id: Date.now() + Math.random(), src: ev.target.result, name: file.name });
-            idbSet(IK, allImgs).then(function() {
-              fillUploaded();
-              show("Subida: " + file.name, "is-success");
-            });
+            // Save uploaded images to server too
+            uploadImageToServer("upload-" + Date.now() + "-" + file.name, ev.target.result)
+              .then(function(r) { if (r.url) allImgs[allImgs.length - 1].src = r.url; })
+              .catch(function() {});
+            fillUploaded();
+            show("Subida: " + file.name, "is-success");
           };
           reader.readAsDataURL(file);
         })(self.files[i]);
@@ -646,7 +655,9 @@
       if (confirm("Ocultar " + f + "?")) {
         var card = delBtn.closest(".image-item");
         if (card) card.style.display = "none";
-        show("Ocultada", "is-success");
+        imageState.hidden.push(f);
+        saveImageState();
+        show("Ocultada: " + f, "is-success");
       }
       return;
     }
@@ -743,7 +754,25 @@
   loadTests();
   loadFaqs();
   loadImgs();
-  renderAll();
+  loadImageState().then(function() {
+    renderAll();
+    // Apply hidden images from server
+    imageState.hidden.forEach(function(fname) {
+      document.querySelectorAll('.image-item img[src*="' + fname + '"]').forEach(function(img) {
+        var card = img.closest(".image-item");
+        if (card) card.style.display = "none";
+      });
+    });
+    // Apply replacements from server
+    Object.keys(imageState.replaces).forEach(function(key) {
+      var url = imageState.replaces[key];
+      if (url) {
+        document.querySelectorAll('.image-item img[src*="' + key + '"]').forEach(function(img) {
+          img.src = url;
+        });
+      }
+    });
+  });
   loadMsgs();
   console.log("ADMIN PANEL LOADED SUCCESSFULLY");
   </script>

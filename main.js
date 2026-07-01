@@ -32,12 +32,12 @@
      Load Config from API & Update Logo
      ============================================ */
   function loadSiteConfig() {
-    // Step 1: Load config from API
+    // Load config from API
     fetch("/api/config")
       .then(function (res) { return res.json(); })
       .then(function (cfg) {
         applyConfig(cfg);
-        // Step 2: After config loaded, load replacements from IndexedDB
+        // Load image overrides from /api/images
         loadReplacements();
       })
       .catch(function () {
@@ -46,29 +46,38 @@
   }
 
   function loadReplacements() {
-    try {
-      var idbReq = indexedDB.open("IsinetDB", 1);
-      idbReq.onupgradeneeded = function(e) { e.target.result.createObjectStore("data"); };
-      idbReq.onsuccess = function(e) {
-        var idb = e.target.result;
-        var tx = idb.transaction("data", "readonly");
-        var req = tx.objectStore("data").get("isinet-replaces");
-        req.onsuccess = function() {
-          if (!req.result) return;
-          try {
-            var r = JSON.parse(req.result);
-            document.querySelectorAll("img").forEach(function (img) {
+    fetch("/api/images")
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (!data) return;
+        // Apply replacements
+        if (data.replaces) {
+          Object.keys(data.replaces).forEach(function(key) {
+            var url = data.replaces[key];
+            if (url) {
+              document.querySelectorAll('img').forEach(function (img) {
+                var src = img.getAttribute("src") || "";
+                if (src.indexOf(key) !== -1 && !img.dataset.replaced) {
+                  img.src = url;
+                  img.dataset.replaced = "1";
+                }
+              });
+            }
+          });
+        }
+        // Apply hidden images
+        if (data.hidden && data.hidden.length) {
+          data.hidden.forEach(function (fname) {
+            document.querySelectorAll('img').forEach(function (img) {
               var src = img.getAttribute("src") || "";
-              var match = src.match(/\/([^\/]+\.\w+)$/);
-              if (match) {
-                var key = "replace_" + match[1].replace(/\.\w+$/, "");
-                if (r[key]) img.src = r[key];
+              if (src.indexOf(fname) !== -1) {
+                img.style.display = "none";
               }
             });
-          } catch(ex) {}
-        };
-      };
-    } catch(e) {}
+          });
+        }
+      })
+      .catch(function () {});
   }
 
   function applyConfig(cfg) {
