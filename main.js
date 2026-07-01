@@ -46,10 +46,11 @@
   }
 
   function loadReplacements() {
-    fetch("/api/images")
+    fetch("/api/images?" + Date.now())
       .then(function (r) { return r.json(); })
       .then(function (data) {
         if (!data) return;
+        var count = 0;
         // Apply replacements
         if (data.replaces) {
           Object.keys(data.replaces).forEach(function(key) {
@@ -57,9 +58,12 @@
             if (url) {
               document.querySelectorAll('img').forEach(function (img) {
                 var src = img.getAttribute("src") || "";
-                if (src.indexOf(key) !== -1 && !img.dataset.replaced) {
-                  img.src = url;
+                // Match filename without extension and without path prefix
+                var filename = src.split('/').pop().replace(/\.\w+$/, '');
+                if (filename === key && !img.dataset.replaced) {
+                  img.src = url + "?t=" + Date.now();
                   img.dataset.replaced = "1";
+                  count++;
                 }
               });
             }
@@ -70,12 +74,15 @@
           data.hidden.forEach(function (fname) {
             document.querySelectorAll('img').forEach(function (img) {
               var src = img.getAttribute("src") || "";
-              if (src.indexOf(fname) !== -1) {
+              var filename = src.split('/').pop().replace(/\.\w+$/, '');
+              if (filename === fname) {
                 img.style.display = "none";
+                count++;
               }
             });
           });
         }
+        if (count > 0) console.log("[Isinet] Applied " + count + " image changes");
       })
       .catch(function () {});
   }
