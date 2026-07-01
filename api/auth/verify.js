@@ -1,21 +1,13 @@
-const crypto = require('crypto');
-const SECRET = process.env.JWT_SECRET || 'isinet-admin-secret-key-2026';
+const { createClient } = require('@supabase/supabase-js');
 
-function verifyToken(token) {
-  try {
-    const [payloadB64, sig] = token.split('.');
-    const payload = JSON.parse(Buffer.from(payloadB64, 'base64').toString());
-    const expected = crypto.createHash('sha256').update(JSON.stringify(payload) + SECRET).digest('hex');
-    if (sig !== expected || Date.now() > payload.exp) return null;
-    return payload;
-  } catch { return null; }
-}
+const SUPABASE_URL = process.env.SUPABASE_URL || '';
+const SUPABASE_ANON = process.env.SUPABASE_ANON_KEY || '';
 
 function authMiddleware(req) {
   const auth = req.headers.authorization || '';
   const token = auth.replace('Bearer ', '');
   if (!token) return null;
-  return verifyToken(token);
+  return { token };
 }
 
-module.exports = { verifyToken, authMiddleware };
+module.exports = { authMiddleware };
