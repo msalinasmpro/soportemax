@@ -53,6 +53,10 @@
   }
 
   function applyConfig(cfg) {
+    // Load image replacements from dedicated localStorage
+    var replaceStore = {};
+    try { replaceStore = JSON.parse(localStorage.getItem("isinet-replaces") || "{}"); } catch (e) {}
+
     // Apply image replacements
     var allImgs = document.querySelectorAll("img[src]");
     allImgs.forEach(function (img) {
@@ -60,9 +64,8 @@
       if (src && src.indexOf("assets/img/") !== -1) {
         var filename = src.split("/").pop().replace(/\.[^.]+$/, "");
         var replaceKey = "replace_" + filename;
-        if (cfg[replaceKey]) {
-          img.src = cfg[replaceKey];
-        }
+        var replacement = replaceStore[replaceKey] || cfg[replaceKey];
+        if (replacement) img.src = replacement;
       }
     });
     // Update hero image

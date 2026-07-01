@@ -524,7 +524,7 @@
     var saved = localStorage.getItem(IMAGES_KEY);
     if (saved) { try { allImages = JSON.parse(saved); } catch (e) {} }
 
-    // Upload handler (new images)
+    // Upload new images
     uploadInput.addEventListener("change", function (e) {
       Array.from(e.target.files).forEach(function (file) {
         if (file.size > 5 * 1024 * 1024) { showToast(file.name + " excede 5MB", "is-error"); return; }
@@ -539,40 +539,39 @@
       });
     });
 
-    // Replace handler — saves replacement to config
-    document.addEventListener("change", function (e) {
-      var input = e.target.closest('[data-replace]');
-      if (!input) return;
-      var originalFile = input.getAttribute("data-replace");
-      var file = input.files[0];
-      if (!file) return;
-      if (file.size > 5 * 1024 * 1024) { showToast(file.name + " excede 5MB", "is-error"); return; }
-      var reader = new FileReader();
-      reader.onload = function (ev) {
-        // Save replacement in config so landing page can load it
-        var replaceKey = "replace_" + originalFile.replace(/\.[^.]+$/, "");
-        config[replaceKey] = ev.target.result;
-        localStorage.setItem(LOCAL_KEY, JSON.stringify(config));
-        // Update the img src visually in admin
-        var imgs = document.querySelectorAll('img[src="/assets/img/' + originalFile + '"]');
-        imgs.forEach(function (img) { img.src = ev.target.result; });
-        showToast("Reemplazada: " + originalFile + ". Presiona Guardar.", "is-success");
-        markDirty();
-      };
-      reader.readAsDataURL(file);
-      input.value = "";
-    });
-
     renderAllSections();
+    // Bind replace buttons after render
+    bindReplaceButtons();
   }
 
-  function renderImageCard(img, showDelete) {
-    var deleteBtn = showDelete !== false ? '<button class="image-item-delete" onclick="deleteImage(' + img.id + ')" title="Eliminar">✕</button>' : '';
-    return '<div class="image-item">' +
-      '<img src="' + img.src + '" alt="' + sanitize(img.name) + '" loading="lazy">' +
-      '<div class="image-item-label">' + sanitize(img.name) + '</div>' +
-      deleteBtn +
-    '</div>';
+  function bindReplaceButtons() {
+    $$("[data-replace]").forEach(function (input) {
+      input.addEventListener("change", function () {
+        var originalFile = this.getAttribute("data-replace");
+        var file = this.files[0];
+        if (!file) return;
+        if (file.size > 5 * 1024 * 1024) { showToast(file.name + " excede 5MB", "is-error"); return; }
+        var self = this;
+        var reader = new FileReader();
+        reader.onload = function (ev) {
+          var replaceKey = "replace_" + originalFile.replace(/\.[^.]+$/, "");
+          // Save to dedicated localStorage key (avoids huge API payloads)
+          var replaceStore = {};
+          try { replaceStore = JSON.parse(localStorage.getItem("isinet-replaces") || "{}"); } catch (e) {}
+          replaceStore[replaceKey] = ev.target.result;
+          localStorage.setItem("isinet-replaces", JSON.stringify(replaceStore));
+          // Also put in config for saving
+          config[replaceKey] = ev.target.result;
+          // Update visual
+          var imgs = document.querySelectorAll('img[src="/assets/img/' + originalFile + '"]');
+          imgs.forEach(function (img) { img.src = ev.target.result; });
+          self.value = "";
+          markDirty();
+          showToast("Reemplazada: " + originalFile, "is-success");
+        };
+        reader.readAsDataURL(file);
+      });
+    });
   }
 
   function renderImageCardFile(filename) {
