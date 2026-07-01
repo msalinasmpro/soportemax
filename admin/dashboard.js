@@ -5,15 +5,15 @@
      Auth Check
      ============================================ */
   var session = localStorage.getItem("isinet-admin-session");
-  if (!session) { window.location.href = "index.html"; return; }
+  if (!session) { window.location.href = "/admin/index.html"; return; }
   try {
     var s = JSON.parse(session);
     if (!s.expiresAt || Date.now() > s.expiresAt) {
       localStorage.removeItem("isinet-admin-session");
-      window.location.href = "index.html";
+      window.location.href = "/admin/index.html";
       return;
     }
-  } catch (e) { window.location.href = "index.html"; return; }
+  } catch (e) { window.location.href = "/admin/index.html"; return; }
 
   var sessionData = JSON.parse(session);
   var API_BASE = window.location.origin;
@@ -98,7 +98,7 @@
   if (logoutBtn) {
     logoutBtn.addEventListener("click", function () {
       localStorage.removeItem("isinet-admin-session");
-      window.location.href = "index.html";
+      window.location.href = "/admin/index.html";
     });
   }
 

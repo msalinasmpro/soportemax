@@ -297,7 +297,7 @@
         localStorage.setItem("isinet-admin-session", JSON.stringify({ token: data.token, user: data.user, expiresAt: Date.now() + 86400000 }));
         submitBtn.textContent = "Acceso concedido";
         submitBtn.style.background = "#22c55e";
-        setTimeout(function () { window.location.href = "dashboard.html"; }, 500);
+        setTimeout(function () { window.location.href = "/admin/dashboard.html"; }, 500);
       })
       .catch(function (err) {
         submitBtn.disabled = false;
