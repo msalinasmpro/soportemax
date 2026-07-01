@@ -220,9 +220,12 @@
      ============================================ */
   var leafletMap = null;
   var leafletMarker = null;
+  var mapInitialized = false;
 
   function initMap() {
-    if (typeof L === "undefined") return;
+    if (typeof L === "undefined" || mapInitialized) return;
+    var container = document.getElementById("admin-map");
+    if (!container) return;
     var lat = parseFloat(config.map_lat) || -33.4489;
     var lng = parseFloat(config.map_lng) || -70.6693;
     leafletMap = L.map("admin-map").setView([lat, lng], 15);
@@ -239,16 +242,33 @@
       $("#map-coords").textContent = "Coordenadas: " + config.map_lat + ", " + config.map_lng;
     });
     $("#map-coords").textContent = "Coordenadas: " + lat + ", " + lng;
-    setTimeout(function () { leafletMap.invalidateSize(); }, 300);
+    mapInitialized = true;
+    setTimeout(function () { leafletMap.invalidateSize(); }, 100);
   }
 
-  function updateMap() {
+  function ensureMapVisible() {
     if (!leafletMap) { initMap(); return; }
-    var lat = parseFloat(config.map_lat) || -33.4489;
-    var lng = parseFloat(config.map_lng) || -70.6693;
-    leafletMap.setView([lat, lng], 15);
-    leafletMarker.setLatLng([lat, lng]);
-    $("#map-coords").textContent = "Coordenadas: " + lat + ", " + lng;
+    setTimeout(function () { leafletMap.invalidateSize(); }, 100);
+  }
+
+  function updateMap(lat, lng) {
+    var la = lat || parseFloat(config.map_lat) || -33.4489;
+    var ln = lng || parseFloat(config.map_lng) || -70.6693;
+    if (!leafletMap) { initMap(); }
+    if (leafletMap) {
+      leafletMap.setView([la, ln], 16);
+      if (leafletMarker) leafletMarker.setLatLng([la, ln]);
+      $("#map-coords").textContent = "Coordenadas: " + la + ", " + ln;
+    }
+  }
+
+  // Watch for section visibility changes
+  var mapSection = document.getElementById("section-map");
+  if (mapSection) {
+    var mapObserver = new MutationObserver(function () {
+      if (mapSection.classList.contains("active")) ensureMapVisible();
+    });
+    mapObserver.observe(mapSection, { attributes: true, attributeFilter: ["class"] });
   }
 
   var searchMapBtn = $("#btn-search-map");
@@ -259,19 +279,22 @@
       if (!address) { showToast("Escribe una dirección para buscar", "is-error"); return; }
       searchMapBtn.textContent = "Buscando...";
       searchMapBtn.disabled = true;
-      fetch("https://nominatim.openstreetmap.org/search?format=json&q=" + encodeURIComponent(address) + "&limit=1")
+      fetch("https://nominatim.openstreetmap.org/search?format=json&q=" + encodeURIComponent(address) + "&limit=1&countrycodes=cl")
         .then(function (r) { return r.json(); })
         .then(function (results) {
-          searchMapBtn.textContent = "Buscar";
+          searchMapBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Buscar';
           searchMapBtn.disabled = false;
           if (!results.length) { showToast("Dirección no encontrada", "is-error"); return; }
           var result = results[0];
-          config.map_lat = parseFloat(result.lat).toFixed(6);
-          config.map_lng = parseFloat(result.lon).toFixed(6);
+          var newLat = parseFloat(result.lat);
+          var newLng = parseFloat(result.lon);
+          config.map_lat = newLat.toFixed(6);
+          config.map_lng = newLng.toFixed(6);
           config.address = address;
-          updateMap();
+          // Update map immediately
+          updateMap(newLat, newLng);
           markDirty();
-          showToast("Dirección encontrada. Presiona Guardar.", "is-success");
+          showToast("Dirección encontrada", "is-success");
         })
         .catch(function () {
           searchMapBtn.textContent = "Buscar";
@@ -500,6 +523,4 @@
   loadFAQs();
   initGallery();
   loadMessages();
-  // Init map after a short delay to ensure Leaflet is loaded
-  setTimeout(function () { if (typeof L !== "undefined") initMap(); }, 500);
 })();
