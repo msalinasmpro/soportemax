@@ -32,8 +32,20 @@
      Load Config from API & Update Logo
      ============================================ */
   function loadSiteConfig() {
-    // Load replacements from IndexedDB (large data)
-    var replaceStore = {};
+    // Step 1: Load config from API
+    fetch("/api/config")
+      .then(function (res) { return res.json(); })
+      .then(function (cfg) {
+        applyConfig(cfg);
+        // Step 2: After config loaded, load replacements from IndexedDB
+        loadReplacements();
+      })
+      .catch(function () {
+        loadReplacements();
+      });
+  }
+
+  function loadReplacements() {
     try {
       var idbReq = indexedDB.open("IsinetDB", 1);
       idbReq.onupgradeneeded = function(e) { e.target.result.createObjectStore("data"); };
@@ -42,47 +54,21 @@
         var tx = idb.transaction("data", "readonly");
         var req = tx.objectStore("data").get("isinet-replaces");
         req.onsuccess = function() {
-          try { replaceStore = JSON.parse(req.result) || {}; } catch(ex) {}
-          applyReplacements(replaceStore);
+          if (!req.result) return;
+          try {
+            var r = JSON.parse(req.result);
+            document.querySelectorAll("img").forEach(function (img) {
+              var src = img.getAttribute("src") || "";
+              var match = src.match(/\/([^\/]+\.\w+)$/);
+              if (match) {
+                var key = "replace_" + match[1].replace(/\.\w+$/, "");
+                if (r[key]) img.src = r[key];
+              }
+            });
+          } catch(ex) {}
         };
-        // Also try localStorage fallback
-        try {
-          var ls = localStorage.getItem("isinet-replaces");
-          if (ls) { var lsData = JSON.parse(ls); Object.keys(lsData).forEach(function(k) { if (!replaceStore[k]) replaceStore[k] = lsData[k]; }); applyReplacements(replaceStore); }
-        } catch(e) {}
       };
-    } catch(e) {
-      // Fallback to localStorage
-      try {
-        var ls = localStorage.getItem("isinet-replaces");
-        if (ls) replaceStore = JSON.parse(ls);
-      } catch(ex) {}
-    }
-
-    // Load config from API
-    fetch("/api/config")
-      .then(function (res) { return res.json(); })
-      .then(function (cfg) {
-        var merged = Object.assign({}, cfg);
-        Object.keys(replaceStore).forEach(function(k) { if (replaceStore[k]) merged[k] = replaceStore[k]; });
-        applyConfig(merged);
-      })
-      .catch(function () {
-        applyConfig(replaceStore);
-      });
-  }
-
-  function applyReplacements(replaceStore) {
-    document.querySelectorAll("img").forEach(function (img) {
-      var src = img.getAttribute("src") || "";
-      var match = src.match(/\/([^\/]+\.\w+)$/);
-      if (match) {
-        var filename = match[1].replace(/\.\w+$/, "");
-        var replaceKey = "replace_" + filename;
-        if (replaceStore[replaceKey]) img.src = replaceStore[replaceKey];
-      }
-    });
-  }
+    } catch(e) {}
   }
 
   function applyConfig(cfg) {
