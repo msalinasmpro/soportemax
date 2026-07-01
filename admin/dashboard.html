@@ -592,32 +592,49 @@
     if (e.target.classList.contains("rif")) {
       var fname = e.target.getAttribute("data-file");
       var file = e.target.files[0];
+      console.log("REPLACE: file selected for", fname, "size:", file ? file.size : "none");
       if (!file || !fname) return;
       if (file.size > 5e6) { show("Max 5MB", "is-error"); return; }
-      show("Subiendo " + fname + "...", "is-success");
+      show("Procesando...", "is-success");
       var reader = new FileReader();
       reader.onload = function(ev) {
+        var dataUrl = ev.target.result;
+        console.log("REPLACE: FileReader loaded, dataUrl length:", dataUrl.length);
+        // Find the key (filename without extension)
         var key = fname.replace(/\.\w+$/, "");
-        uploadImageToServer(key, ev.target.result).then(function(result) {
-          if (result.url) {
-            imageState.replaces[key] = result.url;
-          } else {
-            // Fallback: store data URL directly
-            imageState.replaces[key] = ev.target.result;
-          }
+        console.log("REPLACE: key =", key);
+        // Try to upload to server
+        uploadImageToServer(key, dataUrl).then(function(result) {
+          console.log("REPLACE: server response:", JSON.stringify(result).substring(0, 100));
+          var imgUrl = (result && result.url) ? result.url : dataUrl;
+          imageState.replaces[key] = imgUrl;
           saveImageState().then(function() {
-            document.querySelectorAll('img[src*="' + fname + '"]').forEach(function(img) {
-              img.src = imageState.replaces[key];
+            console.log("REPLACE: saved to server, now updating DOM");
+            // Update ALL matching images
+            var imgs = document.querySelectorAll('img');
+            var updated = 0;
+            imgs.forEach(function(img) {
+              var src = img.getAttribute("src") || "";
+              var filename = src.split('/').pop().replace(/\.\w+$/, '');
+              if (filename === key) {
+                console.log("REPLACE: found matching img:", src, "→ updating to", imgUrl.substring(0, 60));
+                img.src = imgUrl;
+                updated++;
+              }
             });
+            console.log("REPLACE: updated", updated, "images");
             markDirty();
             show("Reemplazada: " + fname, "is-success");
           });
-        }).catch(function() {
-          // Even if server upload fails, show the change visually
-          imageState.replaces[key] = ev.target.result;
+        }).catch(function(err) {
+          console.log("REPLACE: server upload failed:", err);
+          // Fallback: use data URL directly
+          imageState.replaces[key] = dataUrl;
           saveImageState();
-          document.querySelectorAll('img[src*="' + fname + '"]').forEach(function(img) {
-            img.src = imageState.replaces[key];
+          document.querySelectorAll('img').forEach(function(img) {
+            var src = img.getAttribute("src") || "";
+            var filename = src.split('/').pop().replace(/\.\w+$/, '');
+            if (filename === key) img.src = dataUrl;
           });
           markDirty();
           show("Reemplazada (local): " + fname, "is-success");
