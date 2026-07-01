@@ -32,17 +32,14 @@
      Load Config from API & Update Logo
      ============================================ */
   function loadSiteConfig() {
-    // Load config from API
-    fetch("/api/config")
+    // Config API now includes image_replaces and image_hidden
+    fetch("/api/config?" + Date.now())
       .then(function (res) { return res.json(); })
       .then(function (cfg) {
         applyConfig(cfg);
-        // Load image overrides from /api/images
-        loadReplacements();
+        console.log("[Isinet] Config loaded, replacements:", cfg.image_replaces ? Object.keys(JSON.parse(typeof cfg.image_replaces === 'string' ? cfg.image_replaces : '{}')).length : 0);
       })
-      .catch(function () {
-        loadReplacements();
-      });
+      .catch(function (e) { console.log("[Isinet] Config load error:", e); });
   }
 
   function loadReplacements() {
@@ -89,22 +86,40 @@
   }
 
   function applyConfig(cfg) {
-    // Load image replacements from dedicated localStorage
-    var replaceStore = {};
-    try { replaceStore = JSON.parse(localStorage.getItem("isinet-replaces") || "{}"); } catch (e) {}
-
-    // Apply ALL image replacements on the page
-    document.querySelectorAll("img").forEach(function (img) {
-      var src = img.getAttribute("src") || "";
-      // Match any image path ending with a filename
-      var match = src.match(/\/([^\/]+\.\w+)$/);
-      if (match) {
-        var filename = match[1].replace(/\.\w+$/, "");
-        var replaceKey = "replace_" + filename;
-        var replacement = replaceStore[replaceKey] || cfg[replaceKey];
-        if (replacement) img.src = replacement;
+    // Apply image replacements from config
+    if (cfg.image_replaces) {
+      var replaces = (typeof cfg.image_replaces === 'string') ? JSON.parse(cfg.image_replaces) : cfg.image_replaces;
+      Object.keys(replaces).forEach(function(key) {
+        var url = replaces[key];
+        if (!url) return;
+        document.querySelectorAll('img').forEach(function (img) {
+          var src = img.getAttribute("src") || "";
+          var filename = src.split('/').pop().replace(/\.\w+$/, '');
+          if (filename === key && !img.dataset.replaced) {
+            var newImg = document.createElement("img");
+            newImg.src = url + "?v=" + Date.now();
+            newImg.alt = img.alt;
+            newImg.className = img.className;
+            newImg.style.cssText = img.style.cssText;
+            if (img.parentNode) img.parentNode.replaceChild(newImg, img);
+            newImg.dataset.replaced = "1";
+          }
+        });
+      });
+    }
+    // Apply hidden images
+    if (cfg.image_hidden) {
+      var hidden = (typeof cfg.image_hidden === 'string') ? JSON.parse(cfg.image_hidden) : cfg.image_hidden;
+      if (hidden && hidden.length) {
+        hidden.forEach(function(fname) {
+          document.querySelectorAll('img').forEach(function (img) {
+            var src = img.getAttribute("src") || "";
+            var filename = src.split('/').pop().replace(/\.\w+$/, '');
+            if (filename === fname) img.style.display = "none";
+          });
+        });
       }
-    });
+    }
     // Update hero image
     if (cfg.hero_image_url) {
       var heroImg = document.querySelector(".hero-bg img");
