@@ -170,32 +170,36 @@
     renderSection("images-stats", ["server-room.jpg"]);
     renderSection("images-gallery", ["hero-main.jpg","technician.jpg","server-room.jpg","repair-workspace.jpg","network-cables.jpg","workspace-modern.jpg","office-tech.jpg","about-team.jpg"]);
     renderUploaded();
-    // Attach event listeners to all replace inputs
-    $$("[data-file]").forEach(function (input) {
-      input.addEventListener("change", function () {
-        var filename = this.getAttribute("data-file");
+    // Create hidden file input for replace if not exists
+    if (!document.getElementById("shared-replace-input")) {
+      var inp = document.createElement("input");
+      inp.type = "file";
+      inp.accept = "image/*";
+      inp.id = "shared-replace-input";
+      inp.style.cssText = "position:fixed;top:-9999px;left:-9999px;opacity:0;width:0;height:0;";
+      document.body.appendChild(inp);
+      inp.addEventListener("change", function () {
+        var targetFile = this.getAttribute("data-target");
         var file = this.files[0];
-        if (!file) return;
+        if (!file || !targetFile) return;
         if (file.size > 5*1024*1024) { showToast("Máx 5MB", "is-error"); return; }
-        var self = this;
         var reader = new FileReader();
+        var self = this;
         reader.onload = function (ev) {
           var replaces = {};
           try { replaces = JSON.parse(localStorage.getItem(REPLACES_KEY) || "{}"); } catch (e) {}
-          var key = "replace_" + filename.replace(/\.\w+$/, "");
+          var key = "replace_" + targetFile.replace(/\.\w+$/, "");
           replaces[key] = ev.target.result;
           localStorage.setItem(REPLACES_KEY, JSON.stringify(replaces));
-          // Update all matching images on the page
-          document.querySelectorAll('img[src="/assets/img/' + filename + '"]').forEach(function (img) {
-            img.src = ev.target.result;
-          });
+          document.querySelectorAll('img[src="/assets/img/' + targetFile + '"]').forEach(function (img) { img.src = ev.target.result; });
           self.value = "";
+          self.removeAttribute("data-target");
           markDirty();
-          showToast("Reemplazada: " + filename, "is-success");
+          showToast("Reemplazada: " + targetFile, "is-success");
         };
         reader.readAsDataURL(file);
       });
-    });
+    }
   }
 
   function renderSection(containerId, files) {
@@ -206,14 +210,12 @@
 
   function makeImageCard(filename) {
     var safeId = filename.replace(/[^a-z0-9]/gi, "_");
-    var inputId = "replace-" + safeId;
     return '<div class="image-item" id="card-' + safeId + '">' +
       '<img src="/assets/img/' + filename + '" alt="' + filename + '" loading="lazy">' +
       '<div class="image-item-label">' + filename.replace(/\.\w+$/, "").replace(/-/g, " ") + '</div>' +
       '<div class="image-item-actions">' +
-        '<label class="image-item-btn image-item-replace" for="' + inputId + '" title="Reemplazar">🔄 Reemplazar</label>' +
-        '<input type="file" accept="image/*" id="' + inputId + '" data-file="' + filename + '" style="position:absolute;width:0;height:0;opacity:0;overflow:hidden;">' +
-        '<button class="image-item-btn image-item-delete" onclick="window._deleteFileImage(\'' + filename + '\')" title="Ocultar">✕</button>' +
+        '<button class="image-item-btn image-item-replace" data-replace-target="' + filename + '" type="button">🔄 Reemplazar</button>' +
+        '<button class="image-item-btn image-item-delete" data-delete-target="' + filename + '" type="button">✕ Ocultar</button>' +
       '</div>' +
     '</div>';
   }
@@ -389,4 +391,33 @@
 
   /* ===== INIT ===== */
   loadConfig(); loadServices(); loadTestimonials(); loadFAQs(); initImagesManager(); loadMessages();
+
+  // Event delegation for replace/delete buttons
+  document.addEventListener("click", function (e) {
+    // Replace button
+    var replaceBtn = e.target.closest("[data-replace-target]");
+    if (replaceBtn) {
+      e.preventDefault();
+      var filename = replaceBtn.getAttribute("data-replace-target");
+      var sharedInput = document.getElementById("shared-replace-input");
+      if (sharedInput) {
+        sharedInput.setAttribute("data-target", filename);
+        sharedInput.value = "";
+        sharedInput.click();
+      }
+      return;
+    }
+    // Delete button
+    var deleteBtn = e.target.closest("[data-delete-target]");
+    if (deleteBtn) {
+      e.preventDefault();
+      var fname = deleteBtn.getAttribute("data-delete-target");
+      if (confirm("¿Ocultar esta imagen de la sección?")) {
+        var card = document.getElementById("card-" + fname.replace(/[^a-z0-9]/gi, "_"));
+        if (card) card.style.display = "none";
+        showToast("Ocultada: " + fname, "is-success");
+      }
+      return;
+    }
+  });
 })();
