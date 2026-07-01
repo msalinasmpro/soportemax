@@ -53,6 +53,18 @@
   }
 
   function applyConfig(cfg) {
+    // Apply image replacements
+    var allImgs = document.querySelectorAll("img[src]");
+    allImgs.forEach(function (img) {
+      var src = img.getAttribute("src");
+      if (src && src.indexOf("assets/img/") !== -1) {
+        var filename = src.split("/").pop().replace(/\.[^.]+$/, "");
+        var replaceKey = "replace_" + filename;
+        if (cfg[replaceKey]) {
+          img.src = cfg[replaceKey];
+        }
+      }
+    });
     // Update hero image
     if (cfg.hero_image_url) {
       var heroImg = document.querySelector(".hero-bg img");

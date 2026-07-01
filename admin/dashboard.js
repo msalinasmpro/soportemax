@@ -539,7 +539,7 @@
       });
     });
 
-    // Replace handler — event delegation on images-grid containers
+    // Replace handler — saves replacement to config
     document.addEventListener("change", function (e) {
       var input = e.target.closest('[data-replace]');
       if (!input) return;
@@ -549,13 +549,15 @@
       if (file.size > 5 * 1024 * 1024) { showToast(file.name + " excede 5MB", "is-error"); return; }
       var reader = new FileReader();
       reader.onload = function (ev) {
-        // Save replaced image to uploaded list
-        allImages.push({ id: Date.now() + Math.random(), src: ev.target.result, name: originalFile, date: new Date().toISOString(), replaces: originalFile });
-        localStorage.setItem(IMAGES_KEY, JSON.stringify(allImages));
-        // Update the img src visually
+        // Save replacement in config so landing page can load it
+        var replaceKey = "replace_" + originalFile.replace(/\.[^.]+$/, "");
+        config[replaceKey] = ev.target.result;
+        localStorage.setItem(LOCAL_KEY, JSON.stringify(config));
+        // Update the img src visually in admin
         var imgs = document.querySelectorAll('img[src="/assets/img/' + originalFile + '"]');
         imgs.forEach(function (img) { img.src = ev.target.result; });
-        showToast("Reemplazada: " + originalFile, "is-success");
+        showToast("Reemplazada: " + originalFile + ". Presiona Guardar.", "is-success");
+        markDirty();
       };
       reader.readAsDataURL(file);
       input.value = "";
