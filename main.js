@@ -50,43 +50,42 @@
     fetch("/api/images?" + Date.now())
       .then(function (r) { return r.json(); })
       .then(function (data) {
-        console.log("[Isinet] API response:", JSON.stringify(data).substring(0, 200));
-        if (!data) return;
+        if (!data || !data.replaces) return;
         var count = 0;
-        // Apply replacements
-        if (data.replaces) {
-          Object.keys(data.replaces).forEach(function(key) {
-            var url = data.replaces[key];
-            if (url) {
-              document.querySelectorAll('img').forEach(function (img) {
-                var src = img.getAttribute("src") || "";
-                var filename = src.split('/').pop().replace(/\.\w+$/, '');
-                if (filename === key && !img.dataset.replaced) {
-                  console.log("[Isinet] Replacing:", key, "→", url.substring(0, 60));
-                  img.src = url + "?t=" + Date.now();
-                  img.dataset.replaced = "1";
-                  count++;
-                }
-              });
+        Object.keys(data.replaces).forEach(function(key) {
+          var url = data.replaces[key];
+          if (!url) return;
+          document.querySelectorAll('img').forEach(function (img) {
+            var src = img.getAttribute("src") || "";
+            var filename = src.split('/').pop().replace(/\.\w+$/, '');
+            if (filename === key && !img.dataset.replaced) {
+              // FORCE reload: create new img, copy attributes, swap
+              var newImg = document.createElement("img");
+              newImg.src = url + "?v=" + Date.now();
+              newImg.alt = img.alt;
+              newImg.className = img.className;
+              newImg.style.cssText = img.style.cssText;
+              if (img.parentNode) {
+                img.parentNode.replaceChild(newImg, img);
+              }
+              newImg.dataset.replaced = "1";
+              count++;
             }
           });
-        }
-        // Apply hidden images
+        });
+        // Hidden images
         if (data.hidden && data.hidden.length) {
           data.hidden.forEach(function (fname) {
             document.querySelectorAll('img').forEach(function (img) {
               var src = img.getAttribute("src") || "";
               var filename = src.split('/').pop().replace(/\.\w+$/, '');
-              if (filename === fname) {
-                img.style.display = "none";
-                count++;
-              }
+              if (filename === fname) img.style.display = "none";
             });
           });
         }
-        console.log("[Isinet] Applied " + count + " image changes");
+        console.log("[Isinet] Applied " + count + " replacements");
       })
-      .catch(function (e) { console.log("[Isinet] loadReplacements error:", e); });
+      .catch(function (e) { console.log("[Isinet] Error:", e); });
   }
 
   function applyConfig(cfg) {
