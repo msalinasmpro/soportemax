@@ -291,6 +291,13 @@
           config.map_lat = newLat.toFixed(6);
           config.map_lng = newLng.toFixed(6);
           config.address = address;
+          // Update form inputs so save picks up new values
+          var latInput = document.querySelector('[data-key="map_lat"]');
+          var lngInput = document.querySelector('[data-key="map_lng"]');
+          var addrInput = document.querySelector('[data-key="address"]');
+          if (latInput) latInput.value = config.map_lat;
+          if (lngInput) lngInput.value = config.map_lng;
+          if (addrInput) addrInput.value = address;
           // Update map immediately
           updateMap(newLat, newLng);
           markDirty();
