@@ -170,6 +170,32 @@
     renderSection("images-stats", ["server-room.jpg"]);
     renderSection("images-gallery", ["hero-main.jpg","technician.jpg","server-room.jpg","repair-workspace.jpg","network-cables.jpg","workspace-modern.jpg","office-tech.jpg","about-team.jpg"]);
     renderUploaded();
+    // Attach event listeners to all replace inputs
+    $$("[data-file]").forEach(function (input) {
+      input.addEventListener("change", function () {
+        var filename = this.getAttribute("data-file");
+        var file = this.files[0];
+        if (!file) return;
+        if (file.size > 5*1024*1024) { showToast("Máx 5MB", "is-error"); return; }
+        var self = this;
+        var reader = new FileReader();
+        reader.onload = function (ev) {
+          var replaces = {};
+          try { replaces = JSON.parse(localStorage.getItem(REPLACES_KEY) || "{}"); } catch (e) {}
+          var key = "replace_" + filename.replace(/\.\w+$/, "");
+          replaces[key] = ev.target.result;
+          localStorage.setItem(REPLACES_KEY, JSON.stringify(replaces));
+          // Update all matching images on the page
+          document.querySelectorAll('img[src="/assets/img/' + filename + '"]').forEach(function (img) {
+            img.src = ev.target.result;
+          });
+          self.value = "";
+          markDirty();
+          showToast("Reemplazada: " + filename, "is-success");
+        };
+        reader.readAsDataURL(file);
+      });
+    });
   }
 
   function renderSection(containerId, files) {
@@ -180,13 +206,13 @@
 
   function makeImageCard(filename) {
     var safeId = filename.replace(/[^a-z0-9]/gi, "_");
+    var inputId = "replace-" + safeId;
     return '<div class="image-item" id="card-' + safeId + '">' +
       '<img src="/assets/img/' + filename + '" alt="' + filename + '" loading="lazy">' +
       '<div class="image-item-label">' + filename.replace(/\.\w+$/, "").replace(/-/g, " ") + '</div>' +
       '<div class="image-item-actions">' +
-        '<label class="image-item-btn image-item-replace" title="Reemplazar">🔄 Reemplazar' +
-          '<input type="file" accept="image/*" data-file="' + filename + '" onchange="window._replaceImage(this)" hidden>' +
-        '</label>' +
+        '<label class="image-item-btn image-item-replace" for="' + inputId + '" title="Reemplazar">🔄 Reemplazar</label>' +
+        '<input type="file" accept="image/*" id="' + inputId + '" data-file="' + filename + '" style="display:none;">' +
         '<button class="image-item-btn image-item-delete" onclick="window._deleteFileImage(\'' + filename + '\')" title="Ocultar">✕</button>' +
       '</div>' +
     '</div>';
