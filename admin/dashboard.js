@@ -212,7 +212,7 @@
       '<div class="image-item-label">' + filename.replace(/\.\w+$/, "").replace(/-/g, " ") + '</div>' +
       '<div class="image-item-actions">' +
         '<label class="image-item-btn image-item-replace" for="' + inputId + '" title="Reemplazar">🔄 Reemplazar</label>' +
-        '<input type="file" accept="image/*" id="' + inputId + '" data-file="' + filename + '" style="display:none;">' +
+        '<input type="file" accept="image/*" id="' + inputId + '" data-file="' + filename + '" style="position:absolute;width:0;height:0;opacity:0;overflow:hidden;">' +
         '<button class="image-item-btn image-item-delete" onclick="window._deleteFileImage(\'' + filename + '\')" title="Ocultar">✕</button>' +
       '</div>' +
     '</div>';
