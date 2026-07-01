@@ -464,25 +464,43 @@ body {
   text-overflow: ellipsis;
 }
 
-.image-item-delete {
+.image-item-actions {
   position: absolute;
   top: 8px; right: 8px;
-  width: 30px; height: 30px;
-  background: rgba(0,0,0,0.7);
-  backdrop-filter: blur(8px);
-  border: none;
-  border-radius: 50%;
-  color: #fff;
-  cursor: pointer;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.85rem;
+  gap: 6px;
   opacity: 0;
-  transition: all 0.2s;
+  transition: opacity 0.2s;
 }
-.image-item:hover .image-item-delete { opacity: 1; }
-.image-item-delete:hover { background: rgba(239,68,68,0.8); transform: scale(1.1); }
+.image-item:hover .image-item-actions { opacity: 1; }
+
+.image-item-btn {
+  padding: 4px 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.image-item-replace {
+  background: rgba(59,130,246,0.85);
+  color: #fff;
+  font-family: var(--font-body);
+}
+.image-item-replace:hover { background: rgba(59,130,246,1); transform: scale(1.05); }
+
+.image-item-delete {
+  background: rgba(239,68,68,0.85);
+  color: #fff;
+}
+.image-item-delete:hover { background: rgba(239,68,68,1); transform: scale(1.05); }
 
 .gallery-grid-admin {
   display: grid;

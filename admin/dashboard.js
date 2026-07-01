@@ -524,7 +524,7 @@
     var saved = localStorage.getItem(IMAGES_KEY);
     if (saved) { try { allImages = JSON.parse(saved); } catch (e) {} }
 
-    // Upload handler
+    // Upload handler (new images)
     uploadInput.addEventListener("change", function (e) {
       Array.from(e.target.files).forEach(function (file) {
         if (file.size > 5 * 1024 * 1024) { showToast(file.name + " excede 5MB", "is-error"); return; }
@@ -537,6 +537,28 @@
         };
         reader.readAsDataURL(file);
       });
+    });
+
+    // Replace handler — event delegation on images-grid containers
+    document.addEventListener("change", function (e) {
+      var input = e.target.closest('[data-replace]');
+      if (!input) return;
+      var originalFile = input.getAttribute("data-replace");
+      var file = input.files[0];
+      if (!file) return;
+      if (file.size > 5 * 1024 * 1024) { showToast(file.name + " excede 5MB", "is-error"); return; }
+      var reader = new FileReader();
+      reader.onload = function (ev) {
+        // Save replaced image to uploaded list
+        allImages.push({ id: Date.now() + Math.random(), src: ev.target.result, name: originalFile, date: new Date().toISOString(), replaces: originalFile });
+        localStorage.setItem(IMAGES_KEY, JSON.stringify(allImages));
+        // Update the img src visually
+        var imgs = document.querySelectorAll('img[src="/assets/img/' + originalFile + '"]');
+        imgs.forEach(function (img) { img.src = ev.target.result; });
+        showToast("Reemplazada: " + originalFile, "is-success");
+      };
+      reader.readAsDataURL(file);
+      input.value = "";
     });
 
     renderAllSections();
@@ -552,10 +574,16 @@
   }
 
   function renderImageCardFile(filename) {
+    var id = filename.replace(/[^a-zA-Z0-9]/g, '_');
     return '<div class="image-item">' +
       '<img src="/assets/img/' + filename + '" alt="' + filename + '" loading="lazy">' +
       '<div class="image-item-label">' + filename.replace('.jpg','').replace('.png','').replace(/-/g,' ') + '</div>' +
-      '<button class="image-item-delete" onclick="deleteFileImage(\'' + filename + '\')" title="Eliminar">✕</button>' +
+      '<div class="image-item-actions">' +
+        '<label class="image-item-btn image-item-replace" title="Reemplazar">🔄 Reemplazar' +
+          '<input type="file" accept="image/*" data-replace="' + filename + '" hidden>' +
+        '</label>' +
+        '<button class="image-item-btn image-item-delete" onclick="deleteFileImage(\'' + filename + '\')" title="Ocultar">✕</button>' +
+      '</div>' +
     '</div>';
   }
 
