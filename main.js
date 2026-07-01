@@ -53,6 +53,11 @@
   }
 
   function applyConfig(cfg) {
+    // Update hero image
+    if (cfg.hero_image_url) {
+      var heroImg = document.querySelector(".hero-bg img");
+      if (heroImg) heroImg.src = cfg.hero_image_url;
+    }
     // Update logo
     var logoEl = document.querySelector(".nav-logo-icon");
     if (cfg.logo_url && logoEl) {

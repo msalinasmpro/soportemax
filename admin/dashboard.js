@@ -126,15 +126,14 @@
       .then(function (res) { return res.json(); })
       .then(function (data) {
         config = data;
-        // Save to localStorage as backup
         localStorage.setItem(LOCAL_KEY, JSON.stringify(config));
-        fillForm(); updateMap(); updateLogo();
+        fillForm(); updateMap(); updateLogo(); updateHeroImage();
       })
       .catch(function () {
         // Fallback to localStorage
         var saved = localStorage.getItem(LOCAL_KEY);
         if (saved) { try { config = JSON.parse(saved); } catch (e) {} }
-        fillForm(); updateMap(); updateLogo();
+        fillForm(); updateMap(); updateLogo(); updateHeroImage();
       });
   }
 
@@ -157,14 +156,13 @@
         showToast("Configuración guardada", "is-success");
         hasChanges = false;
         saveBtn.disabled = true;
-        updateMap(); updateLogo();
+        updateMap(); updateLogo(); updateHeroImage();
       })
       .catch(function (err) {
-        // Even if API fails, data is saved in localStorage
         showToast("Guardado localmente", "is-success");
         hasChanges = false;
         saveBtn.disabled = true;
-        updateMap(); updateLogo();
+        updateMap(); updateLogo(); updateHeroImage();
       });
   }
 
@@ -212,6 +210,52 @@
       updateLogo();
       markDirty();
       showToast("Logo eliminado. Presiona Guardar para aplicar.", "is-success");
+    });
+  }
+
+  /* ============================================
+     Hero Image
+     ============================================ */
+  function updateHeroImage() {
+    var heroPreview = $("#hero-preview");
+    var placeholder = $("#hero-placeholder");
+    if (heroPreview) {
+      if (config.hero_image_url) {
+        heroPreview.src = config.hero_image_url;
+        heroPreview.style.display = "block";
+        if (placeholder) placeholder.style.display = "none";
+      } else {
+        heroPreview.style.display = "none";
+        if (placeholder) placeholder.style.display = "block";
+      }
+    }
+  }
+
+  var heroUpload = $("#hero-upload");
+  if (heroUpload) {
+    heroUpload.addEventListener("change", function (e) {
+      var file = e.target.files[0];
+      if (!file) return;
+      if (file.size > 5 * 1024 * 1024) { showToast("Máximo 5MB para la imagen", "is-error"); return; }
+      var reader = new FileReader();
+      reader.onload = function (ev) {
+        config.hero_image_url = ev.target.result;
+        updateHeroImage();
+        markDirty();
+        showToast("Imagen cargada. Presiona Guardar para aplicar.", "is-success");
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  var deleteHeroBtn = $("#btn-delete-hero");
+  if (deleteHeroBtn) {
+    deleteHeroBtn.addEventListener("click", function () {
+      if (!confirm("¿Restablecer la imagen por defecto?")) return;
+      config.hero_image_url = "";
+      updateHeroImage();
+      markDirty();
+      showToast("Imagen restablecida. Presiona Guardar.", "is-success");
     });
   }
 
