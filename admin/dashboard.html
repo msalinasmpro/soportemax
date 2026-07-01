@@ -392,26 +392,29 @@
   var imageState = { replaces: {}, hidden: [] };
 
   function loadImageState() {
-    return fetch(API + "/api/images", { headers: { "Authorization": "Bearer " + TOKEN } })
+    return fetch(API + "/api/config")
       .then(function(r) { return r.json(); })
-      .then(function(d) { imageState = d || { replaces: {}, hidden: [] }; })
+      .then(function(d) {
+        imageState = { replaces: {}, hidden: [] };
+        // Extract replace_ and hidden_ keys from config
+        Object.keys(d).forEach(function(k) {
+          if (k.indexOf("replace_") === 0) imageState.replaces[k.replace("replace_", "")] = d[k];
+          if (k.indexOf("hidden_") === 0) imageState.hidden.push(k.replace("hidden_", ""));
+        });
+      })
       .catch(function() { imageState = { replaces: {}, hidden: [] }; });
   }
 
   function saveImageState() {
-    return fetch(API + "/api/images", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + TOKEN },
-      body: JSON.stringify(imageState)
-    }).then(function(r) { return r.json(); });
-  }
-
-  function uploadImageToServer(filename, dataurl) {
-    return fetch(API + "/api/images", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + TOKEN },
-      body: JSON.stringify({ filename: filename, dataurl: dataurl })
-    }).then(function(r) { return r.json(); });
+    // Save each replacement to config
+    var promises = Object.keys(imageState.replaces).map(function(key) {
+      return fetch(API + "/api/update-config", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ key: "replace_" + key, value: imageState.replaces[key] })
+      });
+    });
+    return Promise.all(promises);
   }
 
   var TOKEN = "", API = window.location.origin, LK = "isinet-config", RK = "isinet-replaces", IK = "isinet-images";
@@ -597,33 +600,37 @@
       var file = e.target.files[0];
       if (!file || !fname) return;
       if (file.size > 5e6) { show("Max 5MB", "is-error"); return; }
-      show("Procesando...", "is-success");
-      // Find the image element NEAR this input (same parent)
+      show("Subiendo...", "is-success");
       var card = e.target.closest(".image-item");
       var imgEl = card ? card.querySelector("img") : null;
-      console.log("REPLACE: imgEl found:", !!imgEl, "src:", imgEl ? imgEl.src : "none");
       var reader = new FileReader();
       reader.onload = function(ev) {
         var dataUrl = ev.target.result;
         var key = fname.replace(/\.\w+$/, "");
         // Update image visually IMMEDIATELY
-        if (imgEl) {
-          imgEl.src = dataUrl;
-          console.log("REPLACE: image updated visually");
-        }
-        // Upload to server in background
-        uploadImageToServer(key, dataUrl).then(function(result) {
-          var imgUrl = (result && result.url) ? result.url : dataUrl;
-          imageState.replaces[key] = imgUrl;
-          saveImageState();
-          markDirty();
-          show("Reemplazada: " + fname, "is-success");
-          console.log("REPLACE: saved to server");
+        if (imgEl) imgEl.src = dataUrl;
+        // Upload to Supabase Storage (no auth needed)
+        fetch(API + "/api/upload", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ filename: fname, dataurl: dataUrl })
+        }).then(function(r) { return r.json(); }).then(function(result) {
+          var imgUrl = result.url || dataUrl;
+          // Save replacement URL to config (no auth needed)
+          fetch(API + "/api/update-config", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ key: "replace_" + key, value: imgUrl })
+          }).then(function() {
+            markDirty();
+            show("Reemplazada y guardada: " + fname, "is-success");
+          }).catch(function() {
+            markDirty();
+            show("Reemplazada (guarda pendiente): " + fname, "is-success");
+          });
         }).catch(function() {
-          imageState.replaces[key] = dataUrl;
-          saveImageState();
           markDirty();
-          show("Reemplazada (local): " + fname, "is-success");
+          show("Reemplazada local: " + fname, "is-success");
         });
       };
       reader.readAsDataURL(file);

@@ -28,12 +28,6 @@ module.exports = async function handler(req, res) {
       if (error) throw error;
       const config = { ...DEFAULTS };
       if (data) data.forEach(row => { config[row.key] = row.value; });
-      // Also fetch image replacements
-      try {
-        const { data: imgData } = await supabase.from('site_config')
-          .select('key, value').in('key', ['image_replaces', 'image_hidden']);
-        if (imgData) imgData.forEach(row => { config[row.key] = row.value; });
-      } catch(e) {}
       return res.status(200).json(config);
     } catch (e) {
       return res.status(200).json(DEFAULTS);

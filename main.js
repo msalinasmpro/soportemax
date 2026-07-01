@@ -86,18 +86,16 @@
   }
 
   function applyConfig(cfg) {
-    console.log("[Isinet] applyConfig called, keys:", Object.keys(cfg).length);
-    console.log("[Isinet] image_replaces:", cfg.image_replaces);
-    // Apply image replacements from config
-    if (cfg.image_replaces) {
-      var replaces = (typeof cfg.image_replaces === 'string') ? JSON.parse(cfg.image_replaces) : cfg.image_replaces;
-      Object.keys(replaces).forEach(function(key) {
-        var url = replaces[key];
+    // Apply image replacements from config (keys starting with replace_)
+    Object.keys(cfg).forEach(function(key) {
+      if (key.indexOf("replace_") === 0) {
+        var filename = key.replace("replace_", "");
+        var url = cfg[key];
         if (!url) return;
         document.querySelectorAll('img').forEach(function (img) {
           var src = img.getAttribute("src") || "";
-          var filename = src.split('/').pop().replace(/\.\w+$/, '');
-          if (filename === key && !img.dataset.replaced) {
+          var imgFilename = src.split('/').pop().replace(/\.\w+$/, '');
+          if (imgFilename === filename && !img.dataset.replaced) {
             var newImg = document.createElement("img");
             newImg.src = url + "?v=" + Date.now();
             newImg.alt = img.alt;
@@ -107,21 +105,19 @@
             newImg.dataset.replaced = "1";
           }
         });
-      });
-    }
-    // Apply hidden images
-    if (cfg.image_hidden) {
-      var hidden = (typeof cfg.image_hidden === 'string') ? JSON.parse(cfg.image_hidden) : cfg.image_hidden;
-      if (hidden && hidden.length) {
-        hidden.forEach(function(fname) {
-          document.querySelectorAll('img').forEach(function (img) {
-            var src = img.getAttribute("src") || "";
-            var filename = src.split('/').pop().replace(/\.\w+$/, '');
-            if (filename === fname) img.style.display = "none";
-          });
+      }
+    });
+    // Apply hidden images (keys starting with hidden_)
+    Object.keys(cfg).forEach(function(key) {
+      if (key.indexOf("hidden_") === 0) {
+        var filename = key.replace("hidden_", "");
+        document.querySelectorAll('img').forEach(function (img) {
+          var src = img.getAttribute("src") || "";
+          var imgFilename = src.split('/').pop().replace(/\.\w+$/, '');
+          if (imgFilename === filename) img.style.display = "none";
         });
       }
-    }
+    });
     // Update hero image
     if (cfg.hero_image_url) {
       var heroImg = document.querySelector(".hero-bg img");
