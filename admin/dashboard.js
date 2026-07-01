@@ -153,13 +153,16 @@
      ============================================ */
   function updateLogo() {
     var logoPreview = $("#logo-preview");
-    var currentLogo = $("#current-logo");
-    if (logoPreview && config.logo_url) {
-      logoPreview.src = config.logo_url;
-      logoPreview.style.display = "block";
-    }
-    if (currentLogo && config.logo_url) {
-      currentLogo.src = config.logo_url;
+    var placeholder = $("#logo-placeholder");
+    if (logoPreview) {
+      if (config.logo_url) {
+        logoPreview.src = config.logo_url;
+        logoPreview.style.display = "block";
+        if (placeholder) placeholder.style.display = "none";
+      } else {
+        logoPreview.style.display = "none";
+        if (placeholder) placeholder.style.display = "block";
+      }
     }
   }
 
@@ -180,16 +183,86 @@
     });
   }
 
+  var deleteLogoBtn = $("#btn-delete-logo");
+  if (deleteLogoBtn) {
+    deleteLogoBtn.addEventListener("click", function () {
+      if (!config.logo_url) { showToast("No hay logo para eliminar", "is-error"); return; }
+      if (!confirm("¿Eliminar el logo actual?")) return;
+      config.logo_url = "";
+      updateLogo();
+      markDirty();
+      showToast("Logo eliminado. Presiona Guardar para aplicar.", "is-success");
+    });
+  }
+
   /* ============================================
-     Google Maps
+     Map — Leaflet + Nominatim (free, no API key)
      ============================================ */
+  var leafletMap = null;
+  var leafletMarker = null;
+
+  function initMap() {
+    if (typeof L === "undefined") return;
+    var lat = parseFloat(config.map_lat) || -33.4489;
+    var lng = parseFloat(config.map_lng) || -70.6693;
+    leafletMap = L.map("admin-map").setView([lat, lng], 15);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: "&copy; OpenStreetMap",
+      maxZoom: 19
+    }).addTo(leafletMap);
+    leafletMarker = L.marker([lat, lng], { draggable: true }).addTo(leafletMap);
+    leafletMarker.on("dragend", function (e) {
+      var pos = e.target.getLatLng();
+      config.map_lat = pos.lat.toFixed(6);
+      config.map_lng = pos.lng.toFixed(6);
+      markDirty();
+      $("#map-coords").textContent = "Coordenadas: " + config.map_lat + ", " + config.map_lng;
+    });
+    $("#map-coords").textContent = "Coordenadas: " + lat + ", " + lng;
+    setTimeout(function () { leafletMap.invalidateSize(); }, 300);
+  }
+
   function updateMap() {
-    var mapFrame = $("#admin-map");
-    if (!mapFrame) return;
-    var lat = config.map_lat || "-33.4489";
-    var lng = config.map_lng || "-70.6693";
-    var zoom = config.map_zoom || "15";
-    mapFrame.src = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3323.85!2d" + lng + "!3d" + lat + "!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z" + lat + "S%20" + lng + "W!5e0!3m2!1ses!2scl";
+    if (!leafletMap) { initMap(); return; }
+    var lat = parseFloat(config.map_lat) || -33.4489;
+    var lng = parseFloat(config.map_lng) || -70.6693;
+    leafletMap.setView([lat, lng], 15);
+    leafletMarker.setLatLng([lat, lng]);
+    $("#map-coords").textContent = "Coordenadas: " + lat + ", " + lng;
+  }
+
+  var searchMapBtn = $("#btn-search-map");
+  var mapAddressInput = $("#map-address-input");
+  if (searchMapBtn && mapAddressInput) {
+    searchMapBtn.addEventListener("click", function () {
+      var address = mapAddressInput.value.trim();
+      if (!address) { showToast("Escribe una dirección para buscar", "is-error"); return; }
+      searchMapBtn.textContent = "Buscando...";
+      searchMapBtn.disabled = true;
+      fetch("https://nominatim.openstreetmap.org/search?format=json&q=" + encodeURIComponent(address) + "&limit=1")
+        .then(function (r) { return r.json(); })
+        .then(function (results) {
+          searchMapBtn.textContent = "Buscar";
+          searchMapBtn.disabled = false;
+          if (!results.length) { showToast("Dirección no encontrada", "is-error"); return; }
+          var result = results[0];
+          config.map_lat = parseFloat(result.lat).toFixed(6);
+          config.map_lng = parseFloat(result.lon).toFixed(6);
+          config.address = address;
+          updateMap();
+          markDirty();
+          showToast("Dirección encontrada. Presiona Guardar.", "is-success");
+        })
+        .catch(function () {
+          searchMapBtn.textContent = "Buscar";
+          searchMapBtn.disabled = false;
+          showToast("Error al buscar dirección", "is-error");
+        });
+    });
+    // Enter key triggers search
+    mapAddressInput.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") { e.preventDefault(); searchMapBtn.click(); }
+    });
   }
 
   /* ============================================
@@ -407,4 +480,6 @@
   loadFAQs();
   initGallery();
   loadMessages();
+  // Init map after a short delay to ensure Leaflet is loaded
+  setTimeout(function () { if (typeof L !== "undefined") initMap(); }, 500);
 })();

@@ -52,10 +52,20 @@
           if (items[2]) items[2].textContent = cfg.address || "";
           if (items[3]) items[3].textContent = cfg.hours || "";
         }
-        // Update map
-        var mapFrame = document.querySelector(".contact-map iframe");
-        if (mapFrame && cfg.map_lat && cfg.map_lng) {
-          mapFrame.src = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3323.85!2d" + cfg.map_lng + "!3d" + cfg.map_lat + "!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z" + cfg.map_lat + "S%20" + cfg.map_lng + "W!5e0!3m2!1ses!2scl";
+        // Init Leaflet map
+        if (typeof L !== "undefined") {
+          var mapContainer = document.getElementById("site-map");
+          if (mapContainer && !mapContainer._leaflet_id) {
+            var lat = parseFloat(cfg.map_lat) || -33.4489;
+            var lng = parseFloat(cfg.map_lng) || -70.6693;
+            var siteMap = L.map("site-map").setView([lat, lng], 15);
+            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+              attribution: "&copy; OpenStreetMap",
+              maxZoom: 19
+            }).addTo(siteMap);
+            L.marker([lat, lng]).addTo(siteMap);
+            setTimeout(function () { siteMap.invalidateSize(); }, 300);
+          }
         }
         // Update social links
         var socialLinks = document.querySelectorAll(".footer-social-link");

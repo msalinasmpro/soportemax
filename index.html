@@ -64,6 +64,10 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+  <!-- Leaflet Map (free, no API key) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
   <!-- Styles -->
   <link rel="stylesheet" href="styles.css?v=20260630">
 
@@ -793,7 +797,7 @@
               </div>
             </div>
             <div class="contact-map">
-              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3323.8519999999997!2d-70.6693!3d-33.4489!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzPCsDI2JzU2LjAiUyA3MMKwNDAnMDkuNSJX!5e0!3m2!1ses!2scl!4v1234567890" width="100%" height="250" style="border:0; border-radius: 16px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Ubicación de Isinet Soluciones Informáticas"></iframe>
+              <div id="site-map" style="width:100%;height:250px;border-radius:16px;background:var(--bg-3);"></div>
             </div>
           </div>
         </div>
