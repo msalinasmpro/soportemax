@@ -40,10 +40,18 @@
         if (cfg.logo_url && logoEl) {
           logoEl.innerHTML = '<img src="' + cfg.logo_url + '" alt="Logo" style="height:32px;width:auto;object-fit:contain;">';
         }
-        // Update company name in footer
+        // Update contact info block
+        var contactPhone = document.getElementById("contact-phone");
+        var contactEmail = document.getElementById("contact-email");
+        var contactAddress = document.getElementById("contact-address");
+        var contactHours = document.getElementById("contact-hours");
+        if (contactPhone && cfg.phone) contactPhone.textContent = cfg.phone;
+        if (contactEmail && cfg.email) contactEmail.textContent = cfg.email;
+        if (contactAddress && cfg.address) contactAddress.textContent = cfg.address;
+        if (contactHours && cfg.hours) contactHours.textContent = cfg.hours;
+        // Update footer
         var footerBrand = document.querySelector(".footer-logo span:last-child");
         if (cfg.company_name && footerBrand) footerBrand.textContent = cfg.company_name;
-        // Update phone/email in footer
         var footerContact = document.querySelector(".footer-contact ul");
         if (footerContact && cfg.phone) {
           var items = footerContact.querySelectorAll("li");
