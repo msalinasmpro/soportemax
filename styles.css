@@ -894,87 +894,11 @@ em {
 }
 
 .service-card-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, transparent 50%, var(--surface) 100%);
+  display: none;
 }
 
 /* Modern gradient backgrounds per card */
-.service-card-image[data-gradient="blue"] {
-  background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 40%, #3b82f6 100%);
-}
-.service-card-image[data-gradient="cyan"] {
-  background: linear-gradient(135deg, #042f2e 0%, #134e4a 40%, #22d3ee 100%);
-}
-.service-card-image[data-gradient="purple"] {
-  background: linear-gradient(135deg, #1e1b4b 0%, #4338ca 40%, #818cf8 100%);
-}
-.service-card-image[data-gradient="indigo"] {
-  background: linear-gradient(135deg, #0c0a3e 0%, #312e81 40%, #6366f1 100%);
-}
-.service-card-image[data-gradient="emerald"] {
-  background: linear-gradient(135deg, #022c22 0%, #065f46 40%, #10b981 100%);
-}
-.service-card-image[data-gradient="rose"] {
-  background: linear-gradient(135deg, #1c1017 0%, #9f1239 40%, #fb7185 100%);
-}
-.service-card-image[data-gradient="amber"] {
-  background: linear-gradient(135deg, #1c1308 0%, #92400e 40%, #f59e0b 100%);
-}
-.service-card-image[data-gradient="teal"] {
-  background: linear-gradient(135deg, #042f2e 0%, #115e59 40%, #14b8a6 100%);
-}
-.service-card-image[data-gradient="sky"] {
-  background: linear-gradient(135deg, #0c1929 0%, #075985 40%, #0ea5e9 100%);
-}
-.service-card-image[data-gradient="violet"] {
-  background: linear-gradient(135deg, #1a0533 0%, #6b21a8 40%, #a855f7 100%);
-}
-.service-card-image[data-gradient="slate"] {
-  background: linear-gradient(135deg, #0f172a 0%, #334155 40%, #64748b 100%);
-}
-.service-card-image[data-gradient="orange"] {
-  background: linear-gradient(135deg, #1a0a00 0%, #9a3412 40%, #f97316 100%);
-}
-
-.service-card-image[data-gradient]::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.1) 0%, transparent 60%);
-  pointer-events: none;
-}
-
-.service-card-image[data-gradient] img {
-  mix-blend-mode: luminosity;
-  opacity: 0.6;
-}
-
-.service-card:hover .service-card-image[data-gradient] img {
-  opacity: 0.8;
-  transform: scale(1.1);
-}
-
 /* Light theme gradient adjustments */
-[data-theme="light"] .service-card-image[data-gradient="blue"] {
-  background: linear-gradient(135deg, #1e3a5f 0%, #3b82f6 40%, #93c5fd 100%);
-}
-[data-theme="light"] .service-card-image[data-gradient="cyan"] {
-  background: linear-gradient(135deg, #134e4a 0%, #22d3ee 40%, #a5f3fc 100%);
-}
-[data-theme="light"] .service-card-image[data-gradient="purple"] {
-  background: linear-gradient(135deg, #4338ca 0%, #818cf8 40%, #c7d2fe 100%);
-}
-[data-theme="light"] .service-card-image[data-gradient="emerald"] {
-  background: linear-gradient(135deg, #065f46 0%, #10b981 40%, #a7f3d0 100%);
-}
-[data-theme="light"] .service-card-image[data-gradient="rose"] {
-  background: linear-gradient(135deg, #9f1239 0%, #fb7185 40%, #fecdd3 100%);
-}
-[data-theme="light"] .service-card-image[data-gradient="amber"] {
-  background: linear-gradient(135deg, #92400e 0%, #f59e0b 40%, #fde68a 100%);
-}
-
 .service-card-content {
   padding: var(--space-6);
 }
