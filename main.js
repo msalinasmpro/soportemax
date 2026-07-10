@@ -123,6 +123,21 @@
       var heroImg = document.querySelector(".hero-bg img");
       if (heroImg) heroImg.src = cfg.hero_image_url;
     }
+    // Update hero video
+    if (cfg.hero_video_url) {
+      var heroVideo = document.getElementById("hero-video");
+      var heroImgEl = document.querySelector(".hero-bg .hero-img");
+      if (heroVideo) {
+        var vidUrl = cfg.hero_video_url;
+        var vidMatch = vidUrl.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
+        if (vidMatch) vidUrl = "https://drive.google.com/uc?export=download&id=" + vidMatch[1];
+        heroVideo.querySelector("source").src = vidUrl;
+        heroVideo.load();
+        heroVideo.play();
+        heroVideo.style.display = "block";
+        if (heroImgEl) heroImgEl.style.display = "none";
+      }
+    }
     // Update videos from Google Drive
     if (cfg.video_1_url) {
       var v1 = document.getElementById("video-1");

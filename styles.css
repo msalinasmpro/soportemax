@@ -625,6 +625,19 @@ em {
   filter: saturate(1.1) contrast(1.05);
 }
 
+.hero-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  z-index: 0;
+}
+
 .hero-overlay {
   position: absolute;
   inset: 0;
