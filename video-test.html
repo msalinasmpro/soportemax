@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Opciones de Video para Hero — Isinet</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: #0a0a0f;
+      color: #fff;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+    h1 { text-align: center; font-size: 2.5rem; margin-bottom: 10px; letter-spacing: -0.03em; }
+    .subtitle { text-align: center; color: #a0a0a0; margin-bottom: 40px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 24px; max-width: 1400px; margin: 0 auto; }
+    .card {
+      background: #111118;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.4s;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+    .card-video { width: 100%; aspect-ratio: 16/9; background: #000; }
+    .card-body { padding: 20px; }
+    .card-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 8px; }
+    .card-desc { color: #a0a0a0; font-size: 0.9rem; line-height: 1.5; }
+    .card-tag { display: inline-block; padding: 4px 10px; background: rgba(74,144,217,0.15); color: #4A90D9; border-radius: 6px; font-size: 0.75rem; font-weight: 600; margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+  <h1>Opciones de Video para Hero</h1>
+  <p class="subtitle">Videos de prueba de Pixabay (libres de derechos) — haz clic para verlos</p>
+
+  <div class="grid">
+    <!-- Reparación de computadores -->
+    <div class="card">
+      <video class="card-video" controls muted loop>
+        <source src="https://cdn.pixabay.com/video/2020/07/30/45348-445144483_large.mp4" type="video/mp4">
+      </video>
+      <div class="card-body">
+        <span class="card-tag">Reparación</span>
+        <h3 class="card-title">Reparación de Computadores</h3>
+        <p class="card-desc">Técnico trabajando en componentes de computador con herramientas modernas.</p>
+      </div>
+    </div>
+
+    <!-- Notebook repair -->
+    <div class="card">
+      <video class="card-video" controls muted loop>
+        <source src="https://cdn.pixabay.com/video/2019/06/24/24705-344765392_large.mp4" type="video/mp4">
+      </video>
+      <div class="card-body">
+        <span class="card-tag">Notebook</span>
+        <h3 class="card-title">Reparación de Notebook</h3>
+        <p class="card-desc">Proceso de reparación de laptop con desmontaje y diagnóstico.</p>
+      </div>
+    </div>
+
+    <!-- Cámaras IP -->
+    <div class="card">
+      <video class="card-video" controls muted loop>
+        <source src="https://cdn.pixabay.com/video/2020/05/25/39840-424930032_large.mp4" type="video/mp4">
+      </video>
+      <div class="card-body">
+        <span class="card-tag">Cámaras IP</span>
+        <h3 class="card-title">Instalación de Cámaras IP</h3>
+        <p class="card-desc">Cámaras de seguridad modernas con iluminación nocturna.</p>
+      </div>
+    </div>
+
+    <!-- Server room -->
+    <div class="card">
+      <video class="card-video" controls muted loop>
+        <source src="https://cdn.pixabay.com/video/2020/08/08/46819-449012498_large.mp4" type="video/mp4">
+      </video>
+      <div class="card-body">
+        <span class="card-tag">Servidores</span>
+        <h3 class="card-title">Sala de Servidores</h3>
+        <p class="card-desc">Centro de datos con servidores modernos y cableado estructurado.</p>
+      </div>
+    </div>
+
+    <!-- Networking -->
+    <div class="card">
+      <video class="card-video" controls muted loop>
+        <source src="https://cdn.pixabay.com/video/2021/02/12/65045-510184440_large.mp4" type="video/mp4">
+      </video>
+      <div class="card-body">
+        <span class="card-tag">Redes</span>
+        <h3 class="card-title">Cableado de Redes</h3>
+        <p class="card-desc">Instalación de cableado estructurado y switches de red.</p>
+      </div>
+    </div>
+
+    <!-- Security cameras -->
+    <div class="card">
+      <video class="card-video" controls muted loop>
+        <source src="https://cdn.pixabay.com/video/2021/01/27/63650-504869498_large.mp4" type="video/mp4">
+      </video>
+      <div class="card-body">
+        <span class="card-tag">Seguridad</span>
+        <h3 class="card-title">Cámaras de Vigilancia</h3>
+        <p class="card-desc">Monitoreo 24/7 con acceso remoto desde dispositivos móviles.</p>
+      </div>
+    </div>
+  </div>
+
+  <p style="text-align:center;margin-top:40px;color:#666;font-size:0.85rem;">
+    Todos los videos son de Pixabay — libres de derechos para uso comercial.<br>
+    Copia el link del video que prefieras y pégalo en el admin → Datos Empresa → Video del Hero.
+  </p>
+</body>
+</html>
