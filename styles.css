@@ -876,10 +876,12 @@ em {
 }
 
 .services-grid .reveal,
-.collage-grid .reveal {
-  opacity: 1;
-  transform: none;
-  filter: none;
+.collage-grid .reveal,
+.services-grid .service-card,
+.service-card.reveal {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
 }
 
 @media (min-width: 720px) {
