@@ -1198,7 +1198,77 @@ em {
 
 .collage-item:hover::after { opacity: 1; }
 
-/* Old gallery styles (kept for compatibility) */
+/* ============================================
+   DIVIDER SECTION
+   ============================================ */
+.section-divider {
+  padding: 60px 0;
+  position: relative;
+}
+
+.divider-content {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.divider-icon {
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(59, 130, 246, 0.05);
+  border: 1px solid rgba(59, 130, 246, 0.1);
+  border-radius: 16px;
+  color: var(--accent);
+}
+
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--line-2), transparent);
+}
+
+.divider-stats {
+  display: flex;
+  gap: 40px;
+  flex-shrink: 0;
+}
+
+.divider-stat {
+  text-align: center;
+}
+
+.divider-stat-num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.divider-stat-label {
+  font-size: 0.75rem;
+  color: var(--text-4);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+@media (max-width: 640px) {
+  .divider-content { flex-direction: column; gap: 16px; }
+  .divider-stats { gap: 24px; }
+}
+
+/* ============================================
+   OLD GALLERY STYLES (kept for compatibility)
+   ============================================ */
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
