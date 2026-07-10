@@ -123,6 +123,19 @@
       var heroImg = document.querySelector(".hero-bg img");
       if (heroImg) heroImg.src = cfg.hero_image_url;
     }
+    // Update about check texts
+    if (cfg.text_about_check1) {
+      var ch1 = document.querySelector(".about-features .about-feature:nth-child(1) span");
+      if (ch1) ch1.textContent = cfg.text_about_check1;
+    }
+    if (cfg.text_about_check2) {
+      var ch2 = document.querySelector(".about-features .about-feature:nth-child(2) span");
+      if (ch2) ch2.textContent = cfg.text_about_check2;
+    }
+    if (cfg.text_about_check3) {
+      var ch3 = document.querySelector(".about-features .about-feature:nth-child(3) span");
+      if (ch3) ch3.textContent = cfg.text_about_check3;
+    }
     // Update CTA support button links
     if (cfg.cta_support_url) {
       var ctaLinks = document.querySelectorAll("#cta-support-nav, #cta-support-hero, #cta-support-cameras");
