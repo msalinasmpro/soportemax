@@ -7,14 +7,14 @@
    1. CSS VARIABLES (Tokens)
    ============================================ */
 :root {
-  /* Colors — Dark Theme (default) */
-  --bg: #050505;
-  --bg-2: #111111;
-  --bg-3: #1a1a1a;
-  --bg-4: #222222;
-  --surface: #0d0d0d;
-  --surface-2: #141414;
-  --surface-3: #1c1c1c;
+  /* Colors — Premium Dark Theme */
+  --bg: #0a0a0f;
+  --bg-2: #111118;
+  --bg-3: #1a1a24;
+  --bg-4: #222230;
+  --surface: #0e0e14;
+  --surface-2: #16161f;
+  --surface-3: #1e1e28;
 
   /* Text */
   --text: #ffffff;
@@ -22,11 +22,11 @@
   --text-3: #a0a0a0;
   --text-4: #666666;
 
-  /* Accent */
-  --accent: #3B82F6;
-  --accent-2: #22D3EE;
-  --accent-glow: rgba(59, 130, 246, 0.3);
-  --accent-glow-2: rgba(34, 211, 238, 0.2);
+  /* Accent — Desaturated blue, not screaming */
+  --accent: #4A90D9;
+  --accent-2: #5BC0BE;
+  --accent-glow: rgba(74, 144, 217, 0.25);
+  --accent-glow-2: rgba(91, 192, 190, 0.15);
 
   /* Glass */
   --glass: rgba(255, 255, 255, 0.03);
@@ -37,10 +37,10 @@
   --line: rgba(255, 255, 255, 0.06);
   --line-2: rgba(255, 255, 255, 0.1);
 
-  /* Shadows */
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 16px 64px rgba(0, 0, 0, 0.5);
+  /* Shadows — Tinted to match dark blue background */
+  --shadow-sm: 0 2px 8px rgba(10, 10, 20, 0.4);
+  --shadow-md: 0 8px 32px rgba(10, 10, 25, 0.5);
+  --shadow-lg: 0 16px 64px rgba(10, 10, 30, 0.6);
   --shadow-glow: 0 0 40px var(--accent-glow);
 
   /* Spacing (4px grid) */
@@ -202,7 +202,7 @@ input, textarea { font: inherit; color: inherit; }
 }
 
 /* ============================================
-   3. TYPOGRAPHY — Premium Upgrade
+   3. TYPOGRAPHY — Premium
    ============================================ */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
@@ -218,6 +218,7 @@ h3 { font-size: clamp(1.15rem, 1.8vw, 1.4rem); font-weight: 600; }
 p {
   line-height: 1.7;
   color: var(--text-3);
+  max-width: 65ch;
 }
 
 em {
@@ -298,14 +299,14 @@ em {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--accent), #2563eb);
+  background: linear-gradient(135deg, var(--accent), #3a7bc8);
   color: #fff;
-  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 16px rgba(74, 144, 217, 0.3);
 }
 .btn-primary:hover {
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  background: linear-gradient(135deg, #3a7bc8, #2d6ab0);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+  box-shadow: 0 8px 24px rgba(74, 144, 217, 0.4);
 }
 
 .btn-ghost {
@@ -903,8 +904,8 @@ em {
 
 .service-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 24px 64px -12px rgba(0,0,0,0.5);
-  border-color: rgba(59, 130, 246, 0.15);
+  box-shadow: 0 24px 64px -12px rgba(10, 10, 30, 0.6);
+  border-color: rgba(74, 144, 217, 0.2);
 }
 
 .service-card-image {
@@ -922,7 +923,7 @@ em {
 }
 
 .service-card:hover .service-card-image img {
-  transform: scale(1.06);
+  transform: scale(1.05);
 }
 
 .service-card-overlay {
@@ -1069,7 +1070,7 @@ em {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(59, 130, 246, 0.1);
+  background: rgba(74, 144, 217, 0.08);
   border-radius: var(--radius-lg);
   color: var(--accent);
   margin: 0 auto var(--space-5);
