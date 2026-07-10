@@ -126,14 +126,16 @@
     // Update hero video
     if (cfg.hero_video_url) {
       var heroVideo = document.getElementById("hero-video");
+      var heroVideoSrc = document.getElementById("hero-video-src");
       var heroImgEl = document.querySelector(".hero-bg .hero-img");
-      if (heroVideo) {
+      if (heroVideo && heroVideoSrc) {
         var vidUrl = cfg.hero_video_url;
+        // Convert Google Drive share link to embed
         var vidMatch = vidUrl.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
         if (vidMatch) vidUrl = "https://drive.google.com/uc?export=download&id=" + vidMatch[1];
-        heroVideo.querySelector("source").src = vidUrl;
+        heroVideoSrc.src = vidUrl;
         heroVideo.load();
-        heroVideo.play();
+        heroVideo.play().catch(function(){});
         heroVideo.style.display = "block";
         if (heroImgEl) heroImgEl.style.display = "none";
       }
