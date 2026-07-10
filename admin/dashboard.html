@@ -52,6 +52,10 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
         FAQ
       </a>
+      <a href="#" class="sidebar-link" data-section="videos">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Videos
+      </a>
       <a href="#" class="sidebar-link" data-section="map">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
         Mapa
@@ -173,7 +177,31 @@
         <div class="panel-section-header">
           <h2>Gestor de Imágenes</h2>
         </div>
-        <p style="color:var(--text-3);margin-bottom:16px;font-size:0.9rem;">Selecciona la imagen que quieres cambiar directamente desde el cuadro.</p>
+        <p style="color:var(--text-3);margin-bottom:16px;font-size:0.9rem;">Selecciona la imagen que quieres cambiar directamente desde el cuadro. También puedes pegar una URL de Google Drive.</p>
+        <div style="margin-bottom:20px;padding:12px;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;">
+          <label class="field-label" style="margin-bottom:6px;display:block;">URL de Google Drive (para reemplazar una imagen)</label>
+          <div style="display:flex;gap:8px;">
+            <input type="text" class="field-input" id="gdrive-url" placeholder="https://drive.google.com/file/d/..." style="flex:1;">
+            <select class="field-input" id="gdrive-target" style="width:200px;">
+              <option value="">Seleccionar imagen...</option>
+              <option value="hero-main">Hero Principal</option>
+              <option value="about-team">Quiénes Somos</option>
+              <option value="repair-1">Reparación Computadores</option>
+              <option value="tools-repair">Notebook</option>
+              <option value="engineer-girl">PC Gamer</option>
+              <option value="office-tech">Soporte Empresas</option>
+              <option value="screens-code">Soporte Remoto</option>
+              <option value="cameras-app">Respaldo / Virus</option>
+              <option value="camera-1">Cámaras Seguridad</option>
+              <option value="camera-2">Optimización</option>
+              <option value="lab-1">Instalación Windows</option>
+              <option value="lab-2">Redes</option>
+              <option value="hero-main-serv">Servidores</option>
+              <option value="microchip">Mantención</option>
+            </select>
+            <button class="btn btn-primary" id="btn-apply-gdrive" type="button">Aplicar</button>
+          </div>
+        </div>
 
         <!-- HERO -->
         <div class="images-section-block">
@@ -318,6 +346,39 @@
       </div>
 
       <!-- ===== GALLERY ===== -->
+      <!-- ===== VIDEOS ===== -->
+      <div class="panel-section" id="section-videos">
+        <div class="panel-section-header"><h2>Videos de Google Drive</h2></div>
+        <p style="color:var(--text-3);margin-bottom:20px;font-size:0.9rem;">Pega links de Google Drive para mostrar videos en la página web. Copia el link de compartir y pégalo aquí.</p>
+        <div class="panel-grid">
+          <div class="panel-field panel-field-full">
+            <label class="field-label">Video 1 — URL de Google Drive</label>
+            <input type="text" class="field-input" data-key="video_1_url" placeholder="https://drive.google.com/file/d/...">
+          </div>
+          <div class="panel-field panel-field-full">
+            <label class="field-label">Video 1 — Descripción</label>
+            <input type="text" class="field-input" data-key="video_1_caption" placeholder="Instalación de cámaras IP">
+          </div>
+          <div class="panel-field panel-field-full">
+            <label class="field-label">Video 2 — URL de Google Drive</label>
+            <input type="text" class="field-input" data-key="video_2_url" placeholder="https://drive.google.com/file/d/...">
+          </div>
+          <div class="panel-field panel-field-full">
+            <label class="field-label">Video 2 — Descripción</label>
+            <input type="text" class="field-input" data-key="video_2_caption" placeholder="Soporte remoto en tiempo real">
+          </div>
+        </div>
+        <div style="margin-top:16px;padding:12px;background:rgba(59,130,246,0.05);border:1px solid rgba(59,130,246,0.1);border-radius:12px;">
+          <p style="color:var(--text-3);font-size:0.85rem;line-height:1.6;">
+            <strong style="color:var(--text-2);">Cómo obtener el link:</strong><br>
+            1. Sube el video a Google Drive<br>
+            2. Click derecho → "Compartir" → "Copiar enlace"<br>
+            3. Pega el link en el campo de arriba<br>
+            4. Presiona Guardar
+          </p>
+        </div>
+      </div>
+
       <!-- ===== MAP ===== -->
       <div class="panel-section" id="section-map">
         <div class="panel-section-header"><h2>Mapa de Ubicación</h2></div>
@@ -761,6 +822,37 @@
         return '<div class="message-item"><div class="message-item-header"><span class="message-item-name">' + san(m.name) + '</span><span class="message-item-date">' + (m.created_at ? new Date(m.created_at).toLocaleDateString("es-CL") : "") + '</span></div><div class="message-item-email">' + san(m.email) + (m.phone ? " · " + san(m.phone) : "") + '</div><div class="message-item-text">' + san(m.message) + '</div></div>';
       }).join("");
     }).catch(function() {});
+  }
+
+  // Google Drive URL handler
+  var gdriveBtn = document.getElementById("btn-apply-gdrive");
+  var gdriveUrl = document.getElementById("gdrive-url");
+  var gdriveTarget = document.getElementById("gdrive-target");
+  if (gdriveBtn && gdriveUrl && gdriveTarget) {
+    gdriveBtn.addEventListener("click", function() {
+      var url = gdriveUrl.value.trim();
+      var target = gdriveTarget.value;
+      if (!url) { show("Pega una URL de Google Drive", "is-error"); return; }
+      if (!target) { show("Selecciona una imagen destino", "is-error"); return; }
+      // Convert Google Drive URL to direct access
+      var directUrl = url;
+      var match = url.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
+      if (match) directUrl = "https://drive.google.com/uc?export=view&id=" + match[1];
+      // Save to config
+      fetch(API + "/api/upload", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ key: target, dataurl: directUrl })
+      }).then(function(r) { return r.json(); }).then(function() {
+        // Update image visually
+        document.querySelectorAll('img[src*="' + target + '"]').forEach(function(img) {
+          img.src = directUrl;
+        });
+        markDirty();
+        show("Imagen actualizada: " + target, "is-success");
+        gdriveUrl.value = "";
+      }).catch(function() { show("Error al guardar", "is-error"); });
+    });
   }
 
   // INIT

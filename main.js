@@ -123,6 +123,31 @@
       var heroImg = document.querySelector(".hero-bg img");
       if (heroImg) heroImg.src = cfg.hero_image_url;
     }
+    // Update videos from Google Drive
+    if (cfg.video_1_url) {
+      var v1 = document.getElementById("video-1");
+      if (v1) {
+        var v1url = cfg.video_1_url;
+        var m1 = v1url.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
+        if (m1) v1.src = "https://drive.google.com/file/d/" + m1[1] + "/preview";
+      }
+    }
+    if (cfg.video_1_caption) {
+      var c1 = document.getElementById("video-1-caption");
+      if (c1) c1.textContent = cfg.video_1_caption;
+    }
+    if (cfg.video_2_url) {
+      var v2 = document.getElementById("video-2");
+      if (v2) {
+        var v2url = cfg.video_2_url;
+        var m2 = v2url.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
+        if (m2) v2.src = "https://drive.google.com/file/d/" + m2[1] + "/preview";
+      }
+    }
+    if (cfg.video_2_caption) {
+      var c2 = document.getElementById("video-2-caption");
+      if (c2) c2.textContent = cfg.video_2_caption;
+    }
     // Update texts
     var textMap = {
       "text_hero_badge": ".hero-badge",

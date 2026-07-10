@@ -1,5 +1,16 @@
 const { supabase } = require('./supabase-client');
 
+function convertGoogleDriveUrl(url) {
+  if (!url) return url;
+  // Convert Google Drive share links to direct access
+  // https://drive.google.com/file/d/FILE_ID/view?... -> https://drive.google.com/uc?export=view&id=FILE_ID
+  var match = url.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
+  if (match) return 'https://drive.google.com/uc?export=view&id=' + match[1];
+  // Already a direct link
+  if (url.indexOf('drive.google.com/uc') !== -1) return url;
+  return url;
+}
+
 module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
 
@@ -14,7 +25,6 @@ module.exports = async function handler(req, res) {
 
     if (!error && data && data.value) {
       const val = data.value;
-      // If it's a data URL, serve it directly
       if (val.indexOf('data:') === 0) {
         const matches = val.match(/^data:([^;]+);base64,(.+)$/);
         if (matches) {
@@ -24,13 +34,13 @@ module.exports = async function handler(req, res) {
           return;
         }
       }
-      // Otherwise redirect to the URL
-      res.writeHead(302, { 'Location': val });
+      // Handle Google Drive URLs
+      var finalUrl = convertGoogleDriveUrl(val);
+      res.writeHead(302, { 'Location': finalUrl });
       return res.end();
     }
   } catch (e) {}
 
-  // Fallback: redirect to original
   res.writeHead(302, { 'Location': '/assets/img/' + filename });
   res.end();
 };
