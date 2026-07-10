@@ -875,9 +875,11 @@ em {
   gap: 20px;
 }
 
-.services-grid .reveal {
+.services-grid .reveal,
+.collage-grid .reveal {
   opacity: 1;
   transform: none;
+  filter: none;
 }
 
 @media (min-width: 720px) {
