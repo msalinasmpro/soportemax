@@ -159,6 +159,16 @@ body {
   overflow-x: clip;
 }
 
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.015;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
 img { max-width: 100%; height: auto; display: block; }
 a { color: inherit; text-decoration: none; }
 button { cursor: pointer; border: none; background: none; font: inherit; color: inherit; }
@@ -192,18 +202,23 @@ input, textarea { font: inherit; color: inherit; }
 }
 
 /* ============================================
-   3. TYPOGRAPHY
+   3. TYPOGRAPHY — Premium Upgrade
    ============================================ */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
   font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
 }
 
-h1 { font-size: clamp(2.5rem, 6vw, 5rem); }
-h2 { font-size: clamp(2rem, 4vw, 3.5rem); }
-h3 { font-size: clamp(1.25rem, 2vw, 1.5rem); }
+h1 { font-size: clamp(2.8rem, 7vw, 5.5rem); }
+h2 { font-size: clamp(2.2rem, 4.5vw, 3.8rem); }
+h3 { font-size: clamp(1.15rem, 1.8vw, 1.4rem); font-weight: 600; }
+
+p {
+  line-height: 1.7;
+  color: var(--text-3);
+}
 
 em {
   font-style: normal;
@@ -230,7 +245,7 @@ em {
 
 .section-header {
   text-align: center;
-  margin-bottom: var(--space-16);
+  margin-bottom: 64px;
 }
 
 .section-tag {
@@ -283,24 +298,26 @@ em {
 }
 
 .btn-primary {
-  background: var(--accent);
+  background: linear-gradient(135deg, var(--accent), #2563eb);
   color: #fff;
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
 }
 .btn-primary:hover {
-  background: #2563eb;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-glow);
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
 }
 
 .btn-ghost {
   border: 1px solid var(--line-2);
-  color: var(--text);
+  color: var(--text-2);
   background: transparent;
 }
 .btn-ghost:hover {
   border-color: var(--accent);
   color: var(--accent);
-  background: rgba(59, 130, 246, 0.05);
+  background: rgba(59, 130, 246, 0.04);
+  transform: translateY(-1px);
 }
 
 .btn-glow::after {
@@ -845,7 +862,7 @@ em {
 .services-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-6);
+  gap: 20px;
 }
 
 .services-grid .reveal {
@@ -865,32 +882,33 @@ em {
   position: relative;
   background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: var(--radius-xl);
+  border-radius: 20px;
   overflow: hidden;
   transition: all 0.5s cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 .service-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(59,130,246,0.15);
-  border-color: rgba(59, 130, 246, 0.2);
+  transform: translateY(-4px);
+  box-shadow: 0 24px 64px -12px rgba(0,0,0,0.5);
+  border-color: rgba(59, 130, 246, 0.15);
 }
 
 .service-card-image {
   position: relative;
-  height: 200px;
+  height: 220px;
   overflow: hidden;
+  background: var(--bg-2);
 }
 
 .service-card-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s var(--ease-out);
+  transition: transform 0.7s cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 .service-card:hover .service-card-image img {
-  transform: scale(1.1);
+  transform: scale(1.06);
 }
 
 .service-card-overlay {

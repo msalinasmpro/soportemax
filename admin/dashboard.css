@@ -22,7 +22,7 @@
   --radius-lg: 16px;
   --radius-xl: 24px;
   --font-display: 'Space Grotesk', system-ui, sans-serif;
-  --font-body: 'Inter', system-ui, sans-serif;
+  --font-body: 'Satoshi', 'Inter', system-ui, sans-serif;
   --sidebar-width: 260px;
 }
 
@@ -257,11 +257,11 @@ body {
   padding: 12px 16px;
   background: var(--surface-2);
   border: 1px solid var(--line);
-  border-radius: var(--radius-md);
+  border-radius: 12px;
   color: var(--text);
   font-family: var(--font-body);
   font-size: 0.9rem;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
 .field-input:focus {
   outline: none;
