@@ -141,7 +141,9 @@
     <!-- ========== HERO ========== -->
     <section class="hero" id="inicio">
       <div class="hero-bg">
-        <iframe class="hero-video" id="hero-video" src="" allow="autoplay; encrypted-media" allowfullscreen style="display:none;"></iframe>
+        <video class="hero-video" id="hero-video" autoplay muted loop playsinline preload="auto" onloadeddata="this.play()">
+          <source src="" type="video/mp4" id="hero-video-src">
+        </video>
         <img src="assets/img/cameras-app.webp" alt="Soporte técnico profesional" fetchpriority="high" class="hero-img" id="hero-img">
         <div class="hero-overlay"></div>
       </div>

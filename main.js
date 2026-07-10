@@ -123,19 +123,16 @@
       var heroImg = document.querySelector(".hero-bg img");
       if (heroImg) heroImg.src = cfg.hero_image_url;
     }
-    // Update hero video (iframe embed for Google Drive)
+    // Update hero video (direct MP4 from Supabase Storage)
     if (cfg.hero_video_url) {
-      var heroFrame = document.getElementById("hero-video");
+      var heroVideo = document.getElementById("hero-video");
+      var heroVideoSrc = document.getElementById("hero-video-src");
       var heroImgEl = document.querySelector(".hero-bg .hero-img");
-      if (heroFrame) {
-        var vidUrl = cfg.hero_video_url;
-        // Convert Google Drive share link to preview embed
-        var m1 = vidUrl.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
-        if (m1) vidUrl = "https://drive.google.com/file/d/" + m1[1] + "/preview";
-        var m2 = vidUrl.match(/drive\.google\.com\/open\?id=([a-zA-Z0-9_-]+)/);
-        if (m2) vidUrl = "https://drive.google.com/file/d/" + m2[1] + "/preview";
-        heroFrame.src = vidUrl;
-        heroFrame.style.display = "block";
+      if (heroVideo && heroVideoSrc) {
+        heroVideoSrc.src = cfg.hero_video_url;
+        heroVideo.load();
+        heroVideo.play().catch(function(){});
+        heroVideo.style.display = "block";
         if (heroImgEl) heroImgEl.style.opacity = "0";
       }
     }
