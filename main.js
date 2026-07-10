@@ -136,8 +136,8 @@
         heroVideoSrc.src = vidUrl;
         heroVideo.load();
         heroVideo.play().catch(function(){});
-        heroVideo.style.display = "block";
-        if (heroImgEl) heroImgEl.style.display = "none";
+        heroVideo.style.display = "block"; heroVideo.play().catch(function(){});
+        if (heroImgEl) heroImgEl.style.opacity = "0";
       }
     }
     // Update videos from Google Drive
