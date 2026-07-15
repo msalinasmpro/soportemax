@@ -354,6 +354,12 @@
     var targets = $$(".reveal:not([data-split])");
     if (!targets.length) return;
 
+    // Reduced motion: reveal immediately
+    if (reduced) {
+      targets.forEach(function (el) { el.classList.add("is-visible"); });
+      return;
+    }
+
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (e.isIntersecting) {
@@ -525,8 +531,8 @@
             top: el.getBoundingClientRect().top + window.scrollY - navOffset,
             behavior: "auto"
           });
-          setTimeout(function () { transEl.classList.remove("is-active"); }, 100);
-        }, 280);
+          setTimeout(function () { transEl.classList.remove("is-active"); }, 250);
+        }, 350);
       } else {
         var navOffset = 80;
         window.scrollTo({
