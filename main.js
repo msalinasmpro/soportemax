@@ -623,17 +623,29 @@
   /* ============================================
      Dynamic Services
      ============================================ */
-  var serviceImages = [
+  var serviceImageMap = {
+    "monitor": "assets/img/repair-1.webp",
+    "laptop": "assets/img/notebook-clean.jpg",
+    "gamepad": "assets/img/pc-gamer.jpg",
+    "gamepad-2": "assets/img/pc-gamer.jpg",
+    "building": "assets/img/office-tech.webp",
+    "wifi": "assets/img/networking-rack.jpg",
+    "database": "assets/img/data-backup.jpg",
+    "shield": "assets/img/cybersecurity.jpg",
+    "zap": "assets/img/speedometer.jpg",
+    "download": "assets/img/windows-install.jpg",
+    "server": "assets/img/server-rack.jpg",
+    "tool": "assets/img/microchip.webp",
+    "settings": "assets/img/repair-1.webp",
+    "box": "assets/img/data-backup.jpg",
+    "cpu": "assets/img/microchip.webp",
+    "globe": "assets/img/office-tech.webp"
+  };
+
+  var serviceImageFallback = [
     "assets/img/repair-1.webp",
-    "assets/img/laptop-repair.jpg",
     "assets/img/pc-gamer.jpg",
     "assets/img/office-tech.webp",
-    "assets/img/screens-code.webp",
-    "assets/img/data-backup.jpg",
-    "assets/img/cybersecurity.jpg",
-    "assets/img/optimization.jpg",
-    "assets/img/windows-install.jpg",
-    "assets/img/network-switch.jpg",
     "assets/img/server-rack.jpg",
     "assets/img/microchip.webp"
   ];
@@ -665,12 +677,13 @@
       .then(function (data) {
         if (!data || !data.length) return;
         grid.innerHTML = data.map(function (s, i) {
-          var imgIdx = i % serviceImages.length;
+          var imgSrc = serviceImageMap[s.icon] || serviceImageFallback[i % serviceImageFallback.length];
           var iconSvg = serviceIcons[s.icon] || serviceIcons.settings;
           return '<article class="service-card reveal" data-service>' +
             '<div class="service-card-image">' +
-              '<img src="' + serviceImages[imgIdx] + '" alt="' + escHTML(s.title) + '" loading="lazy">' +
+              '<img src="' + imgSrc + '" alt="' + escHTML(s.title) + '" loading="lazy">' +
               '<div class="service-card-overlay"></div>' +
+            '</div>' +
             '</div>' +
             '<div class="service-card-content">' +
               '<div class="service-card-icon">' + iconSvg + '</div>' +
