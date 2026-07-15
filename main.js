@@ -635,7 +635,7 @@
     "zap": "assets/img/repaired-pc.jpg",
     "download": "assets/img/windows-install.jpg",
     "server": "assets/img/server-rack.jpg",
-    "network": "assets/img/internet-global.jpg",
+    "network": "assets/img/networking-rack.jpg",
     "tool": "assets/img/microchip.webp",
     "settings": "assets/img/repair-1.webp",
     "box": "assets/img/data-backup.jpg",
