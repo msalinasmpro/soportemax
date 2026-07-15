@@ -26,7 +26,8 @@
   },
   "homepage": "https://github.com/msalinasmpro/soportemax#readme",
   "dependencies": {
-    "@supabase/supabase-js": "^2.110.0",
+    "@supabase/supabase-js": "^2.110.6",
+    "dotenv": "^17.4.2",
     "nodemailer": "^9.0.3",
     "pg": "^8.22.0"
   }
