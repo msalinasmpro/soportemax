@@ -759,7 +759,7 @@
         }
 
         var color = line % 2 === 0 ? "74, 144, 217" : "91, 192, 190";
-        var alpha = 0.08 + line * 0.04;
+        var alpha = 0.12 + line * 0.06;
         ctx.strokeStyle = "rgba(" + color + "," + alpha + ")";
         ctx.lineWidth = 1.5;
         ctx.stroke();

@@ -167,7 +167,7 @@ body {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  opacity: 0.6;
+  opacity: 0.8;
 }
 
 body::before {
@@ -254,13 +254,13 @@ em {
   padding: 20px 0;
   position: relative;
   z-index: 1;
-  background: rgba(10, 10, 15, 0.55);
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background: rgba(10, 10, 15, 0.15);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
 }
 
 [data-theme="light"] .section {
-  background: rgba(248, 249, 250, 0.55);
+  background: rgba(248, 249, 250, 0.15);
 }
 
 .section-header {
@@ -659,9 +659,9 @@ em {
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(5, 5, 5, 0.4) 0%,
-    rgba(5, 5, 5, 0.6) 40%,
-    rgba(5, 5, 5, 0.85) 100%
+    rgba(5, 5, 5, 0.2) 0%,
+    rgba(5, 5, 5, 0.3) 40%,
+    rgba(5, 5, 5, 0.6) 100%
   );
 }
 
