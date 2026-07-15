@@ -1432,6 +1432,15 @@ em {
   gap: var(--space-10);
 }
 
+.contact-form-wrapper {
+  background: rgba(14, 14, 20, 0.35);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+}
+
 @media (min-width: 960px) {
   .contact-grid { grid-template-columns: 1fr 1fr; }
 }
@@ -1463,7 +1472,9 @@ em {
 .form-input {
   width: 100%;
   padding: var(--space-3) var(--space-4);
-  background: var(--surface-2);
+  background: rgba(22, 22, 31, 0.4);
+  backdrop-filter: blur(8px) saturate(160%);
+  -webkit-backdrop-filter: blur(8px) saturate(160%);
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
   color: var(--text);
