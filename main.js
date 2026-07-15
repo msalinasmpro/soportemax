@@ -145,39 +145,11 @@
     if (cfg.hero_video_url) {
       var heroVideo = document.getElementById("hero-video");
       var heroVideoSrc = document.getElementById("hero-video-src");
-      var heroImgEl = document.querySelector(".hero-bg .hero-img");
       if (heroVideo && heroVideoSrc) {
         heroVideoSrc.src = cfg.hero_video_url;
         heroVideo.load();
         heroVideo.play().catch(function(){});
-        heroVideo.style.display = "block";
-        if (heroImgEl) heroImgEl.style.opacity = "0";
       }
-    }
-    // Update videos from Google Drive
-    if (cfg.video_1_url) {
-      var v1 = document.getElementById("video-1");
-      if (v1) {
-        var v1url = cfg.video_1_url;
-        var m1 = v1url.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
-        if (m1) v1.src = "https://drive.google.com/file/d/" + m1[1] + "/preview";
-      }
-    }
-    if (cfg.video_1_caption) {
-      var c1 = document.getElementById("video-1-caption");
-      if (c1) c1.textContent = cfg.video_1_caption;
-    }
-    if (cfg.video_2_url) {
-      var v2 = document.getElementById("video-2");
-      if (v2) {
-        var v2url = cfg.video_2_url;
-        var m2 = v2url.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
-        if (m2) v2.src = "https://drive.google.com/file/d/" + m2[1] + "/preview";
-      }
-    }
-    if (cfg.video_2_caption) {
-      var c2 = document.getElementById("video-2-caption");
-      if (c2) c2.textContent = cfg.video_2_caption;
     }
     // Update texts
     var textMap = {
@@ -207,7 +179,6 @@
       "text_proc3_desc": "#proceso .process-step:nth-child(3) .process-desc",
       "text_proc4_name": "#proceso .process-step:nth-child(4) .process-title",
       "text_proc4_desc": "#proceso .process-step:nth-child(4) .process-desc",
-      "text_gallery_title": "#galeria .section-title",
       "text_testimonials_title": "#testimonios .section-title",
       "text_faq_title": "#faq .section-title",
       "text_contact_title": "#contacto .section-title",
@@ -219,7 +190,7 @@
       if (cfg[key]) {
         var el = document.querySelector(textMap[key]);
         if (el) {
-          if (key === "text_hero_title" || key === "text_about_title" || key === "text_services_title" || key === "text_features_title" || key === "text_process_title" || key === "text_gallery_title" || key === "text_testimonials_title" || key === "text_faq_title" || key === "text_contact_title") {
+           if (key === "text_hero_title" || key === "text_about_title" || key === "text_services_title" || key === "text_features_title" || key === "text_process_title" || key === "text_testimonials_title" || key === "text_faq_title" || key === "text_contact_title") {
             // Headlines with <em> — preserve the gradient emphasis
             el.innerHTML = cfg[key];
           } else {
@@ -587,7 +558,7 @@
     requestAnimationFrame(tick);
 
     // Hover states on interactive elements
-    $$("a, button, .service-card, .gallery-item, .faq-question").forEach(function (el) {
+    $$("a, button, .service-card, .faq-question").forEach(function (el) {
       el.addEventListener("mouseover", function () { ring.classList.add("is-hover"); });
       el.addEventListener("mouseout", function () { ring.classList.remove("is-hover"); });
     });
@@ -650,31 +621,6 @@
   }
 
   /* ============================================
-     Gallery Lightbox
-     ============================================ */
-  function initGallery() {
-    $$(".gallery-item").forEach(function (item) {
-      item.addEventListener("click", function () {
-        var img = item.querySelector("img");
-        if (!img) return;
-        var overlay = document.createElement("div");
-        overlay.style.cssText = "position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,0.9);display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;transition:opacity 0.3s;";
-        var bigImg = document.createElement("img");
-        bigImg.src = img.src;
-        bigImg.alt = img.alt;
-        bigImg.style.cssText = "max-width:90vw;max-height:90vh;border-radius:12px;object-fit:contain;";
-        overlay.appendChild(bigImg);
-        document.body.appendChild(overlay);
-        requestAnimationFrame(function () { overlay.style.opacity = "1"; });
-        overlay.addEventListener("click", function () {
-          overlay.style.opacity = "0";
-          setTimeout(function () { overlay.remove(); }, 300);
-        });
-      });
-    });
-  }
-
-  /* ============================================
      Boot
      ============================================ */
   function boot() {
@@ -691,7 +637,6 @@
     safe(initCursor, "initCursor");
     safe(initMagnetic, "initMagnetic");
     safe(initGSAP, "initGSAP");
-    safe(initGallery, "initGallery");
     safe(loadSiteConfig, "loadSiteConfig");
   }
 

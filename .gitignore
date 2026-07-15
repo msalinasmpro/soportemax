@@ -27,3 +27,4 @@ build/
 # Supabase local
 supabase/.temp/
 .vercel
+.env*

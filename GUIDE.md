@@ -11,7 +11,7 @@
 | Vercel | https://vercel.com/msalinas-org/soportemax |
 | Supabase | txjglqkttidhhobovzzz |
 | Email admin | admin@isinet.cl |
-| Password admin | Isinet2026! |
+| Password admin | CBXadmin.123$$## |
 
 ---
 
