@@ -869,13 +869,7 @@ em {
   gap: 20px;
 }
 
-.services-grid .reveal,
-.services-grid .service-card,
-.service-card.reveal {
-  opacity: 1 !important;
-  transform: none !important;
-  filter: none !important;
-}
+
 
 @media (min-width: 720px) {
   .services-grid { grid-template-columns: repeat(2, 1fr); }
