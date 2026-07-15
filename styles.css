@@ -159,6 +159,17 @@ body {
   overflow-x: clip;
 }
 
+/* Animated Wave Background */
+#bg-wave {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
 body::before {
   content: '';
   position: fixed;
@@ -242,6 +253,14 @@ em {
 .section {
   padding: 20px 0;
   position: relative;
+  z-index: 1;
+  background: rgba(10, 10, 15, 0.55);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+}
+
+[data-theme="light"] .section {
+  background: rgba(248, 249, 250, 0.55);
 }
 
 .section-header {
@@ -351,6 +370,10 @@ em {
   align-items: center;
   justify-content: center;
   animation: splashSafety 0.01s 4.5s forwards;
+}
+
+[data-theme="light"] .splash {
+  background: var(--bg-3);
 }
 
 @keyframes splashSafety {
@@ -568,7 +591,9 @@ em {
   right: 0;
   bottom: 0;
   z-index: var(--z-mobile-menu);
-  background: var(--bg);
+  background: rgba(10, 10, 15, 0.85);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s, visibility 0.3s;
@@ -881,11 +906,17 @@ em {
 
 .service-card {
   position: relative;
-  background: var(--surface);
+  background: rgba(14, 14, 20, 0.6);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
   border: 1px solid var(--line);
   border-radius: 20px;
   overflow: hidden;
   transition: all 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+[data-theme="light"] .service-card {
+  background: rgba(248, 249, 250, 0.6);
 }
 
 .service-card:hover {
@@ -970,10 +1001,16 @@ em {
 
 .feature-card {
   padding: var(--space-8);
-  background: var(--surface);
+  background: rgba(14, 14, 20, 0.5);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
   border: 1px solid var(--line);
   border-radius: var(--radius-xl);
   transition: all 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+[data-theme="light"] .feature-card {
+  background: rgba(248, 249, 250, 0.5);
 }
 
 .feature-card:hover {
@@ -1024,12 +1061,18 @@ em {
 
 .process-step {
   padding: var(--space-8);
-  background: var(--surface);
+  background: rgba(14, 14, 20, 0.5);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
   border: 1px solid var(--line);
   border-radius: var(--radius-xl);
   text-align: center;
   position: relative;
   transition: transform 0.4s var(--ease-out), box-shadow 0.4s;
+}
+
+[data-theme="light"] .process-step {
+  background: rgba(248, 249, 250, 0.5);
 }
 
 .process-step:hover {
@@ -1251,10 +1294,16 @@ em {
 
 .testimonial-card {
   padding: var(--space-8);
-  background: var(--surface);
+  background: rgba(14, 14, 20, 0.5);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
   border: 1px solid var(--line);
   border-radius: var(--radius-xl);
   transition: transform 0.4s var(--ease-out), box-shadow 0.4s;
+}
+
+[data-theme="light"] .testimonial-card {
+  background: rgba(248, 249, 250, 0.5);
 }
 
 .testimonial-card:hover {
@@ -1469,7 +1518,9 @@ em {
 
 /* Contact Info */
 .contact-info-card {
-  background: var(--surface);
+  background: rgba(14, 14, 20, 0.5);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
   border: 1px solid var(--line);
   border-radius: var(--radius-xl);
   padding: var(--space-6);
@@ -1477,6 +1528,10 @@ em {
   flex-direction: column;
   gap: var(--space-5);
   margin-bottom: var(--space-6);
+}
+
+[data-theme="light"] .contact-info-card {
+  background: rgba(248, 249, 250, 0.5);
 }
 
 .contact-info-item {
@@ -1516,7 +1571,12 @@ em {
 .footer {
   border-top: 1px solid var(--line);
   padding: var(--space-16) 0 var(--space-8);
-  background: var(--surface);
+  background: rgba(10, 10, 15, 0.7);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  position: relative;
+  z-index: 1;
+}
 }
 
 .footer-grid {

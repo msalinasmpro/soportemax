@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Isinet — Fondos Animados</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --bg-2: #111118;
+  --bg-3: #1a1a24;
+  --bg-4: #222230;
+  --surface: #0e0e14;
+  --surface-2: #16161f;
+  --text: #ffffff;
+  --text-2: #e0e0e0;
+  --text-3: #a0a0a0;
+  --text-4: #666666;
+  --accent: #4A90D9;
+  --accent-2: #5BC0BE;
+  --accent-glow: rgba(74, 144, 217, 0.25);
+  --accent-glow-2: rgba(91, 192, 190, 0.15);
+  --glass: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.06);
+  --line: rgba(255, 255, 255, 0.06);
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --radius-lg: 16px;
+  --radius-md: 12px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+.header {
+  padding: 32px 24px 16px;
+  text-align: center;
+  border-bottom: 1px solid var(--line);
+}
+.header h1 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.header p {
+  font-size: 0.85rem;
+  color: var(--text-3);
+  margin-top: 6px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+@media (min-width: 720px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+}
+.card {
+  position: relative;
+  height: 340px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+.card:hover {
+  border-color: var(--accent);
+  z-index: 2;
+}
+.card-label {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: rgba(10,10,15,0.8);
+  backdrop-filter: blur(12px);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--glass-border);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-2);
+}
+.card-label .num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-right: 10px;
+}
+.card-label .tag {
+  font-size: 0.7rem;
+  color: var(--text-4);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.card canvas, .card .bg-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>✦ Fondos Animados — Isinet</h1>
+  <p>10 conceptos tech con la paleta de colores del proyecto. Hacé clic para seleccionar.</p>
+</div>
+<div class="grid" id="grid">
+
+  <!-- 1. Matrix Rain -->
+  <div class="card" data-id="matrix-rain">
+    <canvas id="c1"></canvas>
+    <div class="card-label"><span><span class="num">1</span>Matrix Rain</span><span class="tag">Código</span></div>
+  </div>
+
+  <!-- 2. Particle Network -->
+  <div class="card" data-id="particle-network">
+    <canvas id="c2"></canvas>
+    <div class="card-label"><span><span class="num">2</span>Red de Partículas</span><span class="tag">Conexiones</span></div>
+  </div>
+
+  <!-- 3. Circuit Board -->
+  <div class="card" data-id="circuit-board">
+    <canvas id="c3"></canvas>
+    <div class="card-label"><span><span class="num">3</span>Circuito Eléctrico</span><span class="tag">Hardware</span></div>
+  </div>
+
+  <!-- 4. Binary Rain -->
+  <div class="card" data-id="binary-rain">
+    <canvas id="c4"></canvas>
+    <div class="card-label"><span><span class="num">4</span>Binary Flow</span><span class="tag">Binario</span></div>
+  </div>
+
+  <!-- 5. Glowing Grid -->
+  <div class="card" data-id="glowing-grid">
+    <canvas id="c5"></canvas>
+    <div class="card-label"><span><span class="num">5</span>Grid Luminoso</span><span class="tag">Malla</span></div>
+  </div>
+
+  <!-- 6. Data Stream -->
+  <div class="card" data-id="data-stream">
+    <canvas id="c6"></canvas>
+    <div class="card-label"><span><span class="num">6</span>Data Stream</span><span class="tag">Flujo</span></div>
+  </div>
+
+  <!-- 7. Hex Grid -->
+  <div class="card" data-id="hex-grid">
+    <canvas id="c7"></canvas>
+    <div class="card-label"><span><span class="num">7</span>Panales Tech</span><span class="tag">Hexágonos</span></div>
+  </div>
+
+  <!-- 8. Radar Scan -->
+  <div class="card" data-id="radar-scan">
+    <canvas id="c8"></canvas>
+    <div class="card-label"><span><span class="num">8</span>Radar</span><span class="tag">Escaneo</span></div>
+  </div>
+
+  <!-- 9. Floating Tech Shapes -->
+  <div class="card" data-id="floating-shapes">
+    <canvas id="c9"></canvas>
+    <div class="card-label"><span><span class="num">9</span>Formas Tech</span><span class="tag">Geometría</span></div>
+  </div>
+
+  <!-- 10. Wave Signal -->
+  <div class="card" data-id="wave-signal">
+    <canvas id="c10"></canvas>
+    <div class="card-label"><span><span class="num">10</span>Señal / Wave</span><span class="tag">Onda</span></div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var accent = "#4A90D9";
+  var accent2 = "#5BC0BE";
+  var accentR = "74,144,217";
+  var accent2R = "91,192,190";
+  var bg = "#0a0a0f";
+
+  function hexToRgb(h) {
+    var r = parseInt(h.slice(1,3),16), g = parseInt(h.slice(3,5),16), b = parseInt(h.slice(5,7),16);
+    return r+","+g+","+b;
+  }
+
+  function resizeCanvas(c) {
+    var rect = c.parentElement.getBoundingClientRect();
+    c.width = rect.width * devicePixelRatio;
+    c.height = rect.height * devicePixelRatio;
+    c.style.width = rect.width + "px";
+    c.style.height = rect.height + "px";
+    var ctx = c.getContext("2d");
+    ctx.scale(devicePixelRatio, devicePixelRatio);
+    return { w: rect.width, h: rect.height, ctx: ctx };
+  }
+
+  // ─── 1. MATRIX RAIN ───
+  (function(){
+    var c = document.getElementById("c1");
+    var ctx, w, h, cols, drops, fontSize = 14;
+    var chars = "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEF<>/{}[]|&_";
+
+    function setup() {
+      var r = resizeCanvas(c);
+      ctx = r.ctx; w = r.w; h = r.h;
+      cols = Math.floor(w / fontSize);
+      drops = Array(cols).fill(1);
+    }
+
+    function draw() {
+      ctx.fillStyle = "rgba(10,10,15,0.05)";
+      ctx.fillRect(0, 0, w, h);
+      ctx.font = fontSize + "px monospace";
+      for (var i = 0; i < cols; i++) {
+        var char = chars[Math.floor(Math.random() * chars.length)];
+        var alpha = Math.random() * 0.5 + 0.5;
+        var isHead = drops[i] * fontSize < fontSize * 2;
+        ctx.fillStyle = isHead ? "rgba(" + accentR + ",1)" : "rgba(" + accentR + "," + (alpha * 0.4) + ")";
+        ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > h && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+      }
+      requestAnimationFrame(draw);
+    }
+
+    setup();
+    window.addEventListener("resize", setup);
+    draw();
+  })();
+
+  // ─── 2. PARTICLE NETWORK ───
+  (function(){
+    var c = document.getElementById("c2");
+    var ctx, w, h, particles = [];
+    var count = 60;
+
+    function setup() {
+      var r = resizeCanvas(c);
+      ctx = r.ctx; w = r.w; h = r.h;
+      particles = [];
+      for (var i = 0; i < count; i++) {
+        particles.push({
+          x: Math.random() * w, y: Math.random() * h,
+          vx: (Math.random() - 0.5) * 0.6,
+          vy: (Math.random() - 0.5) * 0.6,
+          r: Math.random() * 2 + 1
+        });
+      }
+    }
+
+    function draw() {
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, w, h);
+      for (var i = 0; i < particles.length; i++) {
+        var p = particles[i];
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0 || p.x > w) p.vx *= -1;
+        if (p.y < 0 || p.y > h) p.vy *= -1;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(" + accentR + ",0.7)";
+        ctx.fill();
+        for (var j = i + 1; j < particles.length; j++) {
+          var dx = particles[j].x - p.x, dy = particles[j].y - p.y;
+          var dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 150) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = "rgba(" + accentR + "," + (0.15 * (1 - dist / 150)) + ")";
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(draw);
+    }
+
+    setup();
+    window.addEventListener("resize", setup);
+    draw();
+  })();
+
+  // ─── 3. CIRCUIT BOARD ───
+  (function(){
+    var c = document.getElementById("c3");
+    var ctx, w, h, lines = [];
+
+    function setup() {
+      var r = resizeCanvas(c);
+      ctx = r.ctx; w = r.w; h = r.h;
+      lines = [];
+      for (var i = 0; i < 25; i++) {
+        var startX = Math.random() * w, startY = Math.random() * h;
+        var angle = Math.random() * Math.PI * 2;
+        var len = 30 + Math.random() * 80;
+        var endX = startX + Math.cos(angle) * len;
+        var endY = startY + Math.sin(angle) * len;
+        // Add right angles
+        var midX = startX + Math.cos(angle) * (len * 0.5) + (Math.random() - 0.5) * 30;
+        var midY = startY + Math.sin(angle) * (len * 0.5) + (Math.random() - 0.5) * 30;
+        lines.push({ x1: startX, y1: startY, x2: midX, y2: midY, x3: endX, y3: endY, phase: Math.random() * Math.PI * 2 });
+      }
+    }
+
+    function draw() {
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, w, h);
+      var t = Date.now() / 2000;
+      for (var i = 0; i < lines.length; i++) {
+        var l = lines[i];
+        var pulse = Math.sin(t + l.phase) * 0.5 + 0.5;
+        ctx.strokeStyle = "rgba(" + accentR + "," + (0.2 + pulse * 0.4) + ")";
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(l.x1, l.y1);
+        ctx.lineTo(l.x2, l.y2);
+        ctx.lineTo(l.x3, l.y3);
+        ctx.stroke();
+        // Dot at junction
+        ctx.beginPath();
+        ctx.arc(l.x2, l.y2, 2.5, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(" + accent2R + "," + (0.3 + pulse * 0.5) + ")";
+        ctx.fill();
+      }
+      requestAnimationFrame(draw);
+    }
+
+    setup();
+    window.addEventListener("resize", setup);
+    draw();
+  })();
+
+  // ─── 4. BINARY RAIN ───
+  (function(){
+    var c = document.getElementById("c4");
+    var ctx, w, h, particles = [];
+
+    function setup() {
+      var r = resizeCanvas(c);
+      ctx = r.ctx; w = r.w; h = r.h;
+      particles = [];
+      for (var i = 0; i < 80; i++) {
+        particles.push({
+          x: Math.random() * w, y: Math.random() * h,
+          vy: 0.3 + Math.random() * 0.8,
+          value: Math.random() > 0.5 ? "1" : "0",
+          size: 10 + Math.random() * 6,
+          opacity: 0.1 + Math.random() * 0.5
+        });
+      }
+    }
+
+    function draw() {
+      ctx.fillStyle = "rgba(10,10,15,0.08)";
+      ctx.fillRect(0, 0, w, h);
+      ctx.font = "bold 12px monospace";
+      for (var i = 0; i < particles.length; i++) {
+        var p = particles[i];
+        p.y += p.vy;
+        if (p.y > h) { p.y = -10; p.x = Math.random() * w; p.value = Math.random() > 0.5 ? "1" : "0"; }
+        ctx.fillStyle = "rgba(" + accentR + "," + p.opacity + ")";
+        ctx.fillText(p.value, p.x, p.y);
+      }
+      requestAnimationFrame(draw);
+    }
+
+    setup();
+    window.addEventListener("resize", setup);
+    draw();
+  })();
+
+  // ─── 5. GLOWING GRID ───
+  (function(){
+    var c = document.getElementById("c5");
+    var ctx, w, h, step = 40;
+
+    function setup() {
+      var r = resizeCanvas(c);
+      ctx = r.ctx; w = r.w; h = r.h;
+    }
+
+    function draw() {
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, w, h);
+      var t = Date.now() / 3000;
+      ctx.strokeStyle = "rgba(" + accentR + ",0.08)";
+      ctx.lineWidth = 0.5;
+      for (var x = 0; x < w; x += step) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0); ctx.lineTo(x, h);
+        ctx.stroke();
+      }
+      for (var y = 0; y < h; y += step) {
+        ctx.beginPath();
+        ctx.moveTo(0, y); ctx.lineTo(w, y);
+        ctx.stroke();
+      }
+      // Glowing dot at intersections
+      for (var x = 0; x < w; x += step) {
+        for (var y = 0; y < h; y += step) {
+          var dx = x - w/2, dy = y - h/2;
+          var dist = Math.sqrt(dx*dx + dy*dy);
+          var wave = Math.sin(dist * 0.02 - t * 2) * 0.5 + 0.5;
+          var alpha = wave * 0.4;
+          ctx.beginPath();
+          ctx.arc(x, y, 1.5 + wave * 1.5, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(" + accentR + "," + alpha + ")";
+          ctx.fill();
+        }
+      }
+      requestAnimationFrame(draw);
+    }
+
+    setup();
+    window.addEventListener("resize", setup);
+    draw();
+  })();
+
+  // ─── 6. DATA STREAM ───
+  (function(){
+    var c = document.getElementById("c6");
+    var ctx, w, h, streams = [];
+
+    function setup() {
+      var r = resizeCanvas(c);
+      ctx = r.ctx; w = r.w; h = r.h;
+      streams = [];
+      for (var i = 0; i < 30; i++) {
+        streams.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          speed: 1 + Math.random() * 3,
+          length: 20 + Math.random() * 60,
+          width: 1 + Math.random() * 2,
+          phase: Math.random() * Math.PI * 2
+        });
+      }
+    }
+
+    function draw() {
+      ctx.fillStyle = "rgba(10,10,15,0.06)";
+      ctx.fillRect(0, 0, w, h);
+      var t = Date.now() / 1000;
+      for (var i = 0; i < streams.length; i++) {
+        var s = streams[i];
+        s.y += s.speed;
+        if (s.y - s.length > h) { s.y = -s.length; s.x = Math.random() * w; }
+        var grad = ctx.createLinearGradient(s.x, s.y - s.length, s.x, s.y);
+        grad.addColorStop(0, "rgba(" + accentR + ",0)");
+        grad.addColorStop(0.5, "rgba(" + accentR + "," + (0.2 + Math.sin(t + s.phase) * 0.1) + ")");
+        grad.addColorStop(1, "rgba(" + accent2R + ",0.5)");
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = s.width;
+        ctx.beginPath();
+        ctx.moveTo(s.x, s.y - s.length);
+        ctx.lineTo(s.x, s.y);
+        ctx.stroke();
+      }
+      requestAnimationFrame(draw);
+    }
+
+    setup();
+    window.addEventListener("resize", setup);
+    draw();
+  })();
+
+  // ─── 7. HEX GRID ───
+  (function(){
+    var c = document.getElementById("c7");
+    var ctx, w, h, size = 22;
+
+    function hexCenter(x, y, s) {
+      var cx = x * s * 1.5 + s;
+      var cy = y * s * Math.sqrt(3) + (x % 2 === 0 ? s * Math.sqrt(3) / 2 : 0) + s * Math.sqrt(3) / 2;
+      return { cx: cx, cy: cy };
+    }
+
+    function setup() {
+      var r = resizeCanvas(c);
+      ctx = r.ctx; w = r.w; h = r.h;
+    }
+
+    function draw() {
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, w, h);
+      var t = Date.now() / 4000;
+      var cols = Math.ceil(w / (size * 1.5)) + 2;
+      var rows = Math.ceil(h / (size * Math.sqrt(3))) + 2;
+      for (var x = 0; x < cols; x++) {
+        for (var y = 0; y < rows; y++) {
+          var hc = hexCenter(x, y, size);
+          var dx = hc.cx - w/2, dy = hc.cy - h/2;
+          var dist = Math.sqrt(dx*dx + dy*dy);
+          var wave = Math.sin(dist * 0.03 - t * 1.5) * 0.5 + 0.5;
+          var alpha = 0.05 + wave * 0.2;
+          ctx.strokeStyle = "rgba(" + accentR + "," + alpha + ")";
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          for (var i = 0; i < 6; i++) {
+            var angle = Math.PI / 3 * i - Math.PI / 6;
+            var px = hc.cx + size * Math.cos(angle);
+            var py = hc.cy + size * Math.sin(angle);
+            i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+          }
+          ctx.closePath();
+          ctx.stroke();
+        }
+      }
+      requestAnimationFrame(draw);
+    }
+
+    setup();
+    window.addEventListener("resize", setup);
+    draw();
+  })();
+
+  // ─── 8. RADAR SCAN ───
+  (function(){
+    var c = document.getElementById("c8");
+    var ctx, w, h;
+
+    function setup() {
+      var r = resizeCanvas(c);
+      ctx = r.ctx; w = r.w; h = r.h;
+    }
+
+    function draw() {
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, w, h);
+      var t = Date.now() / 3000;
+      var cx = w / 2, cy = h / 2;
+      var radius = Math.min(w, h) * 0.4;
+
+      // Rings
+      for (var i = 1; i <= 4; i++) {
+        ctx.beginPath();
+        ctx.arc(cx, cy, radius * (i / 4), 0, Math.PI * 2);
+        ctx.strokeStyle = "rgba(" + accentR + "," + (0.04 + i * 0.02) + ")";
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+      }
+
+      // Sweep line
+      var angle = t * Math.PI * 2;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.arc(cx, cy, radius, angle - 0.15, angle);
+      ctx.closePath();
+      ctx.fillStyle = "rgba(" + accentR + ",0.06)";
+      ctx.fill();
+
+      // Scan line
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(cx + Math.cos(angle) * radius, cy + Math.sin(angle) * radius);
+      ctx.strokeStyle = "rgba(" + accent2R + ",0.4)";
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      // Center dot
+      ctx.beginPath();
+      ctx.arc(cx, cy, 3, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(" + accent2R + ",0.8)";
+      ctx.fill();
+
+      // Blips
+      for (var i = 0; i < 8; i++) {
+        var ba = Math.sin(i * 2.5 + t * 1.2) * Math.PI * 2;
+        var bd = radius * (0.2 + Math.sin(i * 1.7 + t * 0.8) * 0.3);
+        var bx = cx + Math.cos(ba) * bd;
+        var by = cy + Math.sin(ba) * bd;
+        ctx.beginPath();
+        ctx.arc(bx, by, 2, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(" + accentR + ",0.5)";
+        ctx.fill();
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    setup();
+    window.addEventListener("resize", setup);
+    draw();
+  })();
+
+  // ─── 9. FLOATING TECH SHAPES ───
+  (function(){
+    var c = document.getElementById("c9");
+    var ctx, w, h, shapes = [];
+    var symbols = ["<", "/>", "{}", "()", "[]", "&&", "||", "#", "$", "@"];
+
+    function setup() {
+      var r = resizeCanvas(c);
+      ctx = r.ctx; w = r.w; h = r.h;
+      shapes = [];
+      for (var i = 0; i < 25; i++) {
+        shapes.push({
+          x: Math.random() * w, y: Math.random() * h,
+          vx: (Math.random() - 0.5) * 0.3,
+          vy: (Math.random() - 0.5) * 0.3,
+          size: 14 + Math.random() * 20,
+          symbol: symbols[Math.floor(Math.random() * symbols.length)],
+          rotation: Math.random() * Math.PI * 2,
+          rotSpeed: (Math.random() - 0.5) * 0.01,
+          opacity: 0.08 + Math.random() * 0.2,
+          phase: Math.random() * Math.PI * 2
+        });
+      }
+    }
+
+    function draw() {
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, w, h);
+      var t = Date.now() / 2000;
+      for (var i = 0; i < shapes.length; i++) {
+        var s = shapes[i];
+        s.x += s.vx + Math.sin(t + s.phase) * 0.2;
+        s.y += s.vy + Math.cos(t + s.phase) * 0.2;
+        s.rotation += s.rotSpeed;
+        if (s.x < -40 || s.x > w + 40) s.vx *= -1;
+        if (s.y < -40 || s.y > h + 40) s.vy *= -1;
+        ctx.save();
+        ctx.translate(s.x, s.y);
+        ctx.rotate(s.rotation);
+        ctx.font = s.size + "px monospace";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillStyle = "rgba(" + accentR + "," + (s.opacity + Math.sin(t + s.phase) * 0.05) + ")";
+        ctx.fillText(s.symbol, 0, 0);
+        ctx.restore();
+      }
+      requestAnimationFrame(draw);
+    }
+
+    setup();
+    window.addEventListener("resize", setup);
+    draw();
+  })();
+
+  // ─── 10. WAVE SIGNAL ───
+  (function(){
+    var c = document.getElementById("c10");
+    var ctx, w, h;
+
+    function setup() {
+      var r = resizeCanvas(c);
+      ctx = r.ctx; w = r.w; h = r.h;
+    }
+
+    function draw() {
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, w, h);
+      var t = Date.now() / 2000;
+
+      for (var line = 0; line < 5; line++) {
+        var baseY = h * (0.15 + line * 0.18);
+        var amp = 10 + line * 5;
+        var freq = 0.02 + line * 0.005;
+        ctx.beginPath();
+        for (var x = 0; x < w; x += 2) {
+          var y = baseY + Math.sin(x * freq + t * 2 + line * 1.5) * amp
+                  + Math.sin(x * freq * 2.5 + t * 1.3 + line) * amp * 0.3;
+          x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+        }
+        ctx.strokeStyle = "rgba(" + (line % 2 === 0 ? accentR : accent2R) + "," + (0.1 + line * 0.06) + ")";
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        // Glow
+        ctx.shadowColor = line % 2 === 0 ? "rgba(" + accentR + ",0.15)" : "rgba(" + accent2R + ",0.15)";
+        ctx.shadowBlur = 8;
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+
+        // Fill below wave
+        ctx.lineTo(w, baseY + amp + 10);
+        ctx.lineTo(0, baseY + amp + 10);
+        ctx.closePath();
+        ctx.fillStyle = "rgba(" + (line % 2 === 0 ? accentR : accent2R) + ",0.02)";
+        ctx.fill();
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    setup();
+    window.addEventListener("resize", setup);
+    draw();
+  })();
+
+})();
+</script>
+</body>
+</html>

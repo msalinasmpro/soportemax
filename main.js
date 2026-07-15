@@ -699,7 +699,6 @@
               '<img src="' + imgSrc + '" alt="' + escHTML(s.title) + '" loading="lazy">' +
               '<div class="service-card-overlay"></div>' +
             '</div>' +
-            '</div>' +
             '<div class="service-card-content">' +
               '<div class="service-card-icon">' + iconSvg + '</div>' +
               '<h3 class="service-card-title">' + escHTML(s.title) + '</h3>' +
@@ -722,10 +721,71 @@
   }
 
   /* ============================================
+     Wave Background Animation
+     ============================================ */
+  function initWaveBg() {
+    var c = document.getElementById("bg-wave");
+    if (!c) return;
+    var ctx, w, h;
+
+    function resize() {
+      var rect = c.parentElement.getBoundingClientRect();
+      w = window.innerWidth;
+      h = window.innerHeight;
+      c.width = w * devicePixelRatio;
+      c.height = h * devicePixelRatio;
+      c.style.width = w + "px";
+      c.style.height = h + "px";
+      ctx = c.getContext("2d");
+      ctx.scale(devicePixelRatio, devicePixelRatio);
+    }
+
+    function draw() {
+      if (!ctx) return;
+      ctx.clearRect(0, 0, w, h);
+      var t = Date.now() / 2000;
+
+      for (var line = 0; line < 5; line++) {
+        var baseY = h * (0.12 + line * 0.17);
+        var amp = 12 + line * 6;
+        var freq = 0.015 + line * 0.004;
+
+        ctx.beginPath();
+        for (var x = 0; x < w; x += 2) {
+          var y = baseY
+            + Math.sin(x * freq + t * 2 + line * 1.5) * amp
+            + Math.sin(x * freq * 2.5 + t * 1.3 + line) * amp * 0.3;
+          x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+        }
+
+        var color = line % 2 === 0 ? "74, 144, 217" : "91, 192, 190";
+        var alpha = 0.08 + line * 0.04;
+        ctx.strokeStyle = "rgba(" + color + "," + alpha + ")";
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        // Fill below
+        ctx.lineTo(w, baseY + amp + 10);
+        ctx.lineTo(0, baseY + amp + 10);
+        ctx.closePath();
+        ctx.fillStyle = "rgba(" + color + ",0.015)";
+        ctx.fill();
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    resize();
+    window.addEventListener("resize", resize);
+    draw();
+  }
+
+  /* ============================================
      Boot
      ============================================ */
   function boot() {
     console.log("[Isinet] boot called, DOM ready:", document.readyState);
+    safe(initWaveBg, "initWaveBg");
     safe(initSplash, "initSplash");
     safe(initNav, "initNav");
     safe(initThemeToggle, "initThemeToggle");
