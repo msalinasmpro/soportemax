@@ -1779,25 +1779,7 @@ em {
 [data-reveal-cards] .reveal:nth-child(6) { transition-delay: 0.2s; }
 
 /* ============================================
-   22. PAGE TRANSITION
-   ============================================ */
-.page-transition {
-  position: fixed;
-  inset: 0;
-  z-index: 99999;
-  pointer-events: none;
-  background: var(--bg);
-  transform: scaleY(0);
-  transform-origin: bottom;
-  transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
-}
-
-.page-transition.is-active {
-  transform: scaleY(1);
-}
-
-/* ============================================
-   23. RESPONSIVE
+    23. RESPONSIVE
    ============================================ */
 @media (max-width: 539px) {
   .hero-content { padding-top: calc(var(--nav-height) + var(--space-10)); }

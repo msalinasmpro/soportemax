@@ -513,7 +513,6 @@
      Smooth Scroll for Anchors
      ============================================ */
   function initSmoothScroll() {
-    var transEl = document.getElementById("page-transition");
     document.addEventListener("click", function (e) {
       var a = e.target.closest('a[href^="#"]');
       if (!a) return;
@@ -522,24 +521,11 @@
       var el = document.querySelector(id);
       if (!el) return;
       e.preventDefault();
-
-      if (transEl && !reduced) {
-        transEl.classList.add("is-active");
-        setTimeout(function () {
-          var navOffset = 80;
-          window.scrollTo({
-            top: el.getBoundingClientRect().top + window.scrollY - navOffset,
-            behavior: "auto"
-          });
-          setTimeout(function () { transEl.classList.remove("is-active"); }, 250);
-        }, 350);
-      } else {
-        var navOffset = 80;
-        window.scrollTo({
-          top: el.getBoundingClientRect().top + window.scrollY - navOffset,
-          behavior: reduced ? "auto" : "smooth"
-        });
-      }
+      var navOffset = 80;
+      window.scrollTo({
+        top: el.getBoundingClientRect().top + window.scrollY - navOffset,
+        behavior: "smooth"
+      });
     });
   }
 
