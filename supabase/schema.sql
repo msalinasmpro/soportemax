@@ -194,3 +194,19 @@ ON CONFLICT DO NOTHING;
 INSERT INTO map_config (lat, lng, zoom, address) VALUES
   (-33.4489, -70.6693, 15, 'Av. Tecnología 1234, Santiago, Chile')
 ON CONFLICT DO NOTHING;
+
+-- ============================================
+-- 10. CLIENTS (logo carousel)
+-- ============================================
+CREATE TABLE IF NOT EXISTS clients (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name TEXT NOT NULL,
+  logo_url TEXT,
+  sort_order INT DEFAULT 0,
+  active BOOLEAN DEFAULT true,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+ALTER TABLE clients ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "clients_select" ON clients FOR SELECT USING (active = true);
+CREATE POLICY "clients_all_auth" ON clients FOR ALL USING (auth.role() = 'authenticated');
