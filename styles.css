@@ -1779,6 +1779,156 @@ em {
 [data-reveal-cards] .reveal:nth-child(6) { transition-delay: 0.2s; }
 
 /* ============================================
+   22. CLIENTS MARQUEE
+   ============================================ */
+.section-clients {
+  padding: var(--space-16) 0 var(--space-20);
+  overflow: hidden;
+}
+
+.section-clients .section-header {
+  text-align: center;
+  margin-bottom: var(--space-12);
+}
+
+.clients-marquee-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: var(--space-8) 0;
+}
+
+/* Gradient fade edges */
+.clients-marquee-wrapper::before,
+.clients-marquee-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 120px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.clients-marquee-wrapper::before {
+  left: 0;
+  background: linear-gradient(to right, var(--bg) 0%, transparent 100%);
+}
+
+.clients-marquee-wrapper::after {
+  right: 0;
+  background: linear-gradient(to left, var(--bg) 0%, transparent 100%);
+}
+
+[data-theme="light"] .clients-marquee-wrapper::before {
+  background: linear-gradient(to right, #f8f9fa 0%, transparent 100%);
+}
+
+[data-theme="light"] .clients-marquee-wrapper::after {
+  background: linear-gradient(to left, #f8f9fa 0%, transparent 100%);
+}
+
+.clients-marquee {
+  display: flex;
+  gap: var(--space-6);
+  width: max-content;
+  animation: marqueeScroll 30s linear infinite;
+}
+
+.clients-marquee:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marqueeScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.client-card {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 120px;
+  padding: var(--space-5);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  transition: all 0.3s var(--ease-out);
+  cursor: default;
+}
+
+.client-card:hover {
+  border-color: var(--accent);
+  background: var(--surface-3);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-glow);
+}
+
+.client-card img {
+  max-width: 140px;
+  max-height: 80px;
+  object-fit: contain;
+  filter: grayscale(100%) opacity(0.7);
+  transition: filter 0.3s var(--ease-out);
+}
+
+.client-card:hover img {
+  filter: grayscale(0%) opacity(1);
+}
+
+.client-card-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  color: var(--text-4);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.client-card-placeholder svg {
+  opacity: 0.5;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .clients-marquee {
+    animation: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .client-card:hover {
+    transform: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .client-card {
+    width: 160px;
+    height: 100px;
+  }
+
+  .client-card img {
+    max-width: 110px;
+    max-height: 60px;
+  }
+
+  .clients-marquee-wrapper::before,
+  .clients-marquee-wrapper::after {
+    width: 60px;
+  }
+}
+
+/* ============================================
     23. RESPONSIVE
    ============================================ */
 @media (max-width: 539px) {

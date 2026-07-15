@@ -180,6 +180,8 @@
       "text_proc4_name": "#proceso .process-step:nth-child(4) .process-title",
       "text_proc4_desc": "#proceso .process-step:nth-child(4) .process-desc",
       "text_testimonials_title": "#testimonios .section-title",
+      "text_clients_title": "#clientes .section-title",
+      "text_clients_tag": "#clientes .section-tag",
       "text_faq_title": "#faq .section-title",
       "text_contact_title": "#contacto .section-title",
       "text_contact_sub": "#contacto .section-subtitle",
@@ -190,7 +192,7 @@
       if (cfg[key]) {
         var el = document.querySelector(textMap[key]);
         if (el) {
-           if (key === "text_hero_title" || key === "text_about_title" || key === "text_services_title" || key === "text_features_title" || key === "text_process_title" || key === "text_testimonials_title" || key === "text_faq_title" || key === "text_contact_title") {
+           if (key === "text_hero_title" || key === "text_about_title" || key === "text_services_title" || key === "text_features_title" || key === "text_process_title" || key === "text_testimonials_title" || key === "text_clients_title" || key === "text_faq_title" || key === "text_contact_title") {
             // Headlines with <em> — preserve the gradient emphasis
             el.innerHTML = cfg[key];
           } else {
@@ -627,6 +629,54 @@
   }
 
   /* ============================================
+     Clients Marquee
+     ============================================ */
+  function initClientsMarquee() {
+    var marquee = document.getElementById("clients-marquee");
+    if (!marquee) return;
+
+    fetch("/api/clients?" + Date.now())
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (!data || !data.length) {
+          marquee.parentElement.style.display = "none";
+          return;
+        }
+
+        // Create cards HTML
+        var cardsHTML = data.map(function (client) {
+          var logoSrc = client.logo_url || "";
+          var name = client.name || "Cliente";
+          
+          if (logoSrc) {
+            return '<div class="client-card">' +
+              '<img src="' + escHTML(logoSrc) + '" alt="' + escHTML(name) + '" loading="lazy">' +
+            '</div>';
+          } else {
+            return '<div class="client-card">' +
+              '<div class="client-card-placeholder">' +
+                '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>' +
+                '<span>' + escHTML(name) + '</span>' +
+              '</div>' +
+            '</div>';
+          }
+        }).join("");
+
+        // Duplicate for seamless loop
+        marquee.innerHTML = cardsHTML + cardsHTML;
+
+        // Update animation duration based on content width
+        var totalWidth = marquee.scrollWidth / 2;
+        var duration = Math.max(20, totalWidth / 50); // 50px per second
+        marquee.style.animationDuration = duration + "s";
+      })
+      .catch(function (e) {
+        console.log("[Isinet] Clients load error:", e);
+        marquee.parentElement.style.display = "none";
+      });
+  }
+
+  /* ============================================
      Dynamic Services
      ============================================ */
   var serviceImageMap = {
@@ -791,6 +841,7 @@
     safe(initMagnetic, "initMagnetic");
     safe(initGSAP, "initGSAP");
     safe(initServices, "initServices");
+    safe(initClientsMarquee, "initClientsMarquee");
     safe(loadSiteConfig, "loadSiteConfig");
   }
 
