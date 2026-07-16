@@ -162,24 +162,50 @@
       <!-- ===== LOGO ===== -->
       <div class="panel-section" id="section-logo">
         <div class="panel-section-header"><h2>Logo de la Empresa</h2></div>
-        <p style="color:var(--text-3);margin-bottom:20px;font-size:0.9rem;">El logo se muestra arriba a la izquierda en la página principal. Sube una imagen PNG o SVG con fondo transparente para mejor resultado.</p>
-        <div class="logo-upload-area">
-          <div class="logo-current">
-            <p class="field-label" style="margin-bottom:8px;">Logo actual:</p>
-            <div class="logo-preview-box">
-              <img id="logo-preview" src="" alt="Logo actual" style="max-width:200px;max-height:80px;display:none;">
-              <span id="logo-placeholder" style="color:var(--text-4);font-size:0.85rem;">Sin logo personalizado (se muestra el icono ⚡)</span>
-            </div>
+        <p style="color:var(--text-3);margin-bottom:20px;font-size:0.9rem;">Sube un logo para cada tema. Selecciona la imagen según el fondo del sitio.</p>
+
+        <!-- Logo Tema Oscuro -->
+        <div style="margin-bottom:28px;padding:20px;background:var(--surface-2);border:1px solid var(--line);border-radius:16px;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+            <span style="background:#0a0a0f;padding:4px 10px;border-radius:6px;font-size:0.75rem;font-weight:600;color:#fff;">Tema Oscuro</span>
+            <span style="color:var(--text-4);font-size:0.85rem;">Se muestra cuando el sitio está en modo oscuro</span>
+          </div>
+          <div class="logo-preview-box" style="background:#0a0a0f;margin-bottom:12px;">
+            <img id="logo-preview-dark" src="" alt="Logo tema oscuro" style="max-width:200px;max-height:80px;display:none;">
+            <span id="logo-placeholder-dark" style="color:var(--text-4);font-size:0.85rem;">Sin logo (se muestra el icono ⚡)</span>
           </div>
           <div style="display:flex;gap:12px;flex-wrap:wrap;">
             <label class="btn btn-small" style="cursor:pointer;">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-              Subir logo nuevo
-              <input type="file" id="logo-upload" accept="image/png,image/svg+xml,image/jpeg" hidden>
+              Subir logo
+              <input type="file" id="logo-upload-dark" accept=".png,.jpg,.jpeg,.webp,.avif,.svg,image/*" hidden>
             </label>
-            <button class="btn btn-danger" id="btn-delete-logo" type="button">
+            <button class="btn btn-danger" id="btn-delete-logo-dark" type="button">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-              Eliminar logo
+              Eliminar
+            </button>
+          </div>
+        </div>
+
+        <!-- Logo Tema Claro -->
+        <div style="padding:20px;background:var(--surface-2);border:1px solid var(--line);border-radius:16px;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+            <span style="background:#f8f9fa;padding:4px 10px;border-radius:6px;font-size:0.75rem;font-weight:600;color:#111;">Tema Claro</span>
+            <span style="color:var(--text-4);font-size:0.85rem;">Se muestra cuando el sitio está en modo claro</span>
+          </div>
+          <div class="logo-preview-box" style="background:#f8f9fa;margin-bottom:12px;">
+            <img id="logo-preview-light" src="" alt="Logo tema claro" style="max-width:200px;max-height:80px;display:none;">
+            <span id="logo-placeholder-light" style="color:var(--text-4);font-size:0.85rem;">Sin logo (se muestra el icono ⚡)</span>
+          </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            <label class="btn btn-small" style="cursor:pointer;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              Subir logo
+              <input type="file" id="logo-upload-light" accept=".png,.jpg,.jpeg,.webp,.avif,.svg,image/*" hidden>
+            </label>
+            <button class="btn btn-danger" id="btn-delete-logo-light" type="button">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+              Eliminar
             </button>
           </div>
         </div>
@@ -463,7 +489,7 @@
             <input type="email" class="field-input" data-key="smtp_from" placeholder="noreply@isinet.cl">
           </div>
         </div>
-        <div style="margin-top:20px;padding:16px;background:rgba(59,130,246,0.05);border:1px solid rgba(59,130,246,0.1);border-radius:12px;">
+        <div style="margin-top:20px;padding:16px;background:rgba(6,182,212,0.05);border:1px solid rgba(6,182,212,0.1);border-radius:12px;">
           <p style="color:var(--text-3);font-size:0.85rem;line-height:1.6;">
             <strong style="color:var(--text-2);">Cómo configurar:</strong><br>
             • <strong>Gmail:</strong> Host: <code>smtp.gmail.com</code>, Puerto: <code>587</code>. Necesitas una "App Password" (no tu contraseña normal).<br>
@@ -471,6 +497,13 @@
             • <strong>Yahoo:</strong> Host: <code>smtp.mail.yahoo.com</code>, Puerto: <code>587</code>.<br>
             • <strong>Otro:</strong> Consulta con tu proveedor de correo los datos SMTP.
           </p>
+        </div>
+        <div style="margin-top:20px;display:flex;gap:12px;align-items:center;">
+          <button class="btn btn-primary" id="btn-test-smtp" type="button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg>
+            Probar configuración
+          </button>
+          <span id="smtp-test-result" style="font-size:0.85rem;"></span>
         </div>
       </div>
 
@@ -576,6 +609,27 @@
       var k = i.getAttribute("data-key");
       if (cfg[k] !== undefined) i.value = cfg[k];
     });
+    // Load logo previews
+    if (cfg.logo_url_dark) {
+      var p = document.getElementById("logo-preview-dark");
+      var ph = document.getElementById("logo-placeholder-dark");
+      if (p) { p.src = cfg.logo_url_dark; p.style.display = "block"; }
+      if (ph) ph.style.display = "none";
+    }
+    if (cfg.logo_url_light) {
+      var p2 = document.getElementById("logo-preview-light");
+      var ph2 = document.getElementById("logo-placeholder-light");
+      if (p2) { p2.src = cfg.logo_url_light; p2.style.display = "block"; }
+      if (ph2) ph2.style.display = "none";
+    }
+    // Legacy: load old logo_url into dark if no dark logo set
+    if (!cfg.logo_url_dark && cfg.logo_url) {
+      cfg.logo_url_dark = cfg.logo_url;
+      var p3 = document.getElementById("logo-preview-dark");
+      var ph3 = document.getElementById("logo-placeholder-dark");
+      if (p3) { p3.src = cfg.logo_url; p3.style.display = "block"; }
+      if (ph3) ph3.style.display = "none";
+    }
   }
   function saveCfg() {
     document.querySelectorAll(".field-input[data-key]").forEach(function(i) {
@@ -599,22 +653,64 @@
   document.querySelectorAll(".field-input").forEach(function(i) { i.addEventListener("input", markDirty); });
   if (saveBtn) saveBtn.addEventListener("click", saveCfg);
 
-  // Logo
-  var lu = document.getElementById("logo-upload");
-  if (lu) lu.addEventListener("change", function() {
+  // Logo Dark
+  var luDark = document.getElementById("logo-upload-dark");
+  if (luDark) luDark.addEventListener("change", function() {
     var f = this.files[0];
-    if (!f || f.size > 2e6) return;
+    if (!f || f.size > 3e6) { show("Máx 3MB", "is-error"); return; }
     var r = new FileReader();
     r.onload = function(e) {
-      cfg.logo_url = e.target.result;
-      var p = document.getElementById("logo-preview");
-      var ph = document.getElementById("logo-placeholder");
-      if (p) { p.src = cfg.logo_url; p.style.display = "block"; }
+      cfg.logo_url_dark = e.target.result;
+      var p = document.getElementById("logo-preview-dark");
+      var ph = document.getElementById("logo-placeholder-dark");
+      if (p) { p.src = cfg.logo_url_dark; p.style.display = "block"; }
       if (ph) ph.style.display = "none";
       markDirty();
-      show("Logo cargado", "is-success");
+      show("Logo oscuro cargado", "is-success");
     };
     r.readAsDataURL(f);
+  });
+
+  // Logo Light
+  var luLight = document.getElementById("logo-upload-light");
+  if (luLight) luLight.addEventListener("change", function() {
+    var f = this.files[0];
+    if (!f || f.size > 3e6) { show("Máx 3MB", "is-error"); return; }
+    var r = new FileReader();
+    r.onload = function(e) {
+      cfg.logo_url_light = e.target.result;
+      var p = document.getElementById("logo-preview-light");
+      var ph = document.getElementById("logo-placeholder-light");
+      if (p) { p.src = cfg.logo_url_light; p.style.display = "block"; }
+      if (ph) ph.style.display = "none";
+      markDirty();
+      show("Logo claro cargado", "is-success");
+    };
+    r.readAsDataURL(f);
+  });
+
+  // Delete Logo Dark
+  var delDark = document.getElementById("btn-delete-logo-dark");
+  if (delDark) delDark.addEventListener("click", function() {
+    cfg.logo_url_dark = "";
+    var p = document.getElementById("logo-preview-dark");
+    var ph = document.getElementById("logo-placeholder-dark");
+    if (p) { p.src = ""; p.style.display = "none"; }
+    if (ph) ph.style.display = "block";
+    markDirty();
+    show("Logo oscuro eliminado", "is-success");
+  });
+
+  // Delete Logo Light
+  var delLight = document.getElementById("btn-delete-logo-light");
+  if (delLight) delLight.addEventListener("click", function() {
+    cfg.logo_url_light = "";
+    var p = document.getElementById("logo-preview-light");
+    var ph = document.getElementById("logo-placeholder-light");
+    if (p) { p.src = ""; p.style.display = "none"; }
+    if (ph) ph.style.display = "block";
+    markDirty();
+    show("Logo claro eliminado", "is-success");
   });
 
   // Hero image
@@ -800,7 +896,7 @@
     if (!l) return;
     l.innerHTML = clients.map(function(c) {
       var logoPreview = c.logo_url ? '<img src="' + san(c.logo_url) + '" style="width:60px;height:60px;object-fit:contain;border-radius:8px;background:var(--surface-3);padding:4px;">' : '<div style="width:60px;height:60px;border-radius:8px;background:var(--surface-3);display:flex;align-items:center;justify-content:center;color:var(--text-4);font-size:0.7rem;">Sin logo</div>';
-      return '<div class="panel-list-item"><div class="panel-list-item-header"><span class="panel-list-item-title">' + san(c.name) + '</span><button class="btn-danger" data-delclient="' + c.id + '">Eliminar</button></div><div class="panel-list-item-fields"><div class="panel-field"><label class="field-label">Nombre</label><input class="field-input" value="' + san(c.name) + '" data-updclient="' + c.id + ':name"></div><div class="panel-field"><label class="field-label">Logo</label><div style="display:flex;gap:12px;align-items:center;">' + logoPreview + '<input type="file" accept="image/*" class="client-logo-upload" data-clientid="' + c.id + '" style="font-size:0.85rem;"></div></div></div></div>';
+      return '<div class="panel-list-item"><div class="panel-list-item-header"><span class="panel-list-item-title">' + san(c.name) + '</span><button class="btn-danger" data-delclient="' + c.id + '">Eliminar</button></div><div class="panel-list-item-fields"><div class="panel-field"><label class="field-label">Nombre</label><input class="field-input" value="' + san(c.name) + '" data-updclient="' + c.id + ':name"></div><div class="panel-field"><label class="field-label">Logo</label><div style="display:flex;gap:12px;align-items:center;">' + logoPreview + '<input type="file" accept=".png,.jpg,.jpeg,.webp,.avif,.gif,.svg,image/*" class="client-logo-upload" data-clientid="' + c.id + '" style="font-size:0.85rem;"></div></div></div></div>';
     }).join("");
     bindClientUploads();
   }
@@ -810,15 +906,24 @@
       inp.addEventListener("change", function() {
         var cid = this.getAttribute("data-clientid");
         var file = this.files[0];
-        if (!file || file.size > 2e6) { show("Máx 2MB", "is-error"); return; }
+        if (!file || file.size > 3e6) { show("Máx 3MB", "is-error"); return; }
         var reader = new FileReader();
         reader.onload = function(ev) {
           var c = clients.find(function(x) { return x.id === cid; });
           if (!c) return;
           c.logo_url = ev.target.result;
-          markDirty();
-          renderClients();
-          show("Logo cargado", "is-success");
+          // Save to server immediately
+          fetch(API + "/api/clients", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json", "Authorization": "Bearer " + TOKEN },
+            body: JSON.stringify({ id: cid, logo_url: ev.target.result })
+          }).then(function() {
+            renderClients();
+            show("Logo guardado", "is-success");
+          }).catch(function() {
+            renderClients();
+            show("Logo cargado (pendiente guardar)", "is-success");
+          });
         };
         reader.readAsDataURL(file);
       });
@@ -865,7 +970,7 @@
     el = e.target.closest("[data-updsvc]");
     if (el) { var p = el.getAttribute("data-updsvc").split(":"); var s = svcs.find(function(x) { return x.id === p[0]; }); if (s) { s[p[1]] = el.value; markDirty(); } return; }
     el = e.target.closest("[data-updclient]");
-    if (el) { var p4 = el.getAttribute("data-updclient").split(":"); var c = clients.find(function(x) { return x.id === p4[0]; }); if (c) { c[p4[1]] = el.value; markDirty(); } return; }
+    if (el) { var p4 = el.getAttribute("data-updclient").split(":"); var c = clients.find(function(x) { return x.id === p4[0]; }); if (c) { c[p4[1]] = el.value; fetch(API + "/api/clients", { method: "PUT", headers: { "Content-Type": "application/json", "Authorization": "Bearer " + TOKEN }, body: JSON.stringify({ id: p4[0], [p4[1]]: el.value }) }).then(function() { show("Guardado", "is-success"); }).catch(function() {}); } return; }
     el = e.target.closest("[data-updtest]");
     if (el) { var p2 = el.getAttribute("data-updtest").split(":"); var t = tests.find(function(x) { return x.id === p2[0]; }); if (t) { t[p2[1]] = el.value; markDirty(); } return; }
     el = e.target.closest("[data-updfaq]");
@@ -925,6 +1030,59 @@
     });
   }
 
+  // Test SMTP button
+  var btnTestSmtp = document.getElementById("btn-test-smtp");
+  var smtpResult = document.getElementById("smtp-test-result");
+  if (btnTestSmtp) {
+    btnTestSmtp.addEventListener("click", function() {
+      var host = document.querySelector('[data-key="smtp_host"]').value;
+      var port = document.querySelector('[data-key="smtp_port"]').value;
+      var user = document.querySelector('[data-key="smtp_user"]').value;
+      var pass = document.querySelector('[data-key="smtp_pass"]').value;
+      var to = document.querySelector('[data-key="smtp_to"]').value;
+
+      if (!host || !port || !user || !pass || !to) {
+        show("Completa todos los campos SMTP primero", "is-error");
+        return;
+      }
+
+      btnTestSmtp.disabled = true;
+      btnTestSmtp.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-dasharray="31.4" stroke-dashoffset="10"/></svg> Enviando...';
+      smtpResult.innerHTML = "";
+      smtpResult.style.color = "var(--text-3)";
+
+      // Save config first, then test
+      saveCfg();
+
+      fetch(API + "/api/config", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + TOKEN },
+        body: JSON.stringify({ smtp_host: host, smtp_port: port, smtp_user: user, smtp_pass: pass, smtp_to: to, smtp_from: document.querySelector('[data-key="smtp_from"]').value || user })
+      }).then(function() {
+        return fetch(API + "/api/test-smtp", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Authorization": "Bearer " + TOKEN },
+          body: JSON.stringify({ host: host, port: port, user: user, pass: pass, to: to })
+        });
+      }).then(function(r) { return r.json(); }).then(function(d) {
+        btnTestSmtp.disabled = false;
+        btnTestSmtp.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg> Probar configuración';
+        if (d.ok) {
+          smtpResult.innerHTML = '<span style="color:#22c55e;">✓ Correo de prueba enviado a ' + to + '</span>';
+          show("Correo de prueba enviado", "is-success");
+        } else {
+          smtpResult.innerHTML = '<span style="color:#ef4444;">✗ Error: ' + (d.error || "No se pudo enviar") + '</span>';
+          show("Error al enviar correo de prueba", "is-error");
+        }
+      }).catch(function(e) {
+        btnTestSmtp.disabled = false;
+        btnTestSmtp.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg> Probar configuración';
+        smtpResult.innerHTML = '<span style="color:#ef4444;">✗ Error de conexión</span>';
+        show("Error de conexión", "is-error");
+      });
+    });
+  }
+
   // INIT
   loadCfg();
   loadSvcs();
@@ -979,7 +1137,7 @@
           var y = baseY + Math.sin(x * freq + t * 2 + line * 1.5) * amp + Math.sin(x * freq * 2.5 + t * 1.3 + line) * amp * 0.3;
           x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
         }
-        var color = line % 2 === 0 ? "74, 144, 217" : "91, 192, 190";
+        var color = line % 2 === 0 ? "6, 182, 212" : "34, 211, 238";
         var alpha = 0.12 + line * 0.06;
         ctx.strokeStyle = "rgba(" + color + "," + alpha + ")";
         ctx.lineWidth = 1.5; ctx.stroke();

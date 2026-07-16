@@ -201,10 +201,16 @@
         }
       }
     });
-    // Update logo
+    // Update logo based on current theme
     var logoEl = document.querySelector(".nav-logo-icon");
-    if (cfg.logo_url && logoEl) {
-      logoEl.innerHTML = '<img src="' + cfg.logo_url + '" alt="Logo" style="height:32px;width:auto;object-fit:contain;">';
+    if (logoEl) {
+      var currentTheme = document.documentElement.getAttribute("data-theme") || "dark";
+      var logoUrl = currentTheme === "light" ? (cfg.logo_url_light || cfg.logo_url_dark || cfg.logo_url) : (cfg.logo_url_dark || cfg.logo_url);
+      if (logoUrl) {
+        logoEl.innerHTML = '<img src="' + logoUrl + '" alt="Logo" style="height:75px;width:auto;object-fit:contain;">';
+      }
+      // Store config for theme toggle
+      window._siteConfig = cfg;
     }
     // Update contact info block
     var contactPhone = document.getElementById("contact-phone");
@@ -215,6 +221,29 @@
     if (contactEmail && cfg.email) contactEmail.textContent = cfg.email;
     if (contactAddress && cfg.address) contactAddress.textContent = cfg.address;
     if (contactHours && cfg.hours) contactHours.textContent = cfg.hours;
+    // Update form placeholder
+    var phoneInput = document.querySelector('input[name="phone"]');
+    if (phoneInput && cfg.phone) phoneInput.placeholder = cfg.phone;
+    // Update Schema.org structured data
+    var schemaScript = document.querySelector('script[type="application/ld+json"]');
+    if (schemaScript && cfg.phone) {
+      try {
+        var schema = JSON.parse(schemaScript.textContent);
+        schema.telephone = cfg.phone;
+        if (cfg.email) schema.email = cfg.email;
+        if (cfg.address) schema.address.streetAddress = cfg.address;
+        schemaScript.textContent = JSON.stringify(schema);
+      } catch(e) {}
+    }
+    // Update footer logo
+    var footerLogoEl = document.querySelector(".footer-logo .nav-logo-icon");
+    if (footerLogoEl) {
+      var currentTheme = document.documentElement.getAttribute("data-theme") || "dark";
+      var footerLogoUrl = currentTheme === "light" ? (cfg.logo_url_light || cfg.logo_url_dark || cfg.logo_url) : (cfg.logo_url_dark || cfg.logo_url);
+      if (footerLogoUrl) {
+        footerLogoEl.innerHTML = '<img src="' + footerLogoUrl + '" alt="Logo" style="height:60px;width:auto;object-fit:contain;">';
+      }
+    }
     // Update footer
     var footerBrand = document.querySelector(".footer-logo span:last-child");
     if (cfg.company_name && footerBrand) footerBrand.textContent = cfg.company_name;
@@ -270,11 +299,22 @@
     var links = $$(".nav-link");
     var mobileLinks = $$(".mobile-link");
 
-    // Scroll state
+    // Scroll state — hide nav when scrolling down, show on hero
     var lastScroll = 0;
+    var heroHeight = document.getElementById("inicio") ? document.getElementById("inicio").offsetHeight : 600;
     window.addEventListener("scroll", function () {
       var y = window.scrollY;
-      if (nav) nav.classList.toggle("is-scrolled", y > 50);
+      nav.classList.toggle("is-scrolled", y > 50);
+      // Hide nav when scrolling down past hero, show when scrolling up or on hero
+      if (y > heroHeight) {
+        if (y > lastScroll + 5) {
+          nav.classList.add("is-hidden");
+        } else if (y < lastScroll - 5) {
+          nav.classList.remove("is-hidden");
+        }
+      } else {
+        nav.classList.remove("is-hidden");
+      }
       lastScroll = y;
     }, { passive: true });
 
@@ -332,6 +372,23 @@
       var next = current === "dark" ? "light" : "dark";
       html.setAttribute("data-theme", next);
       localStorage.setItem("soportemax-theme", next);
+      // Switch logo based on theme
+      var cfg = window._siteConfig;
+      if (cfg) {
+        var logoUrl = next === "light" ? (cfg.logo_url_light || cfg.logo_url_dark || cfg.logo_url) : (cfg.logo_url_dark || cfg.logo_url);
+        if (logoUrl) {
+          // Nav logo
+          var logoEl = document.querySelector(".nav-logo-icon");
+          if (logoEl) {
+            logoEl.innerHTML = '<img src="' + logoUrl + '" alt="Logo" style="height:75px;width:auto;object-fit:contain;">';
+          }
+          // Footer logo
+          var footerLogoEl = document.querySelector(".footer-logo .nav-logo-icon");
+          if (footerLogoEl) {
+            footerLogoEl.innerHTML = '<img src="' + logoUrl + '" alt="Logo" style="height:60px;width:auto;object-fit:contain;">';
+          }
+        }
+      }
     });
   }
 
@@ -665,6 +722,11 @@
         // Duplicate for seamless loop
         marquee.innerHTML = cardsHTML + cardsHTML;
 
+        // Add is-visible to all cards immediately
+        marquee.querySelectorAll('.client-card').forEach(function(card) {
+          card.classList.add('is-visible');
+        });
+
         // Update animation duration based on content width
         var totalWidth = marquee.scrollWidth / 2;
         var duration = Math.max(20, totalWidth / 50); // 50px per second
@@ -823,7 +885,7 @@
           x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
         }
 
-        var color = line % 2 === 0 ? "74, 144, 217" : "91, 192, 190";
+        var color = line % 2 === 0 ? "6, 182, 212" : "34, 211, 238";
         var alpha = 0.12 + line * 0.06;
         ctx.strokeStyle = "rgba(" + color + "," + alpha + ")";
         ctx.lineWidth = 1.5;
@@ -846,6 +908,217 @@
   }
 
   /* ============================================
+     WhatsApp Button
+     ============================================ */
+  function initWhatsApp() {
+    var btn = document.getElementById("whatsapp-btn");
+    var contactSection = document.getElementById("contacto");
+    if (!btn || !contactSection) return;
+
+    // Set link from config
+    function updateLink(phone) {
+      if (!phone) return;
+      var clean = phone.replace(/[^0-9+]/g, "");
+      btn.href = "https://wa.me/" + clean.replace(/^\+/, "");
+    }
+
+    // Load from config
+    fetch("/api/config?" + Date.now())
+      .then(function (r) { return r.json(); })
+      .then(function (cfg) {
+        if (cfg.whatsapp) updateLink(cfg.whatsapp);
+        window._siteConfig = window._siteConfig || {};
+        window._siteConfig.whatsapp = cfg.whatsapp;
+      })
+      .catch(function () {});
+
+    // Show/hide based on contact section visibility
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        btn.classList.toggle("is-visible", e.isIntersecting);
+      });
+    }, { threshold: 0.1 });
+
+    io.observe(contactSection);
+  }
+
+  /* ============================================
+     Chat Widget
+     ============================================ */
+  function initChat() {
+    var toggle = document.getElementById("chat-toggle");
+    var window_ = document.getElementById("chat-window");
+    var closeBtn = document.getElementById("chat-close");
+    var messages = document.getElementById("chat-messages");
+    var input = document.getElementById("chat-input");
+    var sendBtn = document.getElementById("chat-send");
+    var quickActions = document.getElementById("chat-quick-actions");
+    var whatsappLink = document.getElementById("chat-whatsapp-link");
+    if (!toggle || !window_) return;
+
+    var isOpen = false;
+    var whatsappNumber = "";
+    var questionCount = 0;
+
+    // FAQ responses
+    var faq = {
+      reparacion: "¡Sí! Reparamos todo tipo de computadores: desktops, laptops, workstations y más. Contamos con técnicos certificados y garantía de 3 meses en todas las reparaciones.",
+      domicilio: "Sí, contamos con servicio on-site para empresas y clientes premium. También ofrecemos soporte remoto para resolver problemas sin traslado.",
+      diagnostico: "El diagnóstico es gratuito para reparaciones que se aprueben. Para diagnósticos sin reparación, el costo es de $15.000 CLP.",
+      garantia: "Todas nuestras reparaciones incluyen 3 meses de garantía. Para repuestos, la garantía del fabricante se mantiene intacta.",
+      datos: "¡Sí! Contamos con herramientas especializadas de recuperación de datos. Tenemos un 95% de éxito en recuperación de discos duros y SSD.",
+      horario: "Nuestro horario es: Lunes a Viernes de 9:00 a 18:00 y Sábados de 9:00 a 14:00.",
+      reparacion2: "La mayoría de las reparaciones se completan en 24-48 horas. Problemas más complejos pueden tomar hasta 3-5 días hábiles.",
+      empresas: "¡Por supuesto! Atendemos desde emprendedores y pymes hasta empresas grandes con infraestructura compleja. Adaptamos nuestros servicios a cada necesidad."
+    };
+
+    var greetings = [
+      "¡Hola! 👋 Soy el asistente de Isinet. ¿En qué puedo ayudarte?",
+      "Puedes escribir tu pregunta o elegir una de las opciones de abajo."
+    ];
+
+    var fallback = "No encontré una respuesta exacta para eso. Pero puedo ayudarte con:\n\n• Reparación de computadores\n• Servicio a domicilio\n• Diagnóstico y presupuesto\n• Garantía\n• Recuperación de datos\n• Horarios\n\nO puedes hablar directamente con un asesor por WhatsApp.";
+
+    // Load whatsapp number
+    fetch("/api/config?" + Date.now())
+      .then(function(r) { return r.json(); })
+      .then(function(cfg) {
+        if (cfg.whatsapp) {
+          whatsappNumber = cfg.whatsapp.replace(/[^0-9+]/g, "").replace(/^\+/, "");
+          whatsappLink.href = "https://wa.me/" + whatsappNumber + "?text=" + encodeURIComponent("Hola, necesito ayuda con...");
+        }
+      })
+      .catch(function() {});
+
+    function addMessage(text, type) {
+      var msg = document.createElement("div");
+      msg.className = "chat-msg " + type;
+      msg.innerHTML = text.replace(/\n/g, "<br>");
+      messages.appendChild(msg);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    function showTyping() {
+      var typing = document.createElement("div");
+      typing.className = "chat-msg bot";
+      typing.id = "chat-typing";
+      typing.innerHTML = '<div class="chat-typing"><span></span><span></span><span></span></div>';
+      messages.appendChild(typing);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    function removeTyping() {
+      var t = document.getElementById("chat-typing");
+      if (t) t.remove();
+    }
+
+    function findAnswer(input) {
+      var lower = input.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      var keywords = {
+        reparacion: ["repara", "reparar", "arreglar", "arreglo", "computador", "pc", "notebook", "laptop", "desktop", "equipo"],
+        domicilio: ["domicilio", "casa", "on-site", "sitio", "visita", "van", "iran"],
+        diagnostico: ["diagnostico", "diagnóstico", "costo", "precio", "cuanto cuesta", "presupuesto"],
+        garantia: ["garantia", "garantía", "aseguran", "garantizan"],
+        datos: ["datos", "recuperar", "recuperacion", "disco", "informacion", "archivos", "perdí", "perdidos"],
+        horario: ["horario", "hora", "abren", "cierran", "atencion", "atención"],
+        empresas: ["empresa", "empresas", "pyme", "pymes", "corporativo", "negocio"]
+      };
+
+      for (var key in keywords) {
+        for (var i = 0; i < keywords[key].length; i++) {
+          if (lower.indexOf(keywords[key][i]) !== -1) return faq[key];
+        }
+      }
+      return null;
+    }
+
+    function handleSend() {
+      var text = input.value.trim();
+      if (!text) return;
+
+      addMessage(text, "user");
+      input.value = "";
+      questionCount++;
+
+      showTyping();
+
+      setTimeout(function() {
+        removeTyping();
+        var answer = findAnswer(text);
+        if (answer) {
+          addMessage(answer, "bot");
+        } else {
+          addMessage(fallback, "bot");
+        }
+        // After 2 questions, show WhatsApp CTA
+        if (questionCount >= 2) {
+          setTimeout(function() {
+            var waMsg = "Hola, necesito ayuda con un problema técnico.";
+            var waUrl = whatsappNumber
+              ? "https://wa.me/" + whatsappNumber + "?text=" + encodeURIComponent(waMsg)
+              : "#";
+            addMessage('¿Necesitas más ayuda? <a href="' + waUrl + '" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px;margin-top:8px;padding:6px 14px;border-radius:16px;background:rgba(37,211,102,0.15);border:1px solid rgba(37,211,102,0.25);color:#25D366;font-weight:600;text-decoration:none;font-size:0.85rem;">💬 Hablar con asesor</a>', "bot");
+          }, 500);
+        }
+      }, 800 + Math.random() * 600);
+    }
+
+    // Toggle chat
+    toggle.addEventListener("click", function() {
+      isOpen = !isOpen;
+      window_.classList.toggle("is-open", isOpen);
+      toggle.classList.toggle("is-open", isOpen);
+
+      if (isOpen && messages.children.length === 0) {
+        greetings.forEach(function(g, i) {
+          setTimeout(function() { addMessage(g, "bot"); }, i * 400);
+        });
+      }
+    });
+
+    closeBtn.addEventListener("click", function() {
+      isOpen = false;
+      window_.classList.remove("is-open");
+      toggle.classList.remove("is-open");
+    });
+
+    // Quick actions
+    quickActions.addEventListener("click", function(e) {
+      var btn = e.target.closest(".chat-quick-btn");
+      if (!btn) return;
+      var q = btn.getAttribute("data-question");
+      var answer = faq[q];
+      if (answer) {
+        addMessage(btn.textContent, "user");
+        questionCount++;
+        showTyping();
+        setTimeout(function() {
+          removeTyping();
+          addMessage(answer, "bot");
+          // After 2 questions, show WhatsApp CTA
+          if (questionCount >= 2) {
+            setTimeout(function() {
+              var waMsg = "Hola, necesito ayuda con un problema técnico.";
+              var waUrl = whatsappNumber
+                ? "https://wa.me/" + whatsappNumber + "?text=" + encodeURIComponent(waMsg)
+                : "#";
+              addMessage('¿Necesitas más ayuda? <a href="' + waUrl + '" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px;margin-top:8px;padding:6px 14px;border-radius:16px;background:rgba(37,211,102,0.15);border:1px solid rgba(37,211,102,0.25);color:#25D366;font-weight:600;text-decoration:none;font-size:0.85rem;">💬 Hablar con asesor</a>', "bot");
+            }, 500);
+          }
+        }, 600);
+      }
+    });
+
+    // Send on click
+    sendBtn.addEventListener("click", handleSend);
+
+    // Send on enter
+    input.addEventListener("keydown", function(e) {
+      if (e.key === "Enter") handleSend();
+    });
+  }
+
+  /* ============================================
      Boot
      ============================================ */
   function boot() {
@@ -865,6 +1138,8 @@
     safe(initGSAP, "initGSAP");
     safe(initServices, "initServices");
     safe(initClientsMarquee, "initClientsMarquee");
+    safe(initWhatsApp, "initWhatsApp");
+    safe(initChat, "initChat");
     safe(loadSiteConfig, "loadSiteConfig");
   }
 
