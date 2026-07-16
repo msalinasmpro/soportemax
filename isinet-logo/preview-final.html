@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ISINET Logo - Preview Final</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+      min-height: 100vh;
+      transition: background 0.5s ease, color 0.5s ease;
+    }
+    body.light { background: #ffffff; color: #1a1a1a; }
+    body.dark { background: #0f1419; color: #e8eaed; }
+
+    .toggle {
+      position: fixed; top: 24px; right: 24px; z-index: 100;
+      background: none; border: 2px solid currentColor;
+      color: inherit; padding: 10px 24px; border-radius: 30px;
+      cursor: pointer; font-size: 13px; font-weight: 600;
+      letter-spacing: 2px; transition: all 0.3s ease;
+    }
+    .toggle:hover { transform: scale(1.05); }
+    body.light .toggle:hover { background: #1565c0; color: #fff; border-color: #1565c0; }
+    body.dark .toggle:hover { background: #42a5f5; color: #0f1419; border-color: #42a5f5; }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 50px 24px; }
+
+    .header { text-align: center; margin-bottom: 50px; }
+    .header h1 { font-weight: 300; font-size: 28px; letter-spacing: 4px; margin-bottom: 8px; }
+    .header p { opacity: 0.45; font-size: 13px; letter-spacing: 1px; }
+
+    /* Main logo display */
+    .main-display {
+      display: flex; justify-content: center; gap: 60px;
+      flex-wrap: wrap; margin-bottom: 60px;
+    }
+    .logo-box {
+      width: 320px; height: 370px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 16px; transition: all 0.4s;
+    }
+    body.light .logo-box { background: #f0f4f8; box-shadow: 0 8px 32px rgba(0,0,0,0.06); }
+    body.dark .logo-box { background: #1a2332; box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+    .logo-box img { max-width: 260px; height: auto; }
+
+    /* Sizes row */
+    .sizes-section { text-align: center; margin-bottom: 60px; }
+    .sizes-section h2 { font-weight: 300; font-size: 18px; letter-spacing: 2px; margin-bottom: 24px; opacity: 0.6; }
+    .sizes-row { display: flex; justify-content: center; align-items: flex-end; gap: 36px; flex-wrap: wrap; }
+    .size-item { text-align: center; }
+    .size-item img { display: block; margin: 0 auto 8px; }
+    .size-label { font-size: 11px; opacity: 0.4; letter-spacing: 1px; }
+
+    /* Navbar mock */
+    .mock-label { font-size: 11px; text-transform: uppercase; letter-spacing: 3px; opacity: 0.4; text-align: center; margin-bottom: 12px; }
+    .navbar-mock {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 28px; border-radius: 12px; margin-bottom: 40px;
+    }
+    body.light .navbar-mock { background: #fff; box-shadow: 0 2px 16px rgba(0,0,0,0.06); }
+    body.dark .navbar-mock { background: #1a2332; box-shadow: 0 2px 16px rgba(0,0,0,0.3); }
+    .navbar-mock img { height: 42px; }
+    .navbar-mock .links { display: flex; gap: 20px; font-size: 13px; opacity: 0.6; }
+    .navbar-mock .cta { padding: 8px 18px; border-radius: 8px; font-size: 12px; font-weight: 600; border: none; cursor: pointer; letter-spacing: 1px; }
+    body.light .navbar-mock .cta { background: #1565c0; color: #fff; }
+    body.dark .navbar-mock .cta { background: #42a5f5; color: #0f1419; }
+
+    /* Hero mock */
+    .hero-mock {
+      padding: 50px 36px; border-radius: 16px; text-align: center; margin-bottom: 40px;
+    }
+    body.light .hero-mock { background: linear-gradient(135deg, #e3f2fd, #f5f5f5); }
+    body.dark .hero-mock { background: linear-gradient(135deg, #0d1b2a, #1b2838); }
+    .hero-mock img { max-width: 320px; margin-bottom: 20px; }
+    .hero-mock h2 { font-size: 28px; font-weight: 300; margin-bottom: 10px; }
+    .hero-mock p { font-size: 15px; opacity: 0.5; max-width: 440px; margin: 0 auto; }
+
+    /* Cards */
+    .cards-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 40px; }
+    .card-mock {
+      display: flex; align-items: center; gap: 16px;
+      padding: 20px; border-radius: 10px;
+    }
+    body.light .card-mock { background: #f5f7fa; }
+    body.dark .card-mock { background: #1a2332; }
+    .card-mock img { flex-shrink: 0; }
+    .card-mock h4 { font-size: 13px; margin-bottom: 2px; }
+    .card-mock p { font-size: 11px; opacity: 0.45; }
+
+    .footer { text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid; opacity: 0.2; font-size: 11px; letter-spacing: 1px; }
+    body.light .footer { border-color: #e0e0e0; }
+    body.dark .footer { border-color: #2a3441; }
+
+    @media (max-width: 700px) {
+      .main-display { gap: 24px; }
+      .logo-box { width: 260px; height: 300px; }
+      .logo-box img { max-width: 200px; }
+      .navbar-mock .links { display: none; }
+    }
+  </style>
+</head>
+<body class="light">
+  <button class="toggle" onclick="toggle()">DARK MODE</button>
+
+  <div class="container">
+    <div class="header">
+      <h1>ISINET</h1>
+      <p>Logo SVG vectorial de alta calidad para web</p>
+    </div>
+
+    <!-- Main display -->
+    <div class="main-display">
+      <div class="logo-box">
+        <img src="isinet-light.svg" alt="ISINET Light">
+      </div>
+      <div class="logo-box">
+        <img src="isinet-dark.svg" alt="ISINET Dark">
+      </div>
+    </div>
+
+    <!-- Sizes -->
+    <div class="sizes-section">
+      <h2>Escalado vectorial</h2>
+      <div class="sizes-row">
+        <div class="size-item"><img src="isinet-light.svg" style="width:32px"><div class="size-label">32</div></div>
+        <div class="size-item"><img src="isinet-light.svg" style="width:48px"><div class="size-label">48</div></div>
+        <div class="size-item"><img src="isinet-light.svg" style="width:64px"><div class="size-label">64</div></div>
+        <div class="size-item"><img src="isinet-light.svg" style="width:96px"><div class="size-label">96</div></div>
+        <div class="size-item"><img src="isinet-light.svg" style="width:128px"><div class="size-label">128</div></div>
+        <div class="size-item"><img src="isinet-light.svg" style="width:180px"><div class="size-label">180</div></div>
+      </div>
+    </div>
+
+    <!-- Navbar -->
+    <div class="mock-label">Navbar</div>
+    <div class="navbar-mock">
+      <img src="isinet-light.svg" alt="ISINET">
+      <div class="links"><span>Servicios</span><span>Soluciones</span><span>Contacto</span></div>
+      <button class="cta">Cotizar</button>
+    </div>
+
+    <!-- Hero -->
+    <div class="mock-label">Hero Section</div>
+    <div class="hero-mock">
+      <img src="isinet-light.svg" alt="ISINET">
+      <h2>Soluciones Informáticas</h2>
+      <p>Tecnología confiable para tu negocio. Infraestructura, desarrollo y soporte.</p>
+    </div>
+
+    <!-- Cards -->
+    <div class="mock-label">Casos de uso</div>
+    <div class="cards-row">
+      <div class="card-mock">
+        <img src="isinet-light.svg" style="width:36px">
+        <div><h4>Favicon</h4><p>16×16 / 32×32px</p></div>
+      </div>
+      <div class="card-mock">
+        <img src="isinet-light.svg" style="width:50px">
+        <div><h4>Email</h4><p>Firma de correo</p></div>
+      </div>
+      <div class="card-mock">
+        <img src="isinet-light.svg" style="width:64px">
+        <div><h4>Redes sociales</h4><p>Perfil y posts</p></div>
+      </div>
+      <div class="card-mock">
+        <img src="isinet-light.svg" style="width:80px">
+        <div><h4>Presentaciones</h4><p>Diapositivas</p></div>
+      </div>
+    </div>
+
+    <div class="footer">ISINET Logo · SVG vectorial · Calidad infinita</div>
+  </div>
+
+  <script>
+    function toggle() {
+      const b = document.body;
+      const t = document.querySelector('.toggle');
+      if (b.classList.contains('light')) {
+        b.classList.replace('light', 'dark');
+        t.textContent = 'LIGHT MODE';
+      } else {
+        b.classList.replace('dark', 'light');
+        t.textContent = 'DARK MODE';
+      }
+      // Update all img src to match theme
+      const isDark = b.classList.contains('dark');
+      document.querySelectorAll('img[src^="isinet-"]').forEach(img => {
+        img.src = isDark ? 'isinet-dark.svg' : 'isinet-light.svg';
+      });
+    }
+  </script>
+</body>
+</html>

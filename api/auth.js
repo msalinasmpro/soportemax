@@ -3,10 +3,17 @@ const { createClient } = require('@supabase/supabase-js');
 const SUPABASE_URL = process.env.SUPABASE_URL || '';
 const SUPABASE_ANON = process.env.SUPABASE_ANON_KEY || '';
 
+function authMiddleware(req) {
+  const auth = req.headers.authorization || '';
+  const token = auth.replace('Bearer ', '');
+  if (!token) return null;
+  return { token };
+}
+
 module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
@@ -24,3 +31,5 @@ module.exports = async function handler(req, res) {
     user: { id: data.user.id, email: data.user.email, name: data.user.email }
   });
 };
+
+module.exports.authMiddleware = authMiddleware;

@@ -30,7 +30,7 @@
 
     var apiBase = window.location.origin;
 
-    fetch(apiBase + "/api/auth/login", {
+    fetch(apiBase + "/api/auth", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email: email, password: password })

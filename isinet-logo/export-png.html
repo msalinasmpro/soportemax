@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ISINET Logo - Export PNG</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0f1419;
+      color: #e8eaed;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+    h1 {
+      font-weight: 300;
+      letter-spacing: 3px;
+      margin-bottom: 8px;
+      font-size: 24px;
+    }
+    .sub {
+      opacity: 0.5;
+      font-size: 13px;
+      margin-bottom: 40px;
+      letter-spacing: 1px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      max-width: 900px;
+      width: 100%;
+    }
+    .card {
+      background: #1a2332;
+      border-radius: 16px;
+      padding: 30px;
+      text-align: center;
+    }
+    .card h3 {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      opacity: 0.5;
+      margin-bottom: 20px;
+    }
+    .preview {
+      width: 220px;
+      height: 250px;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+    }
+    .preview.light-bg { background: #ffffff; }
+    .preview.dark-bg { background: #0f1419; }
+    .preview img { max-width: 180px; max-height: 220px; }
+    .sizes {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .sizes label {
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      opacity: 0.7;
+    }
+    .sizes label:hover { opacity: 1; }
+    .sizes input { accent-color: #42a5f5; }
+    .btn {
+      display: inline-block;
+      padding: 10px 24px;
+      border-radius: 8px;
+      border: none;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 1px;
+      transition: transform 0.2s;
+    }
+    .btn:hover { transform: scale(1.05); }
+    .btn-light {
+      background: #1565c0;
+      color: #fff;
+    }
+    .btn-dark {
+      background: #42a5f5;
+      color: #0f1419;
+    }
+    .btn svg-icon {
+      width: 14px;
+      height: 14px;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+    canvas { display: none; }
+    .info {
+      margin-top: 30px;
+      max-width: 600px;
+      text-align: center;
+      opacity: 0.4;
+      font-size: 12px;
+      line-height: 1.8;
+      letter-spacing: 0.5px;
+    }
+    .direct-links {
+      margin-top: 30px;
+      text-align: center;
+    }
+    .direct-links h3 {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      opacity: 0.5;
+      margin-bottom: 12px;
+    }
+    .direct-links a {
+      display: inline-block;
+      margin: 4px 8px;
+      color: #42a5f5;
+      text-decoration: none;
+      font-size: 13px;
+      border: 1px solid #42a5f5;
+      padding: 6px 16px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .direct-links a:hover {
+      background: #42a5f5;
+      color: #0f1419;
+    }
+  </style>
+</head>
+<body>
+  <h1>ISINET Logo Export</h1>
+  <p class="sub">SVG vectorial · Exportar a PNG en alta resolución</p>
+
+  <div class="grid">
+    <!-- Light theme logo -->
+    <div class="card">
+      <h3>Tema Claro</h3>
+      <div class="preview light-bg">
+        <img id="imgLight" src="isinet-light.svg" alt="ISINET Light">
+      </div>
+      <div class="sizes">
+        <label><input type="radio" name="sizeLight" value="512" checked> 512px</label>
+        <label><input type="radio" name="sizeLight" value="1024"> 1024px</label>
+        <label><input type="radio" name="sizeLight" value="2048"> 2048px</label>
+        <label><input type="radio" name="sizeLight" value="4096"> 4096px</label>
+      </div>
+      <button class="btn btn-light" onclick="exportPNG('light')">
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        Descargar PNG
+      </button>
+    </div>
+
+    <!-- Dark theme logo -->
+    <div class="card">
+      <h3>Tema Oscuro</h3>
+      <div class="preview dark-bg">
+        <img id="imgDark" src="isinet-dark.svg" alt="ISINET Dark">
+      </div>
+      <div class="sizes">
+        <label><input type="radio" name="sizeDark" value="512" checked> 512px</label>
+        <label><input type="radio" name="sizeDark" value="1024"> 1024px</label>
+        <label><input type="radio" name="sizeDark" value="2048"> 2048px</label>
+        <label><input type="radio" name="sizeDark" value="4096"> 4096px</label>
+      </div>
+      <button class="btn btn-dark" onclick="exportPNG('dark')">
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        Descargar PNG
+      </button>
+    </div>
+  </div>
+
+  <div class="direct-links">
+    <h3>Descarga directa SVG</h3>
+    <a href="isinet-light.svg" download="isinet-light-theme.svg">isinet-light.svg</a>
+    <a href="isinet-dark.svg" download="isinet-dark-theme.svg">isinet-dark.svg</a>
+  </div>
+
+  <div class="info">
+    Los archivos SVG son vectoriales y escalan a cualquier tamaño sin perder calidad.<br>
+    Usa el SVG directamente en tu web para calidad perfecta en todas las pantallas.
+  </div>
+
+  <canvas id="canvas"></canvas>
+
+  <script>
+    function exportPNG(theme) {
+      const img = theme === 'light' ? document.getElementById('imgLight') : document.getElementById('imgDark');
+      const sizeRadio = document.querySelector(`input[name="size${theme === 'light' ? 'Light' : 'Dark'}"]:checked`);
+      const size = parseInt(sizeRadio.value);
+
+      const canvas = document.getElementById('canvas');
+      canvas.width = size;
+      canvas.height = Math.round(size * (580 / 512));
+      const ctx = canvas.getContext('2d');
+
+      const svgBlob = new Blob([fetch(img.src).then(r => r.text())], { type: 'image/svg+xml' });
+      fetch(img.src)
+        .then(r => r.text())
+        .then(svgText => {
+          const blob = new Blob([svgText], { type: 'image/svg+xml;charset=utf-8' });
+          const url = URL.createObjectURL(blob);
+          const imgEl = new Image();
+          imgEl.onload = () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(imgEl, 0, 0, canvas.width, canvas.height);
+            URL.revokeObjectURL(url);
+
+            const link = document.createElement('a');
+            link.download = `isinet-${theme}-theme-${size}px.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+          };
+          imgEl.src = url;
+        });
+    }
+  </script>
+</body>
+</html>

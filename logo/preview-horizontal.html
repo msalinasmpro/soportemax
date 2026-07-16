@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ISINET Logo Horizontal</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+      min-height: 100vh;
+      transition: background 0.5s ease, color 0.5s ease;
+    }
+    body.light { background: #ffffff; color: #1a1a1a; }
+    body.dark { background: #0f1419; color: #e8eaed; }
+
+    .toggle {
+      position: fixed; top: 24px; right: 24px; z-index: 100;
+      background: none; border: 2px solid currentColor;
+      color: inherit; padding: 10px 24px; border-radius: 30px;
+      cursor: pointer; font-size: 13px; font-weight: 600;
+      letter-spacing: 2px; transition: all 0.3s ease;
+    }
+    body.light .toggle:hover { background: #1565c0; color: #fff; border-color: #1565c0; }
+    body.dark .toggle:hover { background: #42a5f5; color: #0f1419; border-color: #42a5f5; }
+
+    .container { max-width: 900px; margin: 0 auto; padding: 50px 24px; }
+
+    .header { text-align: center; margin-bottom: 50px; }
+    .header h1 { font-weight: 300; font-size: 26px; letter-spacing: 4px; margin-bottom: 8px; }
+    .header p { opacity: 0.45; font-size: 13px; letter-spacing: 1px; }
+
+    .card {
+      border-radius: 16px; padding: 30px; margin-bottom: 24px;
+      transition: all 0.4s;
+    }
+    body.light .card { background: #f0f4f8; box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+    body.dark .card { background: #1a2332; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+
+    .card h3 {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 2px;
+      opacity: 0.5; margin-bottom: 16px;
+    }
+
+    .preview {
+      width: 100%; padding: 24px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 16px;
+    }
+    .preview.light-bg { background: #ffffff; }
+    .preview.dark-bg { background: #0f1419; }
+    .preview img { width: 100%; max-width: 600px; height: auto; }
+
+    .btn {
+      display: inline-block; padding: 10px 20px; border-radius: 8px;
+      border: none; font-size: 12px; font-weight: 600; cursor: pointer;
+      letter-spacing: 1px; transition: transform 0.2s; text-decoration: none;
+    }
+    .btn:hover { transform: scale(1.05); }
+    .btn-blue { background: #1565c0; color: #fff; }
+    .btn-light-blue { background: #42a5f5; color: #0f1419; }
+
+    .sizes {
+      display: flex; justify-content: center; gap: 20px;
+      flex-wrap: wrap; margin-top: 20px;
+    }
+    .size-item { text-align: center; }
+    .size-item img { display: block; margin: 0 auto 6px; }
+    .size-label { font-size: 10px; opacity: 0.4; letter-spacing: 1px; }
+
+    .footer { text-align: center; margin-top: 40px; opacity: 0.2; font-size: 11px; letter-spacing: 1px; }
+  </style>
+</head>
+<body class="light">
+  <button class="toggle" onclick="toggle()">DARK MODE</button>
+
+  <div class="container">
+    <div class="header">
+      <h1>ISINET Logo Horizontal</h1>
+      <p>Globo a la izquierda + texto a la derecha</p>
+    </div>
+
+    <!-- Light version -->
+    <div class="card">
+      <h3>Tema Claro</h3>
+      <div class="preview light-bg">
+        <img src="isinet-horizontal.svg" alt="ISINET Horizontal Light">
+      </div>
+      <a class="btn btn-blue" href="isinet-horizontal.svg" download>Descargar SVG</a>
+    </div>
+
+    <!-- Dark version -->
+    <div class="card">
+      <h3>Tema Oscuro</h3>
+      <div class="preview dark-bg">
+        <img src="isinet-horizontal-dark.svg" alt="ISINET Horizontal Dark">
+      </div>
+      <a class="btn btn-light-blue" href="isinet-horizontal-dark.svg" download>Descargar SVG</a>
+    </div>
+
+    <!-- Sizes -->
+    <div class="card">
+      <h3>Escalado</h3>
+      <div class="sizes">
+        <div class="size-item"><img src="isinet-horizontal.svg" style="width:120px"><div class="size-label">120px</div></div>
+        <div class="size-item"><img src="isinet-horizontal.svg" style="width:200px"><div class="size-label">200px</div></div>
+        <div class="size-item"><img src="isinet-horizontal.svg" style="width:320px"><div class="size-label">320px</div></div>
+        <div class="size-item"><img src="isinet-horizontal.svg" style="width:480px"><div class="size-label">480px</div></div>
+      </div>
+    </div>
+
+    <p class="footer">ISINET Logo Horizontal · SVG vectorial</p>
+  </div>
+
+  <script>
+    function toggle() {
+      const b = document.body;
+      const t = document.querySelector('.toggle');
+      if (b.classList.contains('light')) {
+        b.classList.replace('light', 'dark');
+        t.textContent = 'LIGHT MODE';
+      } else {
+        b.classList.replace('dark', 'light');
+        t.textContent = 'DARK MODE';
+      }
+    }
+  </script>
+</body>
+</html>
