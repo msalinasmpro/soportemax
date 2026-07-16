@@ -213,7 +213,7 @@
       window._siteConfig = cfg;
     }
     // Update contact info block
-    var contactPhone = document.getElementById("contact-phone");
+    var contactPhone = document.getElementById("contact-phone-display");
     var contactEmail = document.getElementById("contact-email");
     var contactAddress = document.getElementById("contact-address");
     var contactHours = document.getElementById("contact-hours");
