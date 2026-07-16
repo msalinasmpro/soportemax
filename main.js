@@ -753,7 +753,7 @@
     "zap": "assets/img/repaired-pc.jpg",
     "download": "assets/img/windows-install.jpg",
     "server": "assets/img/server-rack.jpg",
-    "network": "assets/img/network-switch.jpg",
+    "network": "assets/img/internet-global.jpg",
     "tool": "assets/img/microchip.webp",
     "settings": "assets/img/repair-1.webp",
     "box": "assets/img/data-backup.jpg",
