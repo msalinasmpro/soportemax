@@ -255,6 +255,10 @@
       if (items[2]) items[2].textContent = cfg.address || "";
       if (items[3]) items[3].textContent = cfg.hours || "";
     }
+      if (items[1]) items[1].textContent = cfg.email || "";
+      if (items[2]) items[2].textContent = cfg.address || "";
+      if (items[3]) items[3].textContent = cfg.hours || "";
+    }
     // Init Leaflet map
     if (typeof L !== "undefined") {
       var mapContainer = document.getElementById("site-map");
