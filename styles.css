@@ -2081,6 +2081,154 @@ em {
 [data-reveal-cards] .reveal:nth-child(6) { transition-delay: 0.2s; }
 
 /* ============================================
+   22. BRANDS MARQUEE
+   ============================================ */
+.section-brands {
+  padding: var(--space-16) 0 var(--space-10);
+  overflow: hidden;
+}
+
+.section-brands .section-header {
+  text-align: center;
+  margin-bottom: var(--space-12);
+}
+
+.brands-marquee-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: var(--space-8) 0;
+}
+
+.brands-marquee-wrapper::before,
+.brands-marquee-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 120px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.brands-marquee-wrapper::before {
+  left: 0;
+  background: linear-gradient(to right, var(--bg) 0%, transparent 100%);
+}
+
+.brands-marquee-wrapper::after {
+  right: 0;
+  background: linear-gradient(to left, var(--bg) 0%, transparent 100%);
+}
+
+[data-theme="light"] .brands-marquee-wrapper::before {
+  background: linear-gradient(to right, #f8f9fa 0%, transparent 100%);
+}
+
+[data-theme="light"] .brands-marquee-wrapper::after {
+  background: linear-gradient(to left, #f8f9fa 0%, transparent 100%);
+}
+
+.brands-marquee {
+  display: flex;
+  gap: var(--space-6);
+  width: max-content;
+  animation: marqueeScroll 30s linear infinite;
+}
+
+.brands-marquee:hover {
+  animation-play-state: paused;
+}
+
+.brand-card {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 120px;
+  padding: var(--space-5);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  transition: all 0.3s var(--ease-out);
+  cursor: default;
+}
+
+.brand-card:hover {
+  border-color: var(--accent);
+  background: var(--surface-3);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-glow);
+}
+
+.brand-card img {
+  max-width: 140px;
+  max-height: 80px;
+  object-fit: contain;
+  transition: transform 0.3s var(--ease-out);
+}
+
+.brand-card:hover img {
+  transform: scale(1.05);
+}
+
+.brand-card-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  color: var(--text-4);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.brand-card-placeholder svg {
+  opacity: 0.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brands-marquee {
+    animation: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .brand-card:hover {
+    transform: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .brand-card {
+    width: 160px;
+    height: 100px;
+  }
+
+  .brand-card img {
+    max-width: 110px;
+    max-height: 60px;
+  }
+
+  .brands-marquee-wrapper::before,
+  .brands-marquee-wrapper::after {
+    width: 60px;
+  }
+}
+
+.brand-card {
+  opacity: 0;
+  transform: translateY(25px) scale(0.95);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.brand-card.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* ============================================
    22. CLIENTS MARQUEE
    ============================================ */
 .section-clients {
@@ -2588,7 +2736,7 @@ em {
   .reveal, .hero-title, .hero-sub, .hero-badge, .hero-actions, .hero-title em { animation: none; opacity: 1; transform: none; filter: none; }
   .section-title, .section-tag, .section-subtitle, .process-number, .process-title, .process-desc { transition: none; opacity: 1; transform: none; }
   .feature-title, .feature-desc, .testimonial-text, .testimonial-author, .testimonial-rating svg { transition: none; opacity: 1; transform: none; }
-  .stat-label, .about-text, .about-feature, .footer-heading, .client-card, .form-label { transition: none; opacity: 1; transform: none; }
+  .stat-label, .about-text, .about-feature, .footer-heading, .client-card, .brand-card, .form-label { transition: none; opacity: 1; transform: none; }
   .whatsapp-btn.is-visible, .section-title em, .section-contact .section-title em { animation: none; }
   .hero-scroll-line, .hero-badge-dot { animation: none; }
   .faq-question:hover span { text-shadow: none; }
@@ -2626,7 +2774,7 @@ em {
   .process-number { transition: none; opacity: 0.25; transform: none; }
   .feature-title, .feature-desc { transition: none; opacity: 1; transform: none; }
   .testimonial-text, .testimonial-author { transition: none; opacity: 1; transform: none; }
-  .client-card { transition: none; opacity: 1; transform: none; }
+  .client-card, .brand-card { transition: none; opacity: 1; transform: none; }
   .whatsapp-btn.is-visible { animation: none; }
   .section-title em { animation: none; }
   .section-contact .section-title em { animation: none; }

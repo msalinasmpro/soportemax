@@ -824,6 +824,45 @@
       .catch(function () {});
   }
 
+  /* ============================================
+     Brands Marquee
+     ============================================ */
+  function initBrandsMarquee() {
+    var marquee = document.getElementById("brands-marquee");
+    if (!marquee) return;
+
+    fetch("/api/brands?" + Date.now())
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (!data || !data.length) {
+          marquee.parentElement.style.display = "none";
+          return;
+        }
+
+        function renderBrand(c) {
+          if (c.logo_url) {
+            return '<div class="brand-card"><img src="' + escHTML(c.logo_url) + '" alt="' + escHTML(c.name) + '" loading="lazy"></div>';
+          }
+          return '<div class="brand-card"><div class="brand-card-placeholder"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>' + escHTML(c.name) + '</span></div></div>';
+        }
+
+        var cardsHtml = data.map(renderBrand).join("");
+        marquee.innerHTML = cardsHtml + cardsHtml;
+
+        marquee.querySelectorAll('.brand-card').forEach(function(card) {
+          card.classList.add('is-visible');
+        });
+
+        var totalWidth = marquee.scrollWidth / 2;
+        var duration = Math.max(20, totalWidth / 50);
+        marquee.style.animationDuration = duration + "s";
+      })
+      .catch(function (e) {
+        console.log("[Isinet] Brands load error:", e);
+        marquee.parentElement.style.display = "none";
+      });
+  }
+
   function initClients() {
     var marquee = document.getElementById("clients-marquee");
     if (!marquee) return;
@@ -1137,6 +1176,7 @@
     safe(initMagnetic, "initMagnetic");
     safe(initGSAP, "initGSAP");
     safe(initServices, "initServices");
+    safe(initBrandsMarquee, "initBrandsMarquee");
     safe(initClientsMarquee, "initClientsMarquee");
     safe(initWhatsApp, "initWhatsApp");
     safe(initChat, "initChat");

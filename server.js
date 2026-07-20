@@ -22,7 +22,7 @@ const CLIENTS_DIR = path.join(__dirname, 'assets', 'img', 'clients');
 if (!fs.existsSync(CLIENTS_DIR)) fs.mkdirSync(CLIENTS_DIR, { recursive: true });
 
 // Endpoints handled locally (not yet deployed to Vercel)
-const LOCAL_ENDPOINTS = ['/api/clients'];
+const LOCAL_ENDPOINTS = ['/api/clients', '/api/brands'];
 
 const MIME_TYPES = {
   '.html': 'text/html',
@@ -216,6 +216,171 @@ function handleClientsLocal(req, res) {
   }
 }
 
+const BRANDS_FILE = path.join(__dirname, 'data', 'brands.json');
+
+function ensureDataDir() {
+  const dir = path.join(__dirname, 'data');
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+}
+
+function readBrandsFile() {
+  ensureDataDir();
+  if (!fs.existsSync(BRANDS_FILE)) return [];
+  try {
+    const d = fs.readFileSync(BRANDS_FILE, 'utf8');
+    return JSON.parse(d);
+  } catch (e) { return []; }
+}
+
+function writeBrandsFile(data) {
+  ensureDataDir();
+  fs.writeFileSync(BRANDS_FILE, JSON.stringify(data, null, 2));
+}
+
+function useLocalBrands() {
+  return !!(process.env.USE_LOCAL_BRANDS);
+}
+
+function handleBrandsLocal(req, res) {
+  const url = new URL(req.url, `http://localhost:${PORT}`);
+
+  // Helper: try Supabase, fallback to local JSON
+  function trySupabase(method, body, id) {
+    return new Promise((resolve) => {
+      supabaseRequest('brands', method, body, id)
+        .then(data => {
+          if (data && data.code && data.message) {
+            resolve({ fallback: true, error: data });
+          } else {
+            resolve({ fallback: false, data });
+          }
+        })
+        .catch(() => resolve({ fallback: true }));
+    });
+  }
+
+  if (req.method === 'GET') {
+    if (useLocalBrands()) {
+      const local = readBrandsFile();
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      return res.end(JSON.stringify(local));
+    }
+    trySupabase('GET').then(result => {
+      if (result.fallback) {
+        const local = readBrandsFile();
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(local));
+      } else {
+        const filtered = Array.isArray(result.data) ? result.data.filter(c => c.active !== false) : result.data;
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(filtered));
+      }
+    });
+  } else if (req.method === 'POST') {
+    let body = [];
+    req.on('data', chunk => body.push(chunk));
+    req.on('end', () => {
+      try {
+        const data = JSON.parse(Buffer.concat(body).toString());
+        if (useLocalBrands()) {
+          const local = readBrandsFile();
+          data.id = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+          data.created_at = new Date().toISOString();
+          data.active = true;
+          local.push(data);
+          writeBrandsFile(local);
+          res.writeHead(201, { 'Content-Type': 'application/json' });
+          return res.end(JSON.stringify(data));
+        }
+        trySupabase('POST', data).then(result => {
+          if (result.fallback) {
+            const local = readBrandsFile();
+            data.id = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+            data.created_at = new Date().toISOString();
+            data.active = true;
+            local.push(data);
+            writeBrandsFile(local);
+            res.writeHead(201, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(data));
+          } else {
+            const brand = Array.isArray(result.data) ? result.data[0] : result.data;
+            res.writeHead(201, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(brand));
+          }
+        });
+      } catch(e) {
+        res.writeHead(500);
+        res.end(JSON.stringify({ error: e.message }));
+      }
+    });
+  } else if (req.method === 'PUT') {
+    let body = [];
+    req.on('data', chunk => body.push(chunk));
+    req.on('end', () => {
+      try {
+        const data = JSON.parse(Buffer.concat(body).toString());
+        const updateId = data.id;
+        delete data.id;
+        if (useLocalBrands()) {
+          const local = readBrandsFile();
+          const idx = local.findIndex(b => b.id === updateId);
+          if (idx !== -1) {
+            Object.assign(local[idx], data);
+            writeBrandsFile(local);
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            return res.end(JSON.stringify(local[idx]));
+          }
+          res.writeHead(404);
+          return res.end(JSON.stringify({ error: 'Not found' }));
+        }
+        trySupabase('PATCH', data, updateId).then(result => {
+          if (result.fallback) {
+            const local = readBrandsFile();
+            const idx = local.findIndex(b => b.id === updateId);
+            if (idx !== -1) {
+              Object.assign(local[idx], data);
+              writeBrandsFile(local);
+              res.writeHead(200, { 'Content-Type': 'application/json' });
+              res.end(JSON.stringify(local[idx]));
+            } else {
+              res.writeHead(404);
+              res.end(JSON.stringify({ error: 'Not found' }));
+            }
+          } else {
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(Array.isArray(result.data) ? result.data[0] : result.data));
+          }
+        });
+      } catch(e) {
+        res.writeHead(500);
+        res.end(JSON.stringify({ error: e.message }));
+      }
+    });
+  } else if (req.method === 'DELETE') {
+    const deleteId = url.searchParams.get('id');
+    (async () => {
+      if (useLocalBrands()) {
+        const local = readBrandsFile();
+        const idx = local.findIndex(b => b.id === deleteId);
+        if (idx !== -1) { local.splice(idx, 1); writeBrandsFile(local); }
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        return res.end(JSON.stringify({ ok: true }));
+      }
+      const result = await trySupabase('DELETE', null, deleteId);
+      if (result.fallback) {
+        const local = readBrandsFile();
+        const idx = local.findIndex(b => b.id === deleteId);
+        if (idx !== -1) { local.splice(idx, 1); writeBrandsFile(local); }
+      }
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ ok: true }));
+    })();
+  } else {
+    res.writeHead(405);
+    res.end(JSON.stringify({ error: 'Method not allowed' }));
+  }
+}
+
 const server = http.createServer((req, res) => {
   // CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -233,6 +398,9 @@ const server = http.createServer((req, res) => {
     const pathname = new URL(req.url, `http://localhost:${PORT}`).pathname;
 
     // Handle locally if not deployed yet
+    if (pathname === '/api/brands') {
+      return handleBrandsLocal(req, res);
+    }
     if (LOCAL_ENDPOINTS.includes(pathname)) {
       return handleClientsLocal(req, res);
     }
@@ -316,5 +484,5 @@ server.listen(PORT, () => {
   console.log(`\n  Server running at http://localhost:${PORT}\n`);
   console.log(`  Landing:  http://localhost:${PORT}/`);
   console.log(`  Admin:    http://localhost:${PORT}/admin`);
-  console.log(`  Local API: /api/clients (Supabase + local files)\n`);
+  console.log(`  Local API: /api/clients, /api/brands (Supabase + local files)\n`);
 });

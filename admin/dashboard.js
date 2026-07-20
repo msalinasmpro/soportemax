@@ -23,7 +23,7 @@ $$(".sidebar-link").forEach(function(l){l.addEventListener("click",function(e){
   this.classList.add("active");
   $$(".panel-section").forEach(function(x){x.classList.remove("active")});
   var t=$("#section-"+sec);if(t)t.classList.add("active");
-  var h=$("#section-title");if(h)h.textContent={general:"Datos Empresa",logo:"Logo",images:"Imágenes",texts:"Textos",videos:"Videos",services:"Servicios",testimonials:"Testimonios",faq:"FAQ",messages:"Mensajes","email-config":"Email / SMTP",map:"Mapa"}[sec]||sec;
+  var h=$("#section-title");if(h)h.textContent={general:"Datos Empresa",logo:"Logo",images:"Imágenes",texts:"Textos",videos:"Videos",services:"Servicios",clients:"Clientes",brands:"Marcas",testimonials:"Testimonios",faq:"FAQ",messages:"Mensajes","email-config":"Email / SMTP",map:"Mapa"}[sec]||sec;
   if(sb)sb.classList.remove("is-open");
   if(sec==="map"&&typeof L!=="undefined"&&map)setTimeout(function(){map.invalidateSize()},100);
 })});

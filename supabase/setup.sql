@@ -56,7 +56,20 @@ ALTER TABLE faqs ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "faqs_public_read" ON faqs FOR SELECT USING (active = true);
 CREATE POLICY "faqs_auth_all" ON faqs FOR ALL USING (auth.role() = 'authenticated');
 
--- 5. GALLERY
+-- 5. BRANDS
+CREATE TABLE IF NOT EXISTS brands (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name TEXT NOT NULL,
+  logo_url TEXT,
+  sort_order INT DEFAULT 0,
+  active BOOLEAN DEFAULT true,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+ALTER TABLE brands ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "brands_public_read" ON brands FOR SELECT USING (active = true);
+CREATE POLICY "brands_auth_all" ON brands FOR ALL USING (auth.role() = 'authenticated');
+
+-- 6. GALLERY
 CREATE TABLE IF NOT EXISTS gallery (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   title TEXT,
