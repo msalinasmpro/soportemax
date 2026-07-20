@@ -202,7 +202,7 @@
       var currentTheme = document.documentElement.getAttribute("data-theme") || "dark";
       var logoUrl = currentTheme === "light" ? (cfg.logo_url_light || cfg.logo_url_dark || cfg.logo_url) : (cfg.logo_url_dark || cfg.logo_url);
       if (logoUrl) {
-        logoEl.innerHTML = '<img src="' + logoUrl + '" alt="Logo" style="height:75px;width:auto;object-fit:contain;">';
+        logoEl.innerHTML = '<img src="' + logoUrl + '" alt="Logo" style="height:55px;width:auto;object-fit:contain;">';
       }
       // Store config for theme toggle
       window._siteConfig = cfg;
@@ -236,7 +236,7 @@
       var currentTheme = document.documentElement.getAttribute("data-theme") || "dark";
       var footerLogoUrl = currentTheme === "light" ? (cfg.logo_url_light || cfg.logo_url_dark || cfg.logo_url) : (cfg.logo_url_dark || cfg.logo_url);
       if (footerLogoUrl) {
-        footerLogoEl.innerHTML = '<img src="' + footerLogoUrl + '" alt="Logo" style="height:60px;width:auto;object-fit:contain;">';
+        footerLogoEl.innerHTML = '<img src="' + footerLogoUrl + '" alt="Logo" style="height:48px;width:auto;object-fit:contain;">';
       }
     }
     // Update footer
@@ -375,12 +375,12 @@
           // Nav logo
           var logoEl = document.querySelector(".nav-logo-icon");
           if (logoEl) {
-            logoEl.innerHTML = '<img src="' + logoUrl + '" alt="Logo" style="height:75px;width:auto;object-fit:contain;">';
+        logoEl.innerHTML = '<img src="' + logoUrl + '" alt="Logo" style="height:55px;width:auto;object-fit:contain;">';
           }
           // Footer logo
           var footerLogoEl = document.querySelector(".footer-logo .nav-logo-icon");
           if (footerLogoEl) {
-            footerLogoEl.innerHTML = '<img src="' + logoUrl + '" alt="Logo" style="height:60px;width:auto;object-fit:contain;">';
+            footerLogoEl.innerHTML = '<img src="' + logoUrl + '" alt="Logo" style="height:48px;width:auto;object-fit:contain;">';
           }
         }
       }
