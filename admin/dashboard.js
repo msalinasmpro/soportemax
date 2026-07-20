@@ -25,7 +25,7 @@ $$(".sidebar-link").forEach(function(l){l.addEventListener("click",function(e){
   var t=$("#section-"+sec);if(t)t.classList.add("active");
   var h=$("#section-title");if(h)h.textContent={general:"Datos Empresa",logo:"Logo",images:"Imágenes",texts:"Textos",videos:"Videos",services:"Servicios",clients:"Clientes",brands:"Marcas",testimonials:"Testimonios",faq:"FAQ",messages:"Mensajes","email-config":"Email / SMTP",map:"Mapa"}[sec]||sec;
   if(sb)sb.classList.remove("is-open");
-  if(sec==="map"&&typeof L!=="undefined"&&map)setTimeout(function(){map.invalidateSize()},100);
+  if(sec==="map"&&typeof L!=="undefined"){if(!map)initMap();setTimeout(function(){map&&map.invalidateSize()},100)}
 })});
 var mt=$("#menu-toggle"),sc=$("#sidebar-close");
 if(mt)mt.addEventListener("click",function(){sb.classList.toggle("is-open")});
