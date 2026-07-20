@@ -136,11 +136,6 @@
       var ch3 = document.querySelector(".about-features .about-feature:nth-child(3) span");
       if (ch3) ch3.textContent = cfg.text_about_check3;
     }
-    // Update CTA support button links
-    if (cfg.cta_support_url) {
-      var ctaLinks = document.querySelectorAll("#cta-support-nav, #cta-support-hero, #cta-support-cameras");
-      ctaLinks.forEach(function (link) { link.href = cfg.cta_support_url; });
-    }
     // Update hero video (direct MP4 from Supabase Storage)
     if (cfg.hero_video_url) {
       var heroVideo = document.getElementById("hero-video");
