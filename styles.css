@@ -133,7 +133,7 @@
 [data-theme="light"] .contact-info-card { background: var(--glass); border-color: var(--glass-border); }
 [data-theme="light"] .about-floating-card { background: var(--glass); border-color: var(--glass-border); }
 [data-theme="light"] .footer { background: rgba(248, 249, 250, 0.6); border-color: var(--glass-border); box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.06); }
-[data-theme="light"] .hero-mesh { opacity: 0.3; }
+[data-theme="light"] .hero-mesh { opacity: 0.7; }
 [data-theme="light"] .cursor-dot, [data-theme="light"] .cursor-ring { display: none; }
 
 /* ============================================
