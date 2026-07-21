@@ -199,7 +199,7 @@
     // Update logo based on current theme
     var logoEl = document.querySelector(".nav-logo-icon");
     if (logoEl) {
-      var currentTheme = document.documentElement.getAttribute("data-theme") || "dark";
+      var currentTheme = document.documentElement.getAttribute("data-theme") || "light";
       var logoUrl = currentTheme === "light" ? (cfg.logo_url_light || cfg.logo_url_dark || cfg.logo_url) : (cfg.logo_url_dark || cfg.logo_url);
       if (logoUrl) {
         logoEl.innerHTML = '<img src="' + logoUrl + '" alt="Logo" style="height:55px;width:auto;object-fit:contain;">';
@@ -233,7 +233,7 @@
     // Update footer logo
     var footerLogoEl = document.querySelector(".footer-logo .nav-logo-icon");
     if (footerLogoEl) {
-      var currentTheme = document.documentElement.getAttribute("data-theme") || "dark";
+      var currentTheme = document.documentElement.getAttribute("data-theme") || "light";
       var footerLogoUrl = currentTheme === "light" ? (cfg.logo_url_light || cfg.logo_url_dark || cfg.logo_url) : (cfg.logo_url_dark || cfg.logo_url);
       if (footerLogoUrl) {
         footerLogoEl.innerHTML = '<img src="' + footerLogoUrl + '" alt="Logo" style="height:48px;width:auto;object-fit:contain;">';
