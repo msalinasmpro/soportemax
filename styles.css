@@ -124,7 +124,9 @@
 [data-theme="light"] .hero-overlay { background: linear-gradient(180deg, rgba(248,249,250,0.3) 0%, rgba(248,249,250,0.85) 100%); }
 [data-theme="light"] .service-card { background: var(--glass); border-color: var(--glass-border); }
 [data-theme="light"] .testimonial-card { background: var(--glass); border-color: var(--glass-border); }
-[data-theme="light"] .faq-item { border-color: var(--line); }
+[data-theme="light"] .faq-item { background: rgba(248, 249, 250, 0.6); border-color: var(--glass-border); box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06); }
+[data-theme="light"] .faq-item.is-open { background: rgba(255, 255, 255, 0.9); border-color: var(--accent); }
+[data-theme="light"] .faq-icon { background: var(--bg-3); }
 [data-theme="light"] .feature-card { background: var(--glass); border-color: var(--glass-border); }
 [data-theme="light"] .process-step { background: var(--glass); border-color: var(--glass-border); }
 [data-theme="light"] .contact-info-card { background: var(--glass); border-color: var(--glass-border); }
@@ -1658,26 +1660,26 @@ em {
 }
 
 .faq-item {
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
   overflow: hidden;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  background: rgba(14, 14, 20, 0.4);
+  background: var(--glass);
   backdrop-filter: blur(12px) saturate(160%);
   -webkit-backdrop-filter: blur(12px) saturate(160%);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .faq-item:hover {
-    border-color: rgba(6, 182, 212, 0.2);
+    border-color: var(--accent);
     box-shadow: 0 8px 32px rgba(6, 182, 212, 0.1);
   }
 }
 
 .faq-item.is-open {
-  border-color: rgba(6, 182, 212, 0.3);
-  background: rgba(14, 14, 20, 0.6);
-  box-shadow: 0 8px 32px rgba(6, 182, 212, 0.15);
+  border-color: var(--accent);
+  background: var(--surface-2);
+  box-shadow: var(--shadow-glow);
 }
 
 .faq-question {
@@ -1704,7 +1706,7 @@ em {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--surface-2);
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   color: var(--text-4);
 }
