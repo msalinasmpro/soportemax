@@ -1751,12 +1751,19 @@ em {
 }
 
 .contact-form-wrapper {
-  background: rgba(14, 14, 20, 0.35);
-  backdrop-filter: blur(12px) saturate(160%);
-  -webkit-backdrop-filter: blur(12px) saturate(160%);
-  border: 1px solid var(--line);
+  background: rgba(14, 14, 20, 0.5);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius-xl);
   padding: var(--space-8);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .contact-form-wrapper {
+  background: rgba(248, 249, 250, 0.6);
+  border-color: var(--glass-border);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
 }
 
 @media (min-width: 960px) {
@@ -1798,7 +1805,6 @@ em {
   color: var(--text);
   font-size: 0.95rem;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .form-input:focus {
