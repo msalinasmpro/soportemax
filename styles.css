@@ -132,7 +132,7 @@
 [data-theme="light"] .process-step { background: var(--glass); border-color: var(--glass-border); }
 [data-theme="light"] .contact-info-card { background: var(--glass); border-color: var(--glass-border); }
 [data-theme="light"] .about-floating-card { background: var(--glass); border-color: var(--glass-border); }
-[data-theme="light"] .footer { border-color: var(--line); }
+[data-theme="light"] .footer { background: rgba(248, 249, 250, 0.6); border-color: var(--glass-border); box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.06); }
 [data-theme="light"] .hero-mesh { opacity: 0.3; }
 [data-theme="light"] .cursor-dot, [data-theme="light"] .cursor-ring { display: none; }
 
@@ -1937,13 +1937,14 @@ em {
    19. FOOTER
    ============================================ */
 .footer {
-  border-top: 1px solid var(--line);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
   padding: var(--space-16) 0 var(--space-8);
-  background: rgba(10, 10, 15, 0.7);
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background: rgba(14, 14, 20, 0.5);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
   position: relative;
   z-index: 1;
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.15);
 }
 
 .footer-grid {
